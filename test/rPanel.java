@@ -12,11 +12,14 @@ public class rPanel extends JPanel implements Game {
 	//TODO: maak een bitboard
     int[][] board;
     int turn = 1; // zwart eerst
+	boolean running = false;
+	boolean interrupted = false;
     Piece[][] cells;
     JLabel test;
     JLabel score;
 	JButton resetBtn;
 	JButton randBtn;
+	JButton interruptBtn;
 
     @Override
     public int getSquare(int i,int j){
@@ -91,12 +94,17 @@ public class rPanel extends JPanel implements Game {
 		resetBtn.addActionListener(e -> resetAll());
 		sidebar.add(resetBtn);
 
+		interruptBtn = new JButton("Interrupt");
+		interruptBtn.addActionListener(e -> interrupted = true);
+		sidebar.add(interruptBtn);
+
 		randBtn = new JButton("Random 10");
 		randBtn.addActionListener(e -> random());
 		sidebar.add(randBtn);
 
-        this.add(sidebar,BorderLayout.EAST);
-        this.add(reversiBoard);
+        add(sidebar,BorderLayout.EAST);
+        add(reversiBoard);
+		setVisible(true);
 
     }
 
@@ -124,27 +132,35 @@ public class rPanel extends JPanel implements Game {
 	}
 
     public void handleClick(int i,int j){
-		// for (int aant = 0; aant < 100000000; aant++) {
-		// 	Rules.possibleMove(board, turn, i, j);
-		// }
-		System.out.println(Rules.possibleMove(board, turn, i, j));
-		System.out.println(Rules.possibleMovev2(board, turn, i, j));
-		if (Rules.possibleMove(board, turn, i, j)) {
-			// for (int aant = 0; aant < 10000000; aant++) {
-			Rules.flipv2(board, turn, i, j);
-			// }
-			setSquare(i, j, turn);
-			if(!Rules.getAllPossibleMoves(board, turn==1?2:1).isEmpty())
-				turn = turn==1?2:1;
-			removeHighlightPossibleMoves();
-			highlightPossibleMoves(board, turn);
-			updateSidebarLabel1(String.valueOf(turn));
-			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, 1))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, 2))+"</html>");
-		}
-		if(Rules.getAllPossibleMoves(board, turn==1?2:1).isEmpty()&&Rules.getAllPossibleMoves(board, turn).isEmpty())
-				test.setText("Game over");
-		repaint();
-    }
+		interrupted = false;
+		if(!running){
+			new Thread(() -> {
+				running = true;
+				long t = System.currentTimeMillis();
+				long end = t+10000;
+				while(!interrupted && System.currentTimeMillis() < end) {
+					Rules.possibleMove(board, turn, i, j);
+				}
+				System.out.println(Rules.possibleMove(board, turn, i, j));
+				System.out.println(Rules.possibleMovev2(board, turn, i, j));
+				if (Rules.possibleMove(board, turn, i, j)) {
+					// for (int aant = 0; aant < 10000000; aant++) {
+					Rules.flipv2(board, turn, i, j);
+					// }
+					setSquare(i, j, turn);
+					if(!Rules.getAllPossibleMoves(board, turn==1?2:1).isEmpty())
+						turn = turn==1?2:1;
+					removeHighlightPossibleMoves();
+					highlightPossibleMoves(board, turn);
+					updateSidebarLabel1(String.valueOf(turn));
+					updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, 1))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, 2))+"</html>");
+				}
+				if(Rules.getAllPossibleMoves(board, turn==1?2:1).isEmpty()&&Rules.getAllPossibleMoves(board, turn).isEmpty())
+					test.setText("Game over");
+				repaint();
+				running = false;
+			}).start();}
+	}
 
     public void handleClickv1(int i,int j){
 		// for (int aant = 0; aant < 100000000; aant++) {
