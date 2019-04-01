@@ -1,4 +1,2 @@
-$ git status
-    # Untracked files
-        .idea
-        Client/Client.iml
+.idea
+**Client/Client.iml
