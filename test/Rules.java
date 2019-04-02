@@ -10,7 +10,7 @@ public class Rules {
         ArrayList<Point> result = new ArrayList<>();
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++)
-                if(possibleMove(board,player,i,j))
+                if(board[i][j] <= 0 && possibleMovev2(board,player,i,j))
                     result.add(new Point(i,j));
         return result;
     }
@@ -139,108 +139,12 @@ public class Rules {
 		}
 	}
 
-	//TODO: move> aanpassen
-	public static void flip(int[][] board, int player, int i, int j) {
-        int moveI, moveJ;
-        int opponent = ((player == 1) ? 2 : 1);
-		int [][] mBoard = new int[board.length][];
-		for(int k = 0; k < board.length; k++)
-			mBoard[k] = board[k].clone();
-
-
-		//up
-        moveI = i - 1;
-        moveJ = j;
-        while(moveI>0 && board[moveI][moveJ] == opponent){mBoard[moveI][moveJ] = player; moveI--; }
-		if(moveI>0 && board[moveI][moveJ] == player){
-			for(int k = 0; k < mBoard.length; k++)
-				board[k] = mBoard[k].clone();
-		}
-
-        //down
-        moveI = i + 1;
-        moveJ = j;
-		for(int k = 0; k < board.length; k++)
-			mBoard[k] = board[k].clone();
-        while(moveI<7 && board[moveI][moveJ] == opponent){mBoard[moveI][moveJ] = player; moveI++; }
-		if(moveI<7 && board[moveI][moveJ] == player){
-			for(int k = 0; k < mBoard.length; k++)
-				board[k] = mBoard[k].clone();
-		}
-
-        //left
-        moveI = i;
-        moveJ = j - 1;
-		for(int k = 0; k < board.length; k++)
-			mBoard[k] = board[k].clone();
-        while(moveJ>0 && board[moveI][moveJ] == opponent){mBoard[moveI][moveJ] = player; moveJ--; }
-		if(moveJ>0 && board[moveI][moveJ] == player){
-			for(int k = 0; k < mBoard.length; k++)
-				board[k] = mBoard[k].clone();
-		}
-
-        //right
-        moveI = i;
-        moveJ = j + 1;
-		for(int k = 0; k < board.length; k++)
-			mBoard[k] = board[k].clone();
-        while(moveJ<7 && board[moveI][moveJ] == opponent){mBoard[moveI][moveJ] = player; moveJ++; }
-		if(moveJ<7 && board[moveI][moveJ] == player){
-			for(int k = 0; k < mBoard.length; k++)
-				board[k] = mBoard[k].clone();
-		}
-
-		//left up
-        moveI = i - 1;
-        moveJ = j - 1;
-		for(int k = 0; k < board.length; k++)
-			mBoard[k] = board[k].clone();
-        while(moveI>0 && moveJ>0 && board[moveI][moveJ] == opponent){mBoard[moveI][moveJ] = player; moveI--; moveJ--; }
-		if(moveI>0 && moveJ>0 && board[moveI][moveJ] == player){
-			for(int k = 0; k < mBoard.length; k++)
-				board[k] = mBoard[k].clone();
-		}
-
-        //right up
-        moveI = i - 1;
-        moveJ = j + 1;
-		for(int k = 0; k < board.length; k++)
-			mBoard[k] = board[k].clone();
-        while(moveI>0 && moveJ<7 && board[moveI][moveJ] == opponent){mBoard[moveI][moveJ] = player; moveI--; moveJ++; }
-		if(moveI>0 && moveJ<7 && board[moveI][moveJ] == player){
-			for(int k = 0; k < mBoard.length; k++)
-				board[k] = mBoard[k].clone();
-		}
-
-        //left down
-        moveI = i + 1;
-        moveJ = j - 1;
-		for(int k = 0; k < board.length; k++)
-			mBoard[k] = board[k].clone();
-        while(moveI<7 && moveJ>0 && board[moveI][moveJ] == opponent){mBoard[moveI][moveJ] = player; moveI++; moveJ--; }
-		if(moveI<7 && moveJ>0 && board[moveI][moveJ] == player){
-			for(int k = 0; k < mBoard.length; k++)
-				board[k] = mBoard[k].clone();
-		}
-
-        //right down
-        moveI = i + 1;
-        moveJ = j + 1;
-		for(int k = 0; k < board.length; k++)
-			mBoard[k] = board[k].clone();
-        while(moveI<7 && moveJ<7 && board[moveI][moveJ] == opponent){mBoard[moveI][moveJ] = player; moveI++; moveJ++; }
-		if(moveI<7 && moveJ<7 && board[moveI][moveJ] == player){
-			for(int k = 0; k < mBoard.length; k++)
-				board[k] = mBoard[k].clone();
-		}
-	}
-
 	protected static final int[] DX = { -1,  0,  1, -1, 1, -1, 0, 1 };
 	protected static final int[] DY = { -1, -1, -1,  0, 0,  1, 1, 1 };
 
-	public static boolean possibleMovev2(int[][] board, int player, int i, int j) {
+	public static boolean possibleMovev2(byte[][] board, byte player, int i, int j) {
         if(board[i][j] > 0) return false;
-        int opponent = ((player == 1) ? 2 : 1);
+        int opponent = ((player == BLACK) ? WHITE : BLACK);
 
 		for (int ii = 0; ii < DX.length; ii++) {
 			boolean sawOther = false;
@@ -250,7 +154,7 @@ public class Rules {
 				y += DY[ii];
 				if (x < 0 || x > 7 || y < 0 || y > 7) break;
 				int piece = board[x][y];
-				if (piece == 0) break;
+				if (piece <= 0) break;
 				else if (piece == opponent) sawOther = true;
 				else if (sawOther) return true;
 				else break;

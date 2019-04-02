@@ -133,7 +133,6 @@ public class rPanel extends JPanel implements Game {
 			setSquare(i, j, turn);
 			if(!Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty())
 				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
-		// random();
 	}
 
     public void playMove(int i, int j) {
@@ -150,8 +149,8 @@ public class rPanel extends JPanel implements Game {
 		if(Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty()&&Rules.getAllPossibleMoves(board, turn).isEmpty())
 			test.setText("Game over");
 		repaint();
-		random();
-		repaint();
+		// random();
+		// repaint();
 	}
 
     public void resetBoard() {
@@ -183,27 +182,32 @@ public class rPanel extends JPanel implements Game {
 			long t = System.currentTimeMillis();
 			long end = t+10000;
 			while(System.currentTimeMillis() < end){
-				if(!Rules.getAllPossibleMoves(board, turn).isEmpty()){
+				randomAI.generatePossibleMoves(board, turn);
+				if(!randomAI.possibleMoves.isEmpty()){
 					if(turn == 1)
 						try{
-							playMovez(randomAI.random(board, turn).x, randomAI.random(board, turn).y);
+							Point p = randomAI.random(board, turn);
+							playMovez(p.x, p.y);
 						} catch(NullPointerException n){
 							System.out.println("null");
 						}
 					else if(turn == 2)
 						try{
-							playMovez(randomAI.random(board, turn).x, randomAI.random(board, turn).y);
+							Point p = randomAI.random(board, turn);
+							playMovez(p.x, p.y);
 						} catch(NullPointerException n){
 							System.out.println("null");
 						}
 				} else {
 					aantal++;
-					System.out.println(aantal);
+					if(aantal%1000==0)
+						System.out.println(aantal);
 					if(Rules.score(board, Rules.BLACK)>Rules.score(board, Rules.WHITE))
 						zwart++;
 					else
 						wit++;
-					System.out.println("Zwart: " + zwart + "Wit: " + wit);
+					if(aantal%1000==0)
+						System.out.println("Zwart: " + zwart + "Wit: " + wit);
 					turn = 1;
 					board = new byte[8][8];
 					for (int i = 0; i < 8; i++) {
@@ -217,6 +221,8 @@ public class rPanel extends JPanel implements Game {
 					setSquare(4,4,Rules.WHITE);
 				}
 			}
+			System.out.println(aantal);
+			System.out.println("Zwart: " + zwart + "Wit: " + wit);
 		}).start();
 	}
 }
