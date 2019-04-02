@@ -10,8 +10,8 @@ public class rPanel extends JPanel implements Game {
 	static final long serialVersionUID = 1L;
 
 	//TODO: maak een bitboard
-    int[][] board;
-    int turn = 1; // zwart eerst
+    byte[][] board;
+    byte turn = 1; // zwart eerst
 	boolean running = false;
 	boolean interrupted = false;
     Piece[][] cells;
@@ -22,19 +22,19 @@ public class rPanel extends JPanel implements Game {
 	JButton interruptBtn;
 
     @Override
-    public int getSquare(int i,int j){
+    public int getSquare(int i, int j) {
         return board[i][j];
     }
 
 	@Override
-	public void highlightPossible(int i, int j){
+	public void highlightPossible(int i, int j) {
 			board[i][j] = -3;
 			repaint();
 	}
 
 	@Override
-	public void highlight(int i, int j){
-		if(board[i][j] <= 0){
+	public void highlight(int i, int j) {
+		if(board[i][j] <= 0) {
 			highlightPossibleMoves(board, turn);
 			if(turn==1)
 				board[i][j] = -1;
@@ -45,8 +45,8 @@ public class rPanel extends JPanel implements Game {
 	}
 
 	@Override
-	public void highlightRemove(int i, int j){
-		if(board[i][j] < 0){
+	public void highlightRemove(int i, int j) {
+		if(board[i][j] < 0) {
 			board[i][j] = 0;
 			highlightPossibleMoves(board, turn);
 			repaint();
@@ -54,11 +54,11 @@ public class rPanel extends JPanel implements Game {
 	}
 
     @Override
-    public void setSquare(int i,int j,int value){
+    public void setSquare(int i,int j,byte value) {
         board[i][j] = value;
     }
 
-    public rPanel(){
+    public rPanel() {
         setLayout(new BorderLayout());
 
         JPanel reversiBoard = new JPanel();
@@ -67,7 +67,6 @@ public class rPanel extends JPanel implements Game {
         reversiBoard.setBackground(new Color(0, 102, 0));
 
         resetBoard();
-		// AINegaScoutab.NegaScout(board, 2, -1000000, 1000000, 1);
 
         cells = new Piece[8][8];
         for (int i = 0; i < 8; i++) {
@@ -86,7 +85,7 @@ public class rPanel extends JPanel implements Game {
 		test.setForeground(Color.WHITE);
         sidebar.add(test);
 
-        score = new JLabel("<html>"+"Zwart: "+String.valueOf(Rules.score(board, 1))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, 2))+"</html>");
+        score = new JLabel("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
 		score.setForeground(Color.WHITE);
         sidebar.add(score);
 
@@ -108,122 +107,116 @@ public class rPanel extends JPanel implements Game {
 
     }
 
-	public void updateSidebarLabel2(String s){
+	public void updateSidebarLabel2(String s) {
 		score.setText(s);
 	}
 
-	public void updateSidebarLabel1(String s){
+	public void updateSidebarLabel1(String s) {
 		test.setText(s);
 	}
 
-	public void highlightPossibleMoves(int[][] board, int turn) {
+	public void highlightPossibleMoves(byte[][] board, byte turn) {
 		ArrayList<Point> res = Rules.getAllPossibleMoves(board, turn);
 		for(Point r : res)
 			highlightPossible(r.x, r.y);
 	}
 
 	public void removeHighlightPossibleMoves() {
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
+		for (int i = 0; i < 8; i++)
+			for (int j = 0; j < 8; j++)
 				if(board[i][j] == -3)
 					board[i][j] = 0;
-			}
-		}
 	}
 
-    public void handleClick(int i,int j){
-		interrupted = false;
-		if(!running){
-			new Thread(() -> {
-				running = true;
-				long t = System.currentTimeMillis();
-				long end = t+10000;
-				while(!interrupted && System.currentTimeMillis() < end) {
-					Rules.possibleMove(board, turn, i, j);
-				}
-				System.out.println(Rules.possibleMove(board, turn, i, j));
-				System.out.println(Rules.possibleMovev2(board, turn, i, j));
-				if (Rules.possibleMove(board, turn, i, j)) {
-					// for (int aant = 0; aant < 10000000; aant++) {
-					Rules.flipv2(board, turn, i, j);
-					// }
-					setSquare(i, j, turn);
-					if(!Rules.getAllPossibleMoves(board, turn==1?2:1).isEmpty())
-						turn = turn==1?2:1;
-					removeHighlightPossibleMoves();
-					highlightPossibleMoves(board, turn);
-					updateSidebarLabel1(String.valueOf(turn));
-					updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, 1))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, 2))+"</html>");
-				}
-				if(Rules.getAllPossibleMoves(board, turn==1?2:1).isEmpty()&&Rules.getAllPossibleMoves(board, turn).isEmpty())
-					test.setText("Game over");
-				repaint();
-				running = false;
-			}).start();}
-	}
-
-    public void handleClickv1(int i,int j){
-		// for (int aant = 0; aant < 100000000; aant++) {
-			Rules.possibleMove(board, turn, i, j);
-		// }
-		System.out.println(Rules.possibleMove(board, turn, i, j));
-		System.out.println(Rules.possibleMovev2(board, turn, i, j));
-		if (Rules.possibleMove(board, turn, i, j)) {
-			// for (int aant = 0; aant < 10000000; aant++) {
+    public void playMovez(int i, int j) {
 			Rules.flipv2(board, turn, i, j);
-			// }
 			setSquare(i, j, turn);
-			turn = turn==1?2:1;
-			removeHighlightPossibleMoves();
-			highlightPossibleMoves(board, turn);
-			updateSidebarLabel1(String.valueOf(turn));
-			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, 1))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, 2))+"</html>");
-		}
-		if(Rules.getAllPossibleMoves(board, turn).isEmpty()){
-			turn = turn==1?2:1;
-			removeHighlightPossibleMoves();
-			highlightPossibleMoves(board, turn);
-			updateSidebarLabel1(String.valueOf(turn));
-			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, 1))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, 2))+"</html>");
-		}
-		if(Rules.getAllPossibleMoves(board, turn==1?2:1).isEmpty()&&Rules.getAllPossibleMoves(board, turn).isEmpty())
-				test.setText("Game over");
-		repaint();
-    }
+			if(!Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty())
+				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
+		// random();
+	}
 
-    public void resetBoard(){
-        board = new int[8][8];
+    public void playMove(int i, int j) {
+		if (Rules.possibleMove(board, turn, i, j)) {
+			Rules.flipv2(board, turn, i, j);
+			setSquare(i, j, turn);
+			if(!Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty())
+				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
+			removeHighlightPossibleMoves();
+			highlightPossibleMoves(board, turn);
+			updateSidebarLabel1(String.valueOf(turn));
+			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
+		}
+		if(Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty()&&Rules.getAllPossibleMoves(board, turn).isEmpty())
+			test.setText("Game over");
+		repaint();
+		random();
+		repaint();
+	}
+
+    public void resetBoard() {
+        board = new byte[8][8];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 board[i][j]=0;
             }
         }
-        setSquare(3,3,2);
-        setSquare(3,4,1);
-        setSquare(4,3,1);
-        setSquare(4,4,2);
+        setSquare(3,3,Rules.WHITE);
+        setSquare(3,4,Rules.BLACK);
+        setSquare(4,3,Rules.BLACK);
+        setSquare(4,4,Rules.WHITE);
 		highlightPossibleMoves(board, turn);
     }
 
 	public void resetAll() {
+		running = false;
 		turn = 1;
 		resetBoard();
 		updateSidebarLabel1(String.valueOf(turn));
-		updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, 1))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, 2))+"</html>");
+		updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
 		repaint();
 	}
 
+	int aantal = 0, zwart = 0, wit = 0;
 	public void random() {
-		for (int i = 0; i < 10; i++) {
-		// while(Rules.getAllPossibleMoves(board, turn).size() > 0){
-			if(Rules.getAllPossibleMoves(board, turn).size() > 0){
-				int rnd = ThreadLocalRandom.current().nextInt(0, Rules.getAllPossibleMoves(board, turn).size());
-				handleClick(
-						Rules.getAllPossibleMoves(board, turn)
-						.get(rnd).x,
-						Rules.getAllPossibleMoves(board, turn)
-						.get(rnd).y);
+		new Thread(() -> {
+			long t = System.currentTimeMillis();
+			long end = t+10000;
+			while(System.currentTimeMillis() < end){
+				if(!Rules.getAllPossibleMoves(board, turn).isEmpty()){
+					if(turn == 1)
+						try{
+							playMovez(randomAI.random(board, turn).x, randomAI.random(board, turn).y);
+						} catch(NullPointerException n){
+							System.out.println("null");
+						}
+					else if(turn == 2)
+						try{
+							playMovez(randomAI.random(board, turn).x, randomAI.random(board, turn).y);
+						} catch(NullPointerException n){
+							System.out.println("null");
+						}
+				} else {
+					aantal++;
+					System.out.println(aantal);
+					if(Rules.score(board, Rules.BLACK)>Rules.score(board, Rules.WHITE))
+						zwart++;
+					else
+						wit++;
+					System.out.println("Zwart: " + zwart + "Wit: " + wit);
+					turn = 1;
+					board = new byte[8][8];
+					for (int i = 0; i < 8; i++) {
+						for (int j = 0; j < 8; j++) {
+							board[i][j]=0;
+						}
+					}
+					setSquare(3,3,Rules.WHITE);
+					setSquare(3,4,Rules.BLACK);
+					setSquare(4,3,Rules.BLACK);
+					setSquare(4,4,Rules.WHITE);
+				}
 			}
-		}
+		}).start();
 	}
 }

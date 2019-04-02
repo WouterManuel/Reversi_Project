@@ -5,35 +5,32 @@ import java.util.ArrayList;
 
 public class Rules {
 
-    public static ArrayList<Point> getAllPossibleMoves(int[][] board, int player){
+	public static final byte BLACK = 1, WHITE = 2;
+    public static ArrayList<Point> getAllPossibleMoves(byte[][] board, byte player){
         ArrayList<Point> result = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if(possibleMove(board,player,i,j)){
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++)
+                if(possibleMove(board,player,i,j))
                     result.add(new Point(i,j));
-                }
-            }
-        }
         return result;
     }
 
-	public static int score(int[][] board, int color) {
+	public static int score(byte[][] board, byte color) {
 		int ret = 0;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++)
 				if(board[i][j]==color)
 					ret++;
-			}
-		}
 		return ret;
 	}
-	public static void printPossibleMoves(int[][] board, int turn) {
+
+	public static void printPossibleMoves(byte[][] board, byte turn) {
 		ArrayList<Point> res = getAllPossibleMoves(board, turn);
 		for(Point r : res)
 			System.out.println(r);
 	}
 
-	public static void flipv2(int[][] board, int player, int i, int j) {
+	public static void flipv2(byte[][] board, byte player, int i, int j) {
         int moveI, moveJ, cells;
         int opponent = ((player == 1) ? 2 : 1);
 
@@ -262,7 +259,7 @@ public class Rules {
 		return false;
 	}
 
-    public static boolean possibleMove(int[][] board, int player, int i, int j){
+    public static boolean possibleMove(byte[][] board, byte player, int i, int j){
 
         if(board[i][j] > 0) return false;
 

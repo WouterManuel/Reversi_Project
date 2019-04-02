@@ -63,7 +63,7 @@ public class Piece extends JLabel implements MouseListener{
     public void mouseClicked(MouseEvent e) {}
 
     @Override
-    public void mousePressed(MouseEvent e) { game.handleClick(i,j); }
+    public void mousePressed(MouseEvent e) { game.playMove(i,j); }
 
     @Override
     public void mouseReleased(MouseEvent e) {}
