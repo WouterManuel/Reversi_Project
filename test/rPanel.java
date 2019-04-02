@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.concurrent.ThreadLocalRandom;
 
+
 public class rPanel extends JPanel implements Game {
 	static final long serialVersionUID = 1L;
 
@@ -176,7 +177,7 @@ public class rPanel extends JPanel implements Game {
 		repaint();
 	}
 
-	int aantal = 0, zwart = 0, wit = 0;
+	int aantal = 0, zwart = 0, wit = 0, gelijk = 0;
 	public void random() {
 		new Thread(() -> {
 			long t = System.currentTimeMillis();
@@ -204,10 +205,12 @@ public class rPanel extends JPanel implements Game {
 						System.out.println(aantal);
 					if(Rules.score(board, Rules.BLACK)>Rules.score(board, Rules.WHITE))
 						zwart++;
-					else
+					else if(Rules.score(board, Rules.BLACK)<Rules.score(board, Rules.WHITE))
 						wit++;
+					else
+						gelijk++;
 					if(aantal%1000==0)
-						System.out.println("Zwart: " + zwart + "Wit: " + wit);
+						System.out.println("Zwart: " + zwart + "Wit: " + wit + "Gelijk: " + gelijk);
 					turn = 1;
 					board = new byte[8][8];
 					for (int i = 0; i < 8; i++) {
@@ -222,7 +225,7 @@ public class rPanel extends JPanel implements Game {
 				}
 			}
 			System.out.println(aantal);
-			System.out.println("Zwart: " + zwart + "Wit: " + wit);
+			System.out.println("Zwart: " + zwart + "Wit: " + wit + "Gelijk: " + gelijk);
 		}).start();
 	}
 }
