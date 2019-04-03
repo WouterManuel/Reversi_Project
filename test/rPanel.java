@@ -1,7 +1,8 @@
+package test;
+
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class rPanel extends JPanel implements Game {
@@ -209,7 +210,7 @@ public class rPanel extends JPanel implements Game {
 			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
 		}
 		if(Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty()&&Rules.getAllPossibleMoves(board, turn).isEmpty())
-			test.setText("Game over");
+			test.setText("test.Game over");
 		repaint();
 		// random();
 		// repaint();
