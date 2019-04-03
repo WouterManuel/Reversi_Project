@@ -1,24 +1,27 @@
 package server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 
-public class SocketHandler {
-    BufferedReader fromServer;
+import static server.ServerParser.parseServerOutput;
 
-    public ServerListener() {
-        fromServer = connection.fromServer;
+public class ServerListener implements Runnable{
+    BufferedReader input;
+    ArrayList<String> parsedMessageList;
+
+    public ServerListener(InputStreamReader input) {
+        this.input = new BufferedReader(input);
+        this.parsedMessageList = new ArrayList<>();
     }
 
     public void run() {
-        String line = null;
         try {
-            while ((line = fromServer.readLine()) != null) {
-                gameParser.parseOutput(line);
+            while (!input.readLine().isEmpty()) {
                 try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    parsedMessageList = parseServerOutput(input.readLine());
+                    Thread.sleep(50);
+                } catch (NullPointerException e) {
+                    System.out.println("\033[34;1m[ServerListener]\033[0m : \033[31;1m[ERROR]\033[0m No messages received.");
                 }
             }
         } catch (IOException ex){
@@ -26,9 +29,21 @@ public class SocketHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-    public void updateController(GameController controller){
-        gameParser.setController(controller);
+
+    public ArrayList getParsedMessage() {
+        return parsedMessageList;
+    }
+
+    //TODO
+    public void notifyObservers(){
+//        for(Object observer : observers) {
+//            observer.update();
+//        }
+    }
+
+    @Override
+    public String toString() {
+        return "ServerListener";
     }
 }

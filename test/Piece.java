@@ -1,11 +1,7 @@
-package test;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.font.FontRenderContext;
-import java.awt.font.LineMetrics;
 
 public class Piece extends JLabel implements MouseListener{
 	static final long serialVersionUID = 1L;
