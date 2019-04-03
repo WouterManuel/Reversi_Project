@@ -30,6 +30,90 @@ public class Rules {
 			System.out.println(r);
 	}
 
+	public static int flipScore(byte[][] board, byte player, int i, int j) {
+        int moveI, moveJ, cells;
+        int opponent = ((player == 1) ? 2 : 1);
+		int ret = 0;
+        for (int k = 0; k < 8; k++)
+            for (int l = 0; l < 8; l++)
+				if(board[k][l]==player)
+					ret++;
+
+		//up
+        moveI = i - 1;
+        moveJ = j;
+		cells = 0;
+        while(moveI>0 && board[moveI][moveJ] == opponent){moveI--; cells++;}
+		if(moveI>=0 && board[moveI][moveJ] == player){
+			ret += cells;
+			//TODO:plus 1
+		}
+
+        //down
+        moveI = i + 1;
+        moveJ = j;
+		cells = 0;
+        while(moveI<7 && board[moveI][moveJ] == opponent){moveI++; cells++;}
+		if(moveI<=7 && board[moveI][moveJ] == player){
+			ret += cells;
+		}
+
+        //left
+        moveI = i;
+        moveJ = j - 1;
+		cells = 0;
+        while(moveJ>0 && board[moveI][moveJ] == opponent){moveJ--; cells++;}
+		if(moveJ>=0 && board[moveI][moveJ] == player){
+			ret += cells;
+		}
+
+        //right
+        moveI = i;
+        moveJ = j + 1;
+		cells = 0;
+        while(moveJ<7 && board[moveI][moveJ] == opponent){moveJ++; cells++;}
+		if(moveJ<=7 && board[moveI][moveJ] == player){
+			ret += cells;
+		}
+
+		//left up
+        moveI = i - 1;
+        moveJ = j - 1;
+		cells = 0;
+        while(moveI>0 && moveJ>0 && board[moveI][moveJ] == opponent){moveI--; moveJ--; cells++;}
+		if(moveI>=0 && moveJ>=0 && board[moveI][moveJ] == player){
+			ret += cells;
+		}
+
+        //right up
+        moveI = i - 1;
+        moveJ = j + 1;
+		cells = 0;
+        while(moveI>0 && moveJ<7 && board[moveI][moveJ] == opponent){moveI--; moveJ++; cells++;}
+		if(moveI>=0 && moveJ<=7 && board[moveI][moveJ] == player){
+			ret += cells;
+		}
+
+        //left down
+        moveI = i + 1;
+        moveJ = j - 1;
+		cells = 0;
+        while(moveI<7 && moveJ>0 && board[moveI][moveJ] == opponent){moveI++; moveJ--; cells++;}
+		if(moveI<=7 && moveJ>=0 && board[moveI][moveJ] == player){
+			ret += cells;
+		}
+
+        //right down
+        moveI = i + 1;
+        moveJ = j + 1;
+		cells = 0;
+        while(moveI<7 && moveJ<7 && board[moveI][moveJ] == opponent){moveI++; moveJ++; cells++;}
+		if(moveI<=7 && moveJ<=7 && board[moveI][moveJ] == player){
+			ret += cells;
+		}
+		return ret;
+	}
+
 	public static void flipv2(byte[][] board, byte player, int i, int j) {
         int moveI, moveJ, cells;
         int opponent = ((player == 1) ? 2 : 1);
