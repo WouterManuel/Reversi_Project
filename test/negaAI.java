@@ -5,9 +5,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class negaAI {
 
-	public static Point negamax(int[][] board, int player, int depth) {
+	public static int negamax(int[][] board, int player, int depth) {
 
-		return null;
+		return 1;
 	}
 
 	public static Point random(byte[][] board, byte turn) {

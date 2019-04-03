@@ -99,7 +99,7 @@ public class rPanel extends JPanel implements Game {
 		sidebar.add(interruptBtn);
 
 		randBtn = new JButton("Random 10");
-		randBtn.addActionListener(e -> random());
+		randBtn.addActionListener(e -> greedy());
 		sidebar.add(randBtn);
 
         add(sidebar,BorderLayout.EAST);
@@ -178,6 +178,57 @@ public class rPanel extends JPanel implements Game {
 	}
 
 	int aantal = 0, zwart = 0, wit = 0, gelijk = 0;
+	public void greedy() {
+		new Thread(() -> {
+			long t = System.currentTimeMillis();
+			long end = t+10000;
+			while(System.currentTimeMillis() < end){
+				greedyAI.generatePossibleMoves(board, turn);
+				randomAI.generatePossibleMoves(board, turn);
+				if(!greedyAI.possibleMoves.isEmpty()){
+					if(turn == 1)
+						try{
+							Point p = greedyAI.greedy(board, turn);
+							playMovez(p.x, p.y);
+						} catch(NullPointerException n){
+							System.out.println("null");
+						}
+					else if(turn == 2)
+						try{
+							Point p = randomAI.random(board, turn);
+							playMovez(p.x, p.y);
+						} catch(NullPointerException n){
+							System.out.println("null");
+						}
+				} else {
+					aantal++;
+					if(aantal%1000==0)
+						System.out.println(aantal);
+					if(Rules.score(board, Rules.BLACK)>Rules.score(board, Rules.WHITE))
+						zwart++;
+					else if(Rules.score(board, Rules.BLACK)<Rules.score(board, Rules.WHITE))
+						wit++;
+					else
+						gelijk++;
+					if(aantal%1000==0)
+						System.out.println("Zwart: " + zwart + "Wit: " + wit + "Gelijk: " + gelijk);
+					turn = 1;
+					board = new byte[8][8];
+					for (int i = 0; i < 8; i++) {
+						for (int j = 0; j < 8; j++) {
+							board[i][j]=0;
+						}
+					}
+					setSquare(3,3,Rules.WHITE);
+					setSquare(3,4,Rules.BLACK);
+					setSquare(4,3,Rules.BLACK);
+					setSquare(4,4,Rules.WHITE);
+				}
+			}
+			System.out.println(aantal);
+			System.out.println("Zwart: " + zwart + "Wit: " + wit + "Gelijk: " + gelijk);
+		}).start();
+	}
 	public void random() {
 		new Thread(() -> {
 			long t = System.currentTimeMillis();
