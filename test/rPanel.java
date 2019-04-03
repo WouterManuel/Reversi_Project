@@ -249,7 +249,7 @@ public class rPanel extends JPanel implements Game {
 		}
 	}
 	public void seeAcceptedInvite() {
-		if (playerList.getSelectedValue() != null) {
+		if (inviteList.getSelectedValue() != null) {
 			String data = "";
 			data = "" + inviteList.getSelectedValue();
 			acceptedInvite.setText(data);
