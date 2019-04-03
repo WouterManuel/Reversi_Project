@@ -21,6 +21,12 @@ public class rPanel extends JPanel implements Game {
 	JButton resetBtn;
 	JButton randBtn;
 	JButton interruptBtn;
+	JLabel listText;
+	JList playerList;
+	JList inviteList;
+	JButton listBtn;
+	JLabel acceptedPlayer;
+	JLabel acceptedInvite;
 
     @Override
     public int getSquare(int i, int j) {
@@ -102,10 +108,68 @@ public class rPanel extends JPanel implements Game {
 		randBtn.addActionListener(e -> random());
 		sidebar.add(randBtn);
 
-        add(sidebar,BorderLayout.EAST);
+		/******************************************** PlayerList *********************************************/
+
+		listText = new JLabel("<html><br>"+"Playerlist :"+"</html>");
+		listText.setForeground(Color.WHITE);
+		sidebar.add(listText);
+
+		String players[]= { "player1", "john doe", "foo", "bar"};
+		if (players.length>0){
+			playerList = new JList(players);
+			playerList.setFixedCellWidth(100);
+			sidebar.add(playerList);
+
+			/* Challenge btn */
+			listBtn = new JButton("Challenge");
+			sidebar.add(listBtn);
+
+			/* See challenged player */
+			acceptedPlayer = new JLabel("");
+			acceptedPlayer.setForeground(Color.WHITE);
+			sidebar.add(acceptedPlayer);
+
+			listBtn.addActionListener(e -> seeAcceptedPlayer());
+		}
+		else {
+			acceptedPlayer = new JLabel("No players found");
+			acceptedPlayer.setForeground(Color.WHITE);
+			sidebar.add(acceptedPlayer);
+		}
+
+		/******************************************** InviteList *********************************************/
+
+		listText = new JLabel("<html><br>"+"Invitelist :"+"</html>");
+		listText.setForeground(Color.WHITE);
+		sidebar.add(listText);
+
+		String invites[]= { "player1", "john doe", "foo", "bar"};
+		if (invites.length>0){
+			inviteList = new JList(invites);
+			inviteList.setFixedCellWidth(100);
+			sidebar.add(inviteList);
+
+			/* Accept btn */
+			listBtn = new JButton("Accept");
+			sidebar.add(listBtn);
+
+			/* See accepted challenge */
+			acceptedInvite = new JLabel("");
+			acceptedInvite.setForeground(Color.WHITE);
+			sidebar.add(acceptedInvite);
+
+			listBtn.addActionListener(e -> seeAcceptedInvite());
+
+		}
+		else {
+			acceptedInvite = new JLabel("No players found");
+			acceptedInvite.setForeground(Color.WHITE);
+			sidebar.add(acceptedInvite);
+		}
+
+		add(sidebar,BorderLayout.EAST);
         add(reversiBoard);
 		setVisible(true);
-
     }
 
 	public void updateSidebarLabel2(String s) {
@@ -175,6 +239,21 @@ public class rPanel extends JPanel implements Game {
 		updateSidebarLabel1(String.valueOf(turn));
 		updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
 		repaint();
+	}
+
+	public void seeAcceptedPlayer() {
+		if (playerList.getSelectedValue() != null) {
+			String data = "";
+			data = "" + playerList.getSelectedValue();
+			acceptedPlayer.setText(data);
+		}
+	}
+	public void seeAcceptedInvite() {
+		if (playerList.getSelectedValue() != null) {
+			String data = "";
+			data = "" + inviteList.getSelectedValue();
+			acceptedInvite.setText(data);
+		}
 	}
 
 	int aantal = 0, zwart = 0, wit = 0, gelijk = 0;
