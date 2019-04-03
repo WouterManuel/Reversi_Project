@@ -213,6 +213,20 @@ public class rPanel extends JPanel implements Game {
 		if(Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty()&&Rules.getAllPossibleMoves(board, turn).isEmpty())
 			test.setText("test.Game over");
 		repaint();
+		if(turn==Rules.WHITE)
+		do{
+			Point p = negaAI.findMove(board, turn);
+			Rules.flipv2(board, turn, p.x, p.y);
+			setSquare(p.x, p.y, turn);
+			if(!Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty())
+				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
+			removeHighlightPossibleMoves();
+			highlightPossibleMoves(board, turn);
+			updateSidebarLabel1(String.valueOf(turn));
+			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
+		} while(Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty());
+		// nega();
+		// repaint();
 		// random();
 		// repaint();
 	}
@@ -255,31 +269,62 @@ public class rPanel extends JPanel implements Game {
 		}
 	}
 
+	public void nega() {
+		while(turn == 2){
+		ArrayList<Point> possibleMoves2 = Rules.getAllPossibleMoves(board, turn);
+		for(Point p : possibleMoves2) {
+			bestMove = p;
+			for (int kk = 0; kk < 8; kk++)
+				mBoard[kk] = board[kk].clone();
+			mBoard[p.x][p.y] = turn;
+			Rules.flipv2(mBoard, turn, p.x, p.y);
+			// value = negaAI.negamax(mBoard, turn, 7, 1);
+			if(value > best){
+				best = value;
+				bestMove = p;
+			}
+		}
+			board[bestMove.x][bestMove.y] = turn;
+			Rules.flipv2(board, turn, bestMove.x, bestMove.y);
+			if(!Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty())
+				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
+			removeHighlightPossibleMoves();
+			highlightPossibleMoves(board, turn);
+			updateSidebarLabel1(String.valueOf(turn));
+			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
+			// playMove(bestMove.x, bestMove.y);
+	}
+	}
+
 	int aantal = 0, zwart = 0, wit = 0, gelijk = 0;
+	int value = 0, best = 0;
+	Point bestMove = new Point();
+	byte[][] mBoard = new byte[8][8];
 	public void greedy() {
 		new Thread(() -> {
 			long t = System.currentTimeMillis();
-			long end = t+10000;
+			long end = t+300000;
 			while(System.currentTimeMillis() < end){
 				possibleMoves = Rules.getAllPossibleMoves(board, turn);
 				if(!possibleMoves.isEmpty()){
-					if(turn == 1)
+					if(turn == Rules.WHITE)
 						try{
-							Point p = greedyAI.greedy(board, turn);
+							Point p = negaAI.findMove(board, turn);
 							playMovez(p.x, p.y);
 						} catch(NullPointerException n){
-							System.out.println("null");
+							// System.out.println("null");
 						}
-					else if(turn == 2)
+					else if(turn == Rules.BLACK)
 						try{
 							Point p = randomAI.random(board, turn);
+							// Point p = greedyAI.greedy(board, turn);
 							playMovez(p.x, p.y);
 						} catch(NullPointerException n){
 							System.out.println("null");
 						}
 				} else {
 					aantal++;
-					if(aantal%1000==0)
+					if(aantal%10==0)
 						System.out.println(aantal);
 					if(Rules.score(board, Rules.BLACK)>Rules.score(board, Rules.WHITE))
 						zwart++;
@@ -287,7 +332,7 @@ public class rPanel extends JPanel implements Game {
 						wit++;
 					else
 						gelijk++;
-					if(aantal%1000==0)
+					if(aantal%10==0)
 						System.out.println("Zwart: " + zwart + "Wit: " + wit + "Gelijk: " + gelijk);
 					turn = 1;
 					board = new byte[8][8];
@@ -311,8 +356,8 @@ public class rPanel extends JPanel implements Game {
 			long t = System.currentTimeMillis();
 			long end = t+10000;
 			while(System.currentTimeMillis() < end){
-				randomAI.generatePossibleMoves(board, turn);
-				if(!randomAI.possibleMoves.isEmpty()){
+				possibleMoves = Rules.getAllPossibleMoves(board, turn);
+				if(!possibleMoves.isEmpty()){
 					if(turn == 1)
 						try{
 							Point p = randomAI.random(board, turn);

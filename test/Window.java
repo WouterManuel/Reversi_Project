@@ -9,6 +9,7 @@ public class Window extends JFrame {
 		rPanel rp = new rPanel();
 		add(rp);
 		setTitle("Reversi");
+		setLocationByPlatform(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		pack();
 		setVisible(true);

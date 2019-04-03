@@ -15,6 +15,56 @@ public class Rules {
         return result;
     }
 
+	public static int scoreH(byte[][] board, byte color) {
+		int ret = 0;
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++)
+				//hoeken
+				if(i == 0 && j == 0 && board[i][j]==color)
+					ret+=15;
+				else if(i == 0 && j == 7 && board[i][j]==color)
+					ret+=15;
+				else if(i == 7 && j == 0 && board[i][j]==color)
+					ret+=15;
+				else if(i == 7 && j == 7 && board[i][j]==color)
+					ret+=15;
+
+				// //linksboven
+				// else if(i == 0 && j == 1 && board[i][j]==color)
+				// 	ret-=100;
+				// else if(i == 1 && j == 0 && board[i][j]==color)
+				// 	ret-=100;
+				// else if(i == 1 && j == 1 && board[i][j]==color)
+				// 	ret-=100;
+                //
+				// //rechtsboven
+				// else if(i == 0 && j == 6 && board[i][j]==color)
+				// 	ret-=100;
+				// else if(i == 7 && j == 1 && board[i][j]==color)
+				// 	ret-=100;
+				// else if(i == 6 && j == 1 && board[i][j]==color)
+				// 	ret-=100;
+                //
+				// //linksonder
+				// else if(i == 0 && j == 6 && board[i][j]==color)
+				// 	ret-=100;
+				// else if(i == 1 && j == 6 && board[i][j]==color)
+				// 	ret-=100;
+				// else if(i == 1 && j == 7 && board[i][j]==color)
+				// 	ret-=100;
+                //
+				// //rechtsonder
+				// else if(i == 7 && j == 6 && board[i][j]==color)
+				// 	ret-=100;
+				// else if(i == 6 && j == 6 && board[i][j]==color)
+				// 	ret-=100;
+				// else if(i == 6 && j == 7 && board[i][j]==color)
+				// 	ret-=100;
+				else
+					ret++;
+		return ret;
+	}
+
 	public static int score(byte[][] board, byte color) {
 		int ret = 0;
         for (int i = 0; i < 8; i++)
