@@ -1,5 +1,3 @@
-package test;
-
 public interface Game{
 
     public int getSquare(int i,int j);

@@ -1,7 +1,4 @@
-package test;
-
 import javax.swing.*;
-import java.awt.*;
 
 public class Window extends JFrame {
 	static final long serialVersionUID = 1L;
@@ -15,7 +12,7 @@ public class Window extends JFrame {
 		setVisible(true);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException {
 		new Window();
 	}
 }
