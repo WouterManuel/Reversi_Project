@@ -38,6 +38,7 @@ public class Rules {
             for (int l = 0; l < 8; l++)
 				if(board[k][l]==player)
 					ret++;
+		ret+=1; // Add one for currently played piece
 
 		//up
         moveI = i - 1;
@@ -46,7 +47,6 @@ public class Rules {
         while(moveI>0 && board[moveI][moveJ] == opponent){moveI--; cells++;}
 		if(moveI>=0 && board[moveI][moveJ] == player){
 			ret += cells;
-			//TODO:plus 1
 		}
 
         //down

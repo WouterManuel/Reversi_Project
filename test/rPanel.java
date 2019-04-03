@@ -13,6 +13,7 @@ public class rPanel extends JPanel implements Game {
     byte turn = 1; // zwart eerst
 	boolean running = false;
 	boolean interrupted = false;
+	public static ArrayList<Point> possibleMoves = new ArrayList<Point>();
     Piece[][] cells;
     JLabel test;
     JLabel score;
@@ -260,9 +261,8 @@ public class rPanel extends JPanel implements Game {
 			long t = System.currentTimeMillis();
 			long end = t+10000;
 			while(System.currentTimeMillis() < end){
-				greedyAI.generatePossibleMoves(board, turn);
-				randomAI.generatePossibleMoves(board, turn);
-				if(!greedyAI.possibleMoves.isEmpty()){
+				possibleMoves = Rules.getAllPossibleMoves(board, turn);
+				if(!possibleMoves.isEmpty()){
 					if(turn == 1)
 						try{
 							Point p = greedyAI.greedy(board, turn);
