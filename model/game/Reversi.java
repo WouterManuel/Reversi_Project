@@ -3,7 +3,7 @@ package model.game;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Reversi implements Game {
+public class Reversi extends Game {
 
     byte player = 1; // zwart eerst
     public final byte BLACK = 1, WHITE = 2;
@@ -372,6 +372,10 @@ public class Reversi implements Game {
         board[move.x][move.y] = this.player;
         if(!getAllPossibleMoves(board, this.player==BLACK?WHITE:BLACK).isEmpty())
             this.player = this.player==BLACK?WHITE:BLACK;
+    }
+
+    public byte getWinner() {
+        return 0;
     }
 
 //    public void playMove(int i, int j) {

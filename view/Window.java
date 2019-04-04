@@ -1,9 +1,9 @@
-package View;
+package view;
 
-import test.rPanel;
+import model.Board;
+import model.ReversiBoard;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class Window extends JFrame {
@@ -21,17 +21,15 @@ public class Window extends JFrame {
 
 		sidebar = new SidebarPanel();
 		add(sidebar.getSidebar(), BorderLayout.EAST);
-		reversi = new ReversiPanel();
-		//add(reversi.getReversi(), BorderLayout.WEST);
+		reversi = new ReversiPanel(new ReversiBoard());
+		add(reversi.getReversi(), BorderLayout.WEST);
 		gameDetails = new GameDetails();
-		add(gameDetails.getGameDetails(), BorderLayout.WEST);
-		rPanel rp = new rPanel();
-		//add(rp);
+		add(gameDetails.getGameDetails(), BorderLayout.CENTER);
 		setTitle("Reversi");
 		setLocationByPlatform(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		pack();
 		setVisible(true);
+		pack();
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException {

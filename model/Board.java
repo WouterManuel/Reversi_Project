@@ -17,5 +17,7 @@ public interface Board {
 	public void removeHighlightPossibleMoves();
 
 	public void resetBoard(byte[][] board);
+
+	public byte[][] getBoard();
 }
 

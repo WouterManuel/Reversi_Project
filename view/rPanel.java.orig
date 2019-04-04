@@ -15,8 +15,7 @@ public class rPanel extends JPanel implements Board {
 	static final long serialVersionUID = 1L;
 
 	//TODO: maak een bitboard
-    byte[][] board;
-    byte turn = 1; // zwart eerst
+
 	boolean running = false;
 	boolean interrupted = false;
     Piece[][] cells;

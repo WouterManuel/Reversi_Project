@@ -1,30 +1,30 @@
-package View;
+package view;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ReversiPanel {
+public class SidebarPanel {
     JLabel playerTurn;
     JLabel scoreLabel;
     JButton resetBtn;
     JButton randBtn;
     JButton interruptBtn;
     JButton playGame;
-    JPanel reversi;
+    JPanel sidebar;
 
-    public ReversiPanel() {
-        reversi = new JPanel();
-        reversi.setLayout(new BoxLayout(reversi,BoxLayout.Y_AXIS));
-        reversi.setPreferredSize(new Dimension(190,200));
-        reversi.setBackground(Color.DARK_GRAY);
+    public SidebarPanel() {
+        sidebar = new JPanel();
+        sidebar.setLayout(new BoxLayout(sidebar,BoxLayout.Y_AXIS));
+        sidebar.setPreferredSize(new Dimension(250,200));
+        sidebar.setBackground(Color.DARK_GRAY);
 
         playerTurn = new JLabel(String.valueOf("player turn here"));
         playerTurn.setForeground(Color.WHITE);
-        reversi.add(playerTurn);
+        sidebar.add(playerTurn);
 
         scoreLabel = new JLabel(String.valueOf("score here here"));
         scoreLabel.setForeground(Color.WHITE);
-        reversi.add(scoreLabel);
+        sidebar.add(scoreLabel);
 
         /* score = new JLabel("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
 		score.setForeground(Color.WHITE);
@@ -32,23 +32,19 @@ public class ReversiPanel {
 
         resetBtn = new JButton("Reset");
         //resetBtn.addActionListener(e -> resetAll());
-        reversi.add(resetBtn);
+        sidebar.add(resetBtn);
 
         interruptBtn = new JButton("Interrupt");
         //interruptBtn.addActionListener(e -> interrupted = true);
-        reversi.add(interruptBtn);
+        sidebar.add(interruptBtn);
 
         randBtn = new JButton("Random 10");
         //randBtn.addActionListener(e -> greedy());
-        reversi.add(randBtn);
-
-        playGame = new JButton("PLAY");
-        //playGame.addActionListener(e -> {this.getComponent(0).remove(); this.add(showReversiBoard(), BorderLayout.WEST);});
-        reversi.add(playGame);
+        sidebar.add(randBtn);
     }
 
-    public JPanel getReversi() {
-        return reversi;
+    public JPanel getSidebar() {
+        return sidebar;
     }
 
     public void updateSidebarLabelScore(String s) {
