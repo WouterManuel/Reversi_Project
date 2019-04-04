@@ -4,7 +4,7 @@ import model.AI.AI;
 import model.AI.negaAI;
 import model.AI.randomAI;
 import model.Board;
-import controller.Rules;
+import model.Rules;
 
 import java.util.ArrayList;
 import javax.swing.*;
