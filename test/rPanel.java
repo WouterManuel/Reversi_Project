@@ -15,17 +15,18 @@ public class rPanel extends JPanel implements Game {
 	boolean interrupted = false;
 	public static ArrayList<Point> possibleMoves = new ArrayList<Point>();
     Piece[][] cells;
-    JLabel test;
     JLabel score;
-	JButton resetBtn;
-	JButton randBtn;
-	JButton interruptBtn;
 	JLabel listText;
 	JList playerList;
 	JList inviteList;
 	JButton listBtn;
 	JLabel acceptedPlayer;
 	JLabel acceptedInvite;
+	JPanel tempPanel;
+
+	JLabel playAs;
+	JLabel gameMode;
+
 
     @Override
     public int getSquare(int i, int j) {
@@ -66,96 +67,66 @@ public class rPanel extends JPanel implements Game {
 
     public rPanel() {
         setLayout(new BorderLayout());
+        tempPanel = new JPanel();
+        tempPanel.setPreferredSize(new Dimension(300,300));
+		tempPanel.setBackground(new Color(0, 102, 0));
 
-        JPanel reversiBoard = new JPanel();
-        reversiBoard.setLayout(new GridLayout(8,8));
-        reversiBoard.setPreferredSize(new Dimension(300,300));
-        reversiBoard.setBackground(new Color(0, 102, 0));
+		/* Left Sidebar */
+		JPanel loginBoard = new JPanel();
+		loginBoard.setPreferredSize(new Dimension(200,300));
+		loginBoard.setBackground(Color.DARK_GRAY);
+		loginBoard.setBorder(BorderFactory.createMatteBorder(
+				0, 0, 0, 2, Color.black));
+		loginBoard.setVisible(false);
 
-        resetBoard();
+		GridLayout experimentLayout = new GridLayout(3,2);
+		loginBoard.setLayout(experimentLayout);
 
-        cells = new Piece[8][8];
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                cells[i][j] = new Piece(this,reversiBoard,i,j);
-                reversiBoard.add(cells[i][j]);
-            }
-        }
-
-        JPanel sidebar = new JPanel();
-        sidebar.setLayout(new BoxLayout(sidebar,BoxLayout.Y_AXIS));
-        sidebar.setPreferredSize(new Dimension(150,0));
-		sidebar.setBackground(Color.DARK_GRAY);
-
-        test = new JLabel(String.valueOf(turn));
-		test.setForeground(Color.WHITE);
-        sidebar.add(test);
-
-        score = new JLabel("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
-		score.setForeground(Color.WHITE);
-        sidebar.add(score);
-
-		resetBtn = new JButton("Reset");
-		resetBtn.addActionListener(e -> resetAll());
-		sidebar.add(resetBtn);
-
-		interruptBtn = new JButton("Interrupt");
-		interruptBtn.addActionListener(e -> interrupted = true);
-		sidebar.add(interruptBtn);
-
-		randBtn = new JButton("Random 10");
-		randBtn.addActionListener(e -> greedy());
-		sidebar.add(randBtn);
+		loginBoard.add(new JLabel("<html><br><div style='margin: 10; color: white;'>"+"Play as :"+"</div></html>"));
+		loginBoard.add(new JLabel("Dropdown here"));
+		loginBoard.add(new JLabel("<html><br><div style='margin: 10; color: white;'>"+"Gamemode :"+"</div></html>"));
+		loginBoard.add(new JLabel("Dropdown here"));
 
 		/******************************************** PlayerList *********************************************/
 
-		listText = new JLabel("<html><br>"+"Playerlist :"+"</html>");
+		listText = new JLabel("<html><br><span style='font-size: 25px'>"+"Playerlist :"+"</span></html>");
 		listText.setForeground(Color.WHITE);
-		sidebar.add(listText);
 
 		String players[]= { "player1", "john doe", "foo", "bar"};
 		if (players.length>0){
 			playerList = new JList(players);
 			playerList.setFixedCellWidth(100);
-			sidebar.add(playerList);
 
 			/* Challenge btn */
 			listBtn = new JButton("Challenge");
-			sidebar.add(listBtn);
 
 			/* See challenged player */
 			acceptedPlayer = new JLabel("");
 			acceptedPlayer.setForeground(Color.WHITE);
-			sidebar.add(acceptedPlayer);
 
 			listBtn.addActionListener(e -> seeAcceptedPlayer());
 		}
 		else {
 			acceptedPlayer = new JLabel("No players found");
 			acceptedPlayer.setForeground(Color.WHITE);
-			sidebar.add(acceptedPlayer);
 		}
 
 		/******************************************** InviteList *********************************************/
 
 		listText = new JLabel("<html><br>"+"Invitelist :"+"</html>");
 		listText.setForeground(Color.WHITE);
-		sidebar.add(listText);
 
 		String invites[]= { "player1", "john doe", "foo", "bar"};
 		if (invites.length>0){
 			inviteList = new JList(invites);
 			inviteList.setFixedCellWidth(100);
-			sidebar.add(inviteList);
 
 			/* Accept btn */
 			listBtn = new JButton("Accept");
-			sidebar.add(listBtn);
 
 			/* See accepted challenge */
 			acceptedInvite = new JLabel("");
 			acceptedInvite.setForeground(Color.WHITE);
-			sidebar.add(acceptedInvite);
 
 			listBtn.addActionListener(e -> seeAcceptedInvite());
 
@@ -163,21 +134,12 @@ public class rPanel extends JPanel implements Game {
 		else {
 			acceptedInvite = new JLabel("No players found");
 			acceptedInvite.setForeground(Color.WHITE);
-			sidebar.add(acceptedInvite);
 		}
 
-		add(sidebar,BorderLayout.EAST);
-        add(reversiBoard);
+		add(tempPanel, BorderLayout.WEST);
+		add(loginBoard, BorderLayout.EAST);
 		setVisible(true);
     }
-
-	public void updateSidebarLabel2(String s) {
-		score.setText(s);
-	}
-
-	public void updateSidebarLabel1(String s) {
-		test.setText(s);
-	}
 
 	public void highlightPossibleMoves(byte[][] board, byte turn) {
 		ArrayList<Point> res = Rules.getAllPossibleMoves(board, turn);
@@ -207,11 +169,11 @@ public class rPanel extends JPanel implements Game {
 				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
 			removeHighlightPossibleMoves();
 			highlightPossibleMoves(board, turn);
-			updateSidebarLabel1(String.valueOf(turn));
-			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
+			//updateSidebarLabel1(String.valueOf(turn));
+			//updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
 		}
 		if(Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty()&&Rules.getAllPossibleMoves(board, turn).isEmpty())
-			test.setText("test.Game over");
+			//test.setText("test.Game over");
 		repaint();
 		if(turn==Rules.WHITE)
 		do{
@@ -222,8 +184,8 @@ public class rPanel extends JPanel implements Game {
 				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
 			removeHighlightPossibleMoves();
 			highlightPossibleMoves(board, turn);
-			updateSidebarLabel1(String.valueOf(turn));
-			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
+			//updateSidebarLabel1(String.valueOf(turn));
+			//updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
 		} while(Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty());
 		// nega();
 		// repaint();
@@ -249,8 +211,8 @@ public class rPanel extends JPanel implements Game {
 		running = false;
 		turn = 1;
 		resetBoard();
-		updateSidebarLabel1(String.valueOf(turn));
-		updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
+		//updateSidebarLabel1(String.valueOf(turn));
+		//updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
 		repaint();
 	}
 
@@ -267,6 +229,26 @@ public class rPanel extends JPanel implements Game {
 			data = "" + inviteList.getSelectedValue();
 			acceptedInvite.setText(data);
 		}
+	}
+
+	public JPanel showReversiBoard() {
+		JPanel reversiBoard = new JPanel();
+		reversiBoard.setLayout(new GridLayout(8,8));
+		reversiBoard.setPreferredSize(new Dimension(300,300));
+		reversiBoard.setBackground(new Color(0, 102, 0));
+		System.out.println(reversiBoard);
+
+		resetBoard();
+
+		cells = new Piece[8][8];
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				cells[i][j] = new Piece(this,reversiBoard,i,j);
+				reversiBoard.add(cells[i][j]);
+			}
+		}
+
+		return reversiBoard;
 	}
 
 	public void nega() {
@@ -290,8 +272,8 @@ public class rPanel extends JPanel implements Game {
 				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
 			removeHighlightPossibleMoves();
 			highlightPossibleMoves(board, turn);
-			updateSidebarLabel1(String.valueOf(turn));
-			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
+			//updateSidebarLabel1(String.valueOf(turn));
+			//updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
 			// playMove(bestMove.x, bestMove.y);
 	}
 	}
@@ -310,7 +292,7 @@ public class rPanel extends JPanel implements Game {
 					if(turn == Rules.WHITE)
 						try{
 							Point p = negaAI.findMove(board, turn);
-							playMovez(p.x, p.y);
+							playMove(p.x, p.y);
 						} catch(NullPointerException n){
 							// System.out.println("null");
 						}
@@ -318,7 +300,7 @@ public class rPanel extends JPanel implements Game {
 						try{
 							Point p = randomAI.random(board, turn);
 							// Point p = greedyAI.greedy(board, turn);
-							playMovez(p.x, p.y);
+							playMove(p.x, p.y);
 						} catch(NullPointerException n){
 							System.out.println("null");
 						}
