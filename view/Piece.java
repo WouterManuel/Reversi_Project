@@ -1,6 +1,6 @@
 package view;
 
-import model.Board;
+import model.game.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,13 +11,15 @@ public class Piece extends JLabel implements MouseListener{
 	static final long serialVersionUID = 1L;
 
 	int i,j;
-    Board board;
+    byte[][] board;
+    Game game;
     JPanel parent;
 
     public int highlight = 0;
 
-    public Piece(Board board, JPanel parent, int i, int j) {
-        this.board = board;
+    public Piece(Game game, JPanel parent, int i, int j) {
+        this.game = game;
+        this.board = game.getBoard();
         this.parent = parent;
         this.i = i;
         this.j = j;
@@ -33,7 +35,7 @@ public class Piece extends JLabel implements MouseListener{
         g.setColor(Color.BLACK);
         g.drawRect(5,5,getWidth(),getHeight());
 
-        int value = board.getSquare(i,j);
+        int value = game.getSquare(i,j);
         if(value == 1) {
             g.setColor(Color.BLACK);
             g.fillOval(leftMargin+2, topMargin+2, getWidth()-2*leftMargin, getHeight()-2*topMargin);
@@ -54,16 +56,16 @@ public class Piece extends JLabel implements MouseListener{
     }
 
     @Override
-	public void mouseEntered(MouseEvent e) { board.highlight(i,j); }
+	public void mouseEntered(MouseEvent e) { game.highlight(i,j); }
 
     @Override
-	public void mouseExited(MouseEvent e) { board.highlightRemove(i,j); }
+	public void mouseExited(MouseEvent e) { game.highlightRemove(i,j); }
 
     @Override
     public void mouseClicked(MouseEvent e) {}
 
     @Override
-    public void mousePressed(MouseEvent e) { board.playMove(i,j); }
+    public void mousePressed(MouseEvent e) { game.playMove(i,j); }
 
     @Override
     public void mouseReleased(MouseEvent e) {}

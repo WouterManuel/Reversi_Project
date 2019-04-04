@@ -1,6 +1,5 @@
 package model.AI;
 
-import model.Rules;
 import model.game.Game;
 
 import java.awt.*;
@@ -28,35 +27,36 @@ public class TestAI implements Runnable{
         while(System.currentTimeMillis() < time){
             AI.possibleMoves = game.getAllPossibleMoves(board, turn);
             if(!AI.possibleMoves.isEmpty()){
-                if(turn == Game.WHITE)
+                if(turn == 1)
                     try{
                         Point p = ai1.findMove(board, turn);
                         game.playMovez(board, p, turn);
                     } catch(NullPointerException n){
                         // System.out.println("null");
                     }
-                else if(turn == Game.BLACK)
+                else if(turn == 2)
                     try{
                         Point p = ai2.findMove(board, turn);
                         game.playMovez(board, p, turn);
                     } catch(NullPointerException n){
                         System.out.println("null");
                     }
-            } else {
-                int aantal = 0, zwart = 0, wit = 0, gelijk = 0;
-                aantal++;
-                if(aantal%10==0)
-                    System.out.println(aantal);
-                if(Rules.score(board, Rules.BLACK)>Rules.score(board, Rules.WHITE))
-                    zwart++;
-                else if(Rules.score(board, Rules.BLACK)<Rules.score(board, Rules.WHITE))
-                    wit++;
-                else
-                    gelijk++;
-                if(aantal%10==0)
-                    System.out.println("Zwart: " + zwart + "Wit: " + wit + "Gelijk: " + gelijk);
-                turn = 1;
-            }
+                }
+//            else {
+//                int aantal = 0, zwart = 0, wit = 0, gelijk = 0;
+//                aantal++;
+//                if(aantal%10==0)
+//                    System.out.println(aantal);
+//                if(Game.score(board, Game.BLACK)>Game.score(board, Game.WHITE))
+//                    zwart++;
+//                else if(Game.score(board, Game.BLACK)<Game.score(board, Game.WHITE))
+//                    wit++;
+//                else
+//                    gelijk++;
+//                if(aantal%10==0)
+//                    System.out.println("Zwart: " + zwart + "Wit: " + wit + "Gelijk: " + gelijk);
+//                turn = 1;
+//            }
         }
 //        System.out.println(aantal);
 //        System.out.println("Zwart: " + zwart + "Wit: " + wit + "Gelijk: " + gelijk);

@@ -1,7 +1,5 @@
 package model.AI;
 
-import model.Rules;
-
 import java.awt.*;
 import java.util.ArrayList;
 

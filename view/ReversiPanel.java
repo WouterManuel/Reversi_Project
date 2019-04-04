@@ -1,6 +1,6 @@
 package view;
 
-import model.Board;
+import model.game.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,10 +14,10 @@ public class ReversiPanel {
     JButton playGame;
     JPanel reversiBoard;
 
-    Board board;
+    byte[][] board;
 
-    public ReversiPanel(Board board) {
-        this.board = board;
+    public ReversiPanel(Game reversi) {
+        this.board = reversi.getBoard();
         reversiBoard = new JPanel();
 		reversiBoard.setLayout(new GridLayout(8,8));
 		reversiBoard.setPreferredSize(new Dimension(300,300));
@@ -27,11 +27,11 @@ public class ReversiPanel {
         Piece[][] cells = new Piece[8][8];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                cells[i][j] = new Piece(board, reversiBoard,i,j);
+                cells[i][j] = new Piece(reversi, reversiBoard,i,j);
                 reversiBoard.add(cells[i][j]);
             }
         }
-        board.resetBoard(board.getBoard());
+        reversi.resetBoard();
     }
 
     public JPanel getReversi() {

@@ -1,7 +1,5 @@
 package model.AI;
 
-import model.Rules;
-
 import java.awt.*;
 
 public class greedyAI extends AI {

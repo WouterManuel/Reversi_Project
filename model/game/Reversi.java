@@ -4,12 +4,16 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Reversi extends Game {
-
-    byte player = 1; // zwart eerst
+    byte player;
     public final byte BLACK = 1, WHITE = 2;
 
     protected final int[] DX = { -1,  0,  1, -1, 1, -1, 0, 1 };
     protected final int[] DY = { -1, -1, -1,  0, 0,  1, 1, 1 };
+
+    public Reversi() {
+        board = new byte[8][8];
+        player = 1; // zwart eerst
+    }
 
     public ArrayList<Point> getAllPossibleMoves(byte[][] board, byte player){
         ArrayList<Point> result = new ArrayList<>();
@@ -79,8 +83,8 @@ public class Reversi extends Game {
         return ret;
     }
 
-    public void printPossibleMoves(byte[][] board, byte turn) {
-        ArrayList<Point> res = getAllPossibleMoves(board, turn);
+    public void printPossibleMoves(byte[][] board, byte player) {
+        ArrayList<Point> res = getAllPossibleMoves(board, player);
         for(Point r : res)
             System.out.println(r);
     }
@@ -410,4 +414,49 @@ public class Reversi extends Game {
 //        // repaint();
 //    }
 
+    public void playMove(int i,int j) {
+        //TODO
+    }
+
+    public void highlight(int i, int j) {
+        //TODO
+    }
+
+    public void highlightRemove(int i, int j) {
+        //TODO
+    }
+
+    public void highlightPossible(int i, int j) {
+        //TODO
+    }
+
+    public void removeHighlightPossibleMoves() {
+        //TODO
+    }
+
+    public void resetBoard() {
+        int x = board.length;
+        int y = board[0].length;
+        board = new byte[x][y];
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                board[i][j]=0;
+            }
+        }
+        setSquare(3,3, WHITE);
+        setSquare(3,4,BLACK);
+        setSquare(4,3,BLACK);
+        setSquare(4,4,WHITE);
+        //highlightPossibleMoves(board, turn);
+
+        player = 1;
+        //resetBoard();
+        //updateSidebarLabel1(String.valueOf(turn));
+        //updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
+        //repaint();
+    }
+
+    public byte[][] getBoard() {
+        return board;
+    }
 }
