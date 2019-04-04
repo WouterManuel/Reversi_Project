@@ -1,4 +1,4 @@
-package server;
+package controller.server;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,10 +6,10 @@ import java.util.Arrays;
 public class ServerParser {
 
         /**
-         * Parses the output from the server and puts each message in an arrayList.
+         * Parses the output from the controller.server and puts each message in an arrayList.
          * By going through the elements in the array the appropriate action is selected.
          * -
-         * Any information about a game on the server is stored in the parseGameOutput arrayList
+         * Any information about a game on the controller.server is stored in the parseGameOutput arrayList
          * and handled by a second switch statement.
          * */
 
@@ -39,7 +39,7 @@ public class ServerParser {
         }
 
     /**
-     * Method that handles handles all server messages related to game information
+     * Method that handles handles all controller.server messages related to game information
      * @param list
      * @return
      */
@@ -52,7 +52,7 @@ public class ServerParser {
                 // Check if the PLAYERTOMOVE name = the clients name.
                 // If so, the player on the client starts the game and is notified.
 
-                //Handles the move message from the server to store the value in temp
+                //Handles the move message from the controller.server to store the value in temp
                 // and then passing it on to the model to set the last move to the receiver value
                 case "MOVE":
                     listIterator(list, temp, 3);

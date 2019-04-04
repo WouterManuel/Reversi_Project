@@ -1,9 +1,9 @@
-package server;
+package controller.server;
 
 import java.io.*;
 import java.util.ArrayList;
 
-import static server.ServerParser.parseServerOutput;
+import static controller.server.ServerParser.parseServerOutput;
 
 public class ServerListener implements Runnable{
     BufferedReader input;

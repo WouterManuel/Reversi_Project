@@ -1,11 +1,17 @@
-package test;
+package view;
+
+import model.AI.AI;
+import model.AI.negaAI;
+import model.AI.randomAI;
+import model.Board;
+import controller.Rules;
 
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 
 
-public class rPanel extends JPanel implements Game {
+public class rPanel extends JPanel implements Board {
 	static final long serialVersionUID = 1L;
 
 	//TODO: maak een bitboard
@@ -13,7 +19,6 @@ public class rPanel extends JPanel implements Game {
     byte turn = 1; // zwart eerst
 	boolean running = false;
 	boolean interrupted = false;
-	public static ArrayList<Point> possibleMoves = new ArrayList<Point>();
     Piece[][] cells;
     JLabel score;
 	JLabel listText;
@@ -193,10 +198,12 @@ public class rPanel extends JPanel implements Game {
 		// repaint();
 	}
 
-    public void resetBoard() {
-        board = new byte[8][8];
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
+    public void resetBoard(byte[][] board) {
+    	int x = board.length;
+    	int y = board[0].length;
+        board = new byte[x][y];
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
                 board[i][j]=0;
             }
         }
@@ -205,16 +212,13 @@ public class rPanel extends JPanel implements Game {
         setSquare(4,3,Rules.BLACK);
         setSquare(4,4,Rules.WHITE);
 		highlightPossibleMoves(board, turn);
-    }
 
-	public void resetAll() {
-		running = false;
 		turn = 1;
 		resetBoard();
 		//updateSidebarLabel1(String.valueOf(turn));
 		//updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
 		repaint();
-	}
+    }
 
 	public void seeAcceptedPlayer() {
 		if (playerList.getSelectedValue() != null) {
@@ -287,8 +291,8 @@ public class rPanel extends JPanel implements Game {
 			long t = System.currentTimeMillis();
 			long end = t+300000;
 			while(System.currentTimeMillis() < end){
-				possibleMoves = Rules.getAllPossibleMoves(board, turn);
-				if(!possibleMoves.isEmpty()){
+				AI.possibleMoves = Rules.getAllPossibleMoves(board, turn);
+				if(!AI.possibleMoves.isEmpty()){
 					if(turn == Rules.WHITE)
 						try{
 							Point p = negaAI.findMove(board, turn);
@@ -298,7 +302,7 @@ public class rPanel extends JPanel implements Game {
 						}
 					else if(turn == Rules.BLACK)
 						try{
-							Point p = randomAI.random(board, turn);
+							Point p = randomAI.findMove(board, turn);
 							// Point p = greedyAI.greedy(board, turn);
 							playMove(p.x, p.y);
 						} catch(NullPointerException n){
@@ -338,7 +342,7 @@ public class rPanel extends JPanel implements Game {
 			long t = System.currentTimeMillis();
 			long end = t+10000;
 			while(System.currentTimeMillis() < end){
-				possibleMoves = Rules.getAllPossibleMoves(board, turn);
+				possibleMoves = Rules.getAllPossibleMoves(board, turn)
 				if(!possibleMoves.isEmpty()){
 					if(turn == 1)
 						try{

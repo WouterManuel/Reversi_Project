@@ -1,6 +1,6 @@
-package test;
+package model;
 
-public interface Game{
+public interface Board {
 
     public int getSquare(int i,int j);
 
@@ -14,5 +14,8 @@ public interface Game{
 
 	public void highlightPossible(int i, int j);
 
+	public void removeHighlightPossibleMoves();
+
+	public void resetBoard(byte[][] board);
 }
 

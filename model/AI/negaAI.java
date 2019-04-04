@@ -1,21 +1,22 @@
-package test;
+package model.AI;
+
+import controller.Rules;
 
 import java.awt.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
 
-public class negaAI implements AI {
+public class negaAI extends AI {
 
-	static final int INF = 1000000;
-	private static int maxDepth = 9;
+	final int INF = 1000000;
+	private int maxDepth = 9;
 
-	public static Point findMove(byte[][] board, byte player){
+	public Point findMove(byte[][] board, byte player){
 		MoveScore moveScore = negascout(board, player, 0, -INF, INF);
 		return moveScore.getMove();
 	}
 
-	public static MoveScore negascout(byte[][] board, byte player, int depth, int alpha, int beta) {
-		byte opp = player==Rules.BLACK?Rules.WHITE:Rules.BLACK;
+	public MoveScore negascout(byte[][] board, byte player, int depth, int alpha, int beta) {
+		byte opp = player== Rules.BLACK?Rules.WHITE:Rules.BLACK;
 		if(depth == maxDepth)
 			return new MoveScore(null, Rules.scoreH(board, player));
 
