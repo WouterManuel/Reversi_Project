@@ -3,7 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-public class SidebarPanel {
+public class GameSidebarPanel {
     JLabel playerTurn;
     JLabel scoreLabel;
     JButton resetBtn;
@@ -12,7 +12,7 @@ public class SidebarPanel {
     JButton playGame;
     JPanel sidebar;
 
-    public SidebarPanel() {
+    public GameSidebarPanel() {
         sidebar = new JPanel();
         sidebar.setLayout(new BoxLayout(sidebar,BoxLayout.Y_AXIS));
         sidebar.setPreferredSize(new Dimension(250,200));

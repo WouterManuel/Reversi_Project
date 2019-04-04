@@ -3,7 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameDetails {
+public class SettingsPanel {
 
     JLabel playerTurn;
     JLabel scoreLabel;
@@ -13,7 +13,7 @@ public class GameDetails {
     JButton playGame;
     JPanel gameDetails;
 
-    public GameDetails() {
+    public SettingsPanel() {
         gameDetails = new JPanel();
         gameDetails.setLayout(new BoxLayout(gameDetails,BoxLayout.Y_AXIS));
         gameDetails.setPreferredSize(new Dimension(250,200));
