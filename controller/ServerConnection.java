@@ -1,4 +1,4 @@
-package controller.server;
+package controller;
 
 import java.io.*;
 import java.net.Socket;

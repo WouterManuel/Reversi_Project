@@ -1,6 +1,6 @@
 package model.AI;
 
-import controller.Rules;
+import model.Rules;
 
 import java.awt.*;
 import java.util.ArrayList;

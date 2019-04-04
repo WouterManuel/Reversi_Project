@@ -1,4 +1,4 @@
-package controller.server;
+package controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
