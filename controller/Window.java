@@ -1,4 +1,6 @@
-package test;
+package controller;
+
+import view.rPanel;
 
 import javax.swing.*;
 

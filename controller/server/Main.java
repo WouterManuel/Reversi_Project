@@ -1,4 +1,4 @@
-package server;
+package controller.server;
 
 import java.util.Scanner;
 
