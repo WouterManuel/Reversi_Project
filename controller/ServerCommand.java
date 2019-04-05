@@ -52,12 +52,12 @@ public class ServerCommand {
     }
 
     public synchronized ArrayList<String> getPlayerlist() {
-        ArrayList<String> temp = null;
+        ArrayList<String> temp = new ArrayList<String>();
         try {
             output.println("get playerlist");
             Thread.sleep(100);
             if(checkIfValidCommand() && listener.getParsedMessage() != null) {
-                temp = listener.getParsedMessage();
+                return listener.getParsedMessage();
             }
         } catch (NullPointerException ex) {
             System.out.println("\033[34;1m[SERVERCOMMAND]\033[0m : Server not available.");

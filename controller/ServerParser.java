@@ -13,9 +13,9 @@ public class ServerParser {
          * and handled by a second switch statement.
          * */
 
-        public static ArrayList parseServerOutput(String s) {
-            ArrayList<String> outputList = new ArrayList<>(Arrays.asList(s.split(" ")));
-            ArrayList<String> playerlist = new ArrayList<>();
+        public static ArrayList<String> parseServerOutput(String s) {
+			ArrayList<String> outputList = new ArrayList<>(Arrays.asList(s.split(" ")));
+			ArrayList<String> playerlist = new ArrayList<>();
 
             if (outputList.size() > 1) {
                 if(outputList.get(1).equals("ERR")){
@@ -24,10 +24,10 @@ public class ServerParser {
                 else {
                     switch (outputList.get(1)) {
                         case "PLAYERLIST":
-                            listIterator(outputList, playerlist, 2);
+                            return listIterator(outputList, playerlist, 2);
 
                         case "GAME":
-                            ArrayList gameInfo = parseGameOutput(outputList);
+                            ArrayList<String> gameInfo = parseGameOutput(outputList);
                             return gameInfo;
 
                         default:
@@ -43,11 +43,12 @@ public class ServerParser {
      * @param list
      * @return
      */
-    public static ArrayList parseGameOutput(ArrayList<String> list) {
+    public static ArrayList<String> parseGameOutput(ArrayList<String> list) {
         ArrayList<String> temp = new ArrayList<>();
             switch(list.get(2)) {
                 case "MATCH":
                     listIterator(list, temp, 3);
+					break;
                 // TODO
                 // Check if the PLAYERTOMOVE name = the clients name.
                 // If so, the player on the client starts the game and is notified.
@@ -56,29 +57,35 @@ public class ServerParser {
                 // and then passing it on to the model to set the last move to the receiver value
                 case "MOVE":
                     listIterator(list, temp, 3);
+					break;
 
                 case "CHALLENGE":
                     if(list.get(3).equals("CANCELLED")) {
                         listIterator(list, temp, 4);
                     } else listIterator(list, temp, 3);
+					break;
 
                 case "YOURTURN":
                     listIterator(list, temp, 3);
+					break;
 
                 case "WIN":
                     listIterator(list, temp, 3);
+					break;
 
                 case "DRAW":
                     listIterator(list, temp, 3);
+					break;
 
                 case "LOSS":
                     listIterator(list, temp, 3);
+					break;
             }
             return null;
         }
 
         private static ArrayList<String> listIterator(ArrayList<String> list, ArrayList<String> temp, int index) {
-            for(String item : list.subList(3, list.size()-1)) {
+            for(String item : list.subList(index, list.size())) {
                 String player = regexStringClean(item);
                 temp.add(player);
             }

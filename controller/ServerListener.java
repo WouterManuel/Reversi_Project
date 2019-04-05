@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class ServerListener implements Runnable{
     BufferedReader input;
     ArrayList<String> parsedMessageList;
+	String serverLine;
 
     public ServerListener(InputStreamReader input) {
         this.input = new BufferedReader(input);
@@ -14,9 +15,10 @@ public class ServerListener implements Runnable{
 
     public void run() {
         try {
-            while (!input.readLine().isEmpty()) {
+            while (!(serverLine = input.readLine()).isEmpty()) {
                 try {
-                    parsedMessageList = ServerParser.parseServerOutput(input.readLine());
+					if(!serverLine.equals("OK"))
+						parsedMessageList = ServerParser.parseServerOutput(serverLine);
                     Thread.sleep(50);
                 } catch (NullPointerException e) {
                     System.out.println("\033[34;1m[ServerListener]\033[0m : \033[31;1m[ERROR]\033[0m No messages received.");
@@ -29,7 +31,7 @@ public class ServerListener implements Runnable{
         }
     }
 
-    public ArrayList getParsedMessage() {
+    public ArrayList<String> getParsedMessage() {
         return parsedMessageList;
     }
 
