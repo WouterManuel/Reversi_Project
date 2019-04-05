@@ -12,13 +12,14 @@ public class Main {
         input = inputScanner.nextLine();
         command.sendLoginCommand(input);
 
-        System.out.print("Subscribe to game: ");
-        input = inputScanner.nextLine();
-        command.sendSubscribeCommand(input);
-
         System.out.print("Get playerlist: ");
         for(String player : command.getPlayerlist()) {
             System.out.println(player);
         }
+        System.out.print("Subscribe to game: ");
+        input = inputScanner.nextLine();
+        command.sendSubscribeCommand(input);
+		inputScanner.close();
+
     }
 }

@@ -3,7 +3,11 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+<<<<<<< HEAD
+public class ServerDetailsPanel extends JPanel{
+=======
 public class ServerDetailsPanel extends JPanel {
+>>>>>>> completeMVC
     JList playerList;
     JList inviteList;
     JButton listBtn;
@@ -15,16 +19,27 @@ public class ServerDetailsPanel extends JPanel {
 
 
     public ServerDetailsPanel() {
-        setPreferredSize(new Dimension(300,400));
+<<<<<<< HEAD
+        setPreferredSize(new Dimension(400,400));
         setLayout(new GridLayout(3,2));
 
         listText = new JLabel("Playerlist :");
+		add(listText);
+
+        listText2 = new JLabel("Invitelist :");
+        add(listText2);
+=======
+        setPreferredSize(new Dimension(300,400));
+        setLayout(new GridLayout(3,2));
+
+        listText = new JLabel("<html><br><span style='font-size: 25px'>"+"Playerlist :"+"</span></html>");
 		listText.setForeground(Color.WHITE);
 		add(listText,0.1);
 
-        listText = new JLabel("Invitelist :");
+        listText = new JLabel("<html><br>"+"Invitelist :"+"</html>");
         listText.setForeground(Color.WHITE);
         add(listText,1);
+>>>>>>> completeMVC
 
 		String players[]= { "player1", "john doe", "foo", "bar","oke"};
 		if (players.length>0){
@@ -42,7 +57,10 @@ public class ServerDetailsPanel extends JPanel {
 			listBtn.addActionListener(e -> seeAcceptedPlayer());
 
 			add(playerList);
+<<<<<<< HEAD
 			add(listBtn);
+=======
+>>>>>>> completeMVC
 		}
 		else {
 			acceptedPlayer = new JLabel("No players found");

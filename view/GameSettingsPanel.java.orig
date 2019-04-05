@@ -3,7 +3,11 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+<<<<<<< HEAD
 public class GameSettingsPanel extends JPanel{
+=======
+public class GameSettingsPanel extends JPanel {
+>>>>>>> completeMVC
 
     JLabel playerTurn;
     JLabel scoreLabel;

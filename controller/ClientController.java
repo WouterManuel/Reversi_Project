@@ -8,10 +8,15 @@ public class ClientController {
     Window window;
 
     public ClientController() {
-        window = new Window();
+        window = new Window(this);
     }
 
-    public static void startServerCommand(String hostname, int port) {
+    public void startServerCommand(String hostname, int port) {
         serverCommander = new ServerCommand(hostname, port);
+        window.connected();
+    }
+
+    public static void main(String[] args) {
+        new ClientController();
     }
 }

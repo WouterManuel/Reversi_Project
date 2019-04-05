@@ -1,6 +1,5 @@
 package view;
 
-import controller.ClientController;
 import model.game.Game;
 import model.game.Reversi;
 import view.states.IntroState;
@@ -12,7 +11,6 @@ import java.awt.*;
 
 public class Window extends JFrame {
 	static final long serialVersionUID = 1L;
-	protected ClientController clientController;
 	private JPanel reversiPanel;
 	private JPanel ticTacToePanel;
 	private JPanel loginPanel;
@@ -26,22 +24,41 @@ public class Window extends JFrame {
 	WindowState connectedToServer;
 	WindowState currentState;
 
-	public Window(ClientController clientController){
-		this.clientController = clientController;
-		reversiPanel = new ReversiPanel(new Reversi());
-		gameSidebarPanel = new GameSidebarPanel();
-		serverConnectionPanel = new ServerConnectionPanel(clientController);
-		loginPanel = new ServerLoginPanel(clientController);
+<<<<<<< HEAD
+=======
+	private GameSidebarPanel gameSidebar;
+	private ReversiPanel reversi;
+	private GameSettingsPanel gameSettingsPanel;
+	private ServerDetailsPanel serverDetailsPanel;
+	private ServerConnectionPanel serverConnectionPanel;
+>>>>>>> completeMVC
 
-		introState = new IntroState(this);
-		currentState = introState;
-
-		setTitle("GamerTool");
+	public Window(){
+		setTitle("Reversi");
+<<<<<<< HEAD
         setLocationByPlatform(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		pack();
         setVisible(true);
+        pack();
+        setResizable(false);
+
+        reversiPanel = new ReversiPanel(new Reversi());
+        gameSidebarPanel = new GameSidebarPanel();
+		serverConnectionPanel = new ServerDetailsPanel();
+		loginPanel = new ServerLoginPanel();
+
+        introState = new IntroState(this);
+
+        currentState = introState;
     }
+=======
+		setLocationByPlatform(true);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		pack();
+		setVisible(true);
+		//setResizable(false);
+	}
+>>>>>>> completeMVC
 
     public void connected() {
 		currentState.connected();
@@ -62,16 +79,30 @@ public class Window extends JFrame {
 //
 //	}
 
+<<<<<<< HEAD
 	public void setWindowState(WindowState windowState) {
 		this.currentState = windowState;
 	}
 
 	public WindowState getLoggedInState() {
-	    return new ConnectedToServerState(this);
+	    return connectedToServer;
     }
 
 	public WindowState getIntroState() {
 		return introState;
+	}
+=======
+		add(new ReversiPanel(new Reversi()), BorderLayout.WEST);
+
+		gameSidebar = new GameSidebarPanel();
+		add(gameSidebar, BorderLayout.CENTER);
+
+		serverConnectionPanel = new ServerConnectionPanel();
+		add(serverConnectionPanel, BorderLayout.EAST);
+>>>>>>> completeMVC
+
+	public JPanel getGameReversiPanel() {
+		return reversiPanel;
 	}
 
 	public JPanel getGameSidebarPanel() {
@@ -82,11 +113,15 @@ public class Window extends JFrame {
 		return reversiPanel;
 	}
 
-	public JPanel getServerConnectionPanel() {
+	public JPanel getServerConnectionPanelPanel() {
 		return serverConnectionPanel;
 	}
 
 	public JPanel getLoginPanel() {
 		return loginPanel;
+	}
+
+	public static void main(String[] args) {
+		new Window();
 	}
 }

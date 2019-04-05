@@ -2,15 +2,18 @@ package view.states;
 
 import view.Window;
 
+import java.awt.*;
+
 public class ConnectedToServerState implements WindowState {
     Window window;
 
     public ConnectedToServerState(Window window) {
         this.window = window;
 
-        window.remove(2);
-        window.add(window.getLoginPanel(), 2);
-        window.repaint();
+        window.getContentPane().remove(window.getServerConnectionPanel());
+        window.getContentPane().add(window.getLoginPanel(), BorderLayout.EAST);
+        window.invalidate();
+        window.validate();
     }
 
     public void connected() {

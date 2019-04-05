@@ -1,15 +1,18 @@
 package view;
 
-import controller.ClientController;
-
 import javax.swing.*;
+<<<<<<< HEAD
+
+public class ServerConnectionPanel extends JPanel {
+
+=======
 import java.awt.*;
 
-public class ServerLoginPanel extends JPanel {
-    ClientController clientController;
+public class ServerConnectionPanel extends JPanel {
 
-    public ServerLoginPanel(ClientController clientController) {
-        this.clientController = clientController;
+    JPanel serverConnectionPanel;
+
+    public ServerConnectionPanel() {
         setPreferredSize(new Dimension(300,400));
         setLayout(new GridBagLayout());
         setBackground(Color.GRAY);
@@ -19,7 +22,7 @@ public class ServerLoginPanel extends JPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        JLabel hostnameLabel = new JLabel("wouter");
+        JLabel hostnameLabel = new JLabel("hostname");
         add(hostnameLabel, gbc);
 
         gbc.gridx = 0;
@@ -41,7 +44,8 @@ public class ServerLoginPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 4;
         JButton listBtn = new JButton("Connect");
-        listBtn.addActionListener(e -> clientController.startServerCommand(hostname.getText(), Integer.valueOf(port.getText())));
+        listBtn.addActionListener(e -> controller.ClientController.startServerCommand(hostname.getText(), Integer.valueOf(port.getText())));
         add(listBtn, gbc);
     }
+>>>>>>> completeMVC
 }

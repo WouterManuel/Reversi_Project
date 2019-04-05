@@ -1,0 +1,25 @@
+package controller;
+
+<<<<<<< HEAD
+import view.Window;
+
+public class ClientController {
+
+    private static ServerCommand serverCommander;
+    Window window;
+
+    public ClientController() {
+        window = new Window();
+=======
+public class ClientController {
+    private static ServerCommand serverCommander;
+
+    public ClientController() {
+
+>>>>>>> completeMVC
+    }
+
+    public static void startServerCommand(String hostname, int port) {
+        serverCommander = new ServerCommand(hostname, port);
+    }
+}
