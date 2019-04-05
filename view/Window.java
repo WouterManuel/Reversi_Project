@@ -10,15 +10,14 @@ import java.awt.*;
 
 public class Window extends JFrame {
 	static final long serialVersionUID = 1L;
-	private JPanel ReversiPanel;
-	private JPanel TicTacToePanel;
-	private JPanel LoginPanel;
+	private JPanel reversiPanel;
+	private JPanel ticTacToePanel;
+	private JPanel loginPanel;
 	private JPanel sidePanel;
-
-	private GameSidebarPanel gameSidebar;
-	private ReversiPanel reversi;
-	private GameSettingsPanel gameSettingsPanel;
-	private ServerDetailsPanel serverDetailsPanel;
+	private JPanel gameSidebarPanel;
+	private JPanel serverConnectionPanel;
+	private JPanel gameSettingsPanel;
+	private JPanel serverDetailsPanel;
 
 	WindowState introState;
 	WindowState connectedToServer;
@@ -33,16 +32,18 @@ public class Window extends JFrame {
         pack();
         setResizable(false);
 
+        reversiPanel = new ReversiPanel(new Reversi());
+        gameSidebarPanel = new GameSidebarPanel();
+		serverConnectionPanel = new ServerDetailsPanel();
+		loginPanel = new ServerLoginPanel();
+
         introState = new IntroState(this);
-        connectedToServer = new ConnectedToServerState(this);
 
         currentState = introState;
     }
 
-    public void introState(){
-	    currentState.connectedToServer();
-	    System.out.println("Ik ben introState");
-	    repaint();
+    public void connected() {
+		currentState.connected();
     }
 
 //	public void defaultConstructedSetup() {
@@ -70,6 +71,26 @@ public class Window extends JFrame {
 
 	public WindowState getIntroState() {
 		return introState;
+	}
+
+	public JPanel getGameReversiPanel() {
+		return reversiPanel;
+	}
+
+	public JPanel getGameSidebarPanel() {
+		return gameSidebarPanel;
+	}
+
+	public JPanel getReversiPanel() {
+		return reversiPanel;
+	}
+
+	public JPanel getServerConnectionPanelPanel() {
+		return serverConnectionPanel;
+	}
+
+	public JPanel getLoginPanel() {
+		return loginPanel;
 	}
 
 	public static void main(String[] args) {

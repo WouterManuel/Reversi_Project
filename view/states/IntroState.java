@@ -14,16 +14,10 @@ public class IntroState implements WindowState {
     public IntroState(Window window) {
         this.window = window;
 
-        window.removeAll();
-        System.out.println("Ben hier");
-
-        window.add(getLoggedInState, BorderLayout.WEST);
-
-        gameSidebar = new GameSidebarPanel();
-        add(gameSidebar.getSidebar(), BorderLayout.CENTER);
-
-        serverDetailsPanel = new ServerDetailsPanel();
-        add(serverDetailsPanel.getServerDetailsPanel(), BorderLayout.EAST);
+        window.add(window.getGameReversiPanel(), BorderLayout.WEST);
+        window.add(window.getGameSidebarPanel(), BorderLayout.CENTER);
+        window.add(window.getServerConnectionPanelPanel(), BorderLayout.EAST);
+        window.repaint();
     }
 
     public void connected() {

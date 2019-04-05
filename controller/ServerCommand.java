@@ -11,9 +11,9 @@ public class ServerCommand {
     PrintStream output;
     InputStreamReader input;
 
-    public ServerCommand(ServerConnection connection) {
+    public ServerCommand(String hostname, int port) {
         try {
-            this.connection = connection;
+            this.connection = new ServerConnection(hostname, port);
             this.output = new PrintStream(connection.getSocket().getOutputStream());
             this.input = new InputStreamReader(connection.getSocket().getInputStream());
             this.listener = new ServerListener(input);

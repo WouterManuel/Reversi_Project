@@ -10,6 +10,7 @@ public class ConnectedToServerState implements WindowState {
 
         window.remove(2);
         window.add(window.getLoginPanel(), 2);
+        window.repaint();
     }
 
     public void connected() {

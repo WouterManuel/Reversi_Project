@@ -14,10 +14,7 @@ public class ReversiPanel extends JPanel{
     JButton interruptBtn;
     JButton playGame;
 
-    byte[][] board;
-
     public ReversiPanel(Game reversi) {
-        this.board = reversi.getBoard();
 		setLayout(new GridLayout(8,8));
 		setPreferredSize(new Dimension(400,400));
 		setBackground(new Color(0, 102, 0));

@@ -1,13 +1,12 @@
 package controller;
 
-import java.io.*;
 import java.net.Socket;
 
 public class ServerConnection {
     private String host;
     private int port;
     private Socket socket;
-
+    boolean connected;
     /**
      * Connect to controller.server using variables for the socket that are set in the GUI
      **/
@@ -17,9 +16,12 @@ public class ServerConnection {
 
         try {
             //Create a socket to connect to the controller.server
-            socket = new Socket(host, port);
-
-        } catch (IOException ex) {
+            while(!connected) {
+                socket = new Socket(host, port);
+                System.out.println("Server connection established");
+                connected = true;
+            }
+        } catch (Exception ex) {
             System.out.println("\033[31;1m[ERROR]\033[0m Start the controller.server!");
         }
     }
