@@ -1,4 +1,6 @@
 package view;
 
-public class ServerConnectionPanel {
+import javax.swing.*;
+
+public class ServerConnectionPanel extends JPanel {
 }

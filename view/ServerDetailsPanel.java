@@ -3,36 +3,35 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-public class ServerDetailsPanel {
-    JPanel serverDetailsPanel;
+public class ServerDetailsPanel extends JPanel{
     JList playerList;
     JList inviteList;
     JButton listBtn;
+    JButton listBtn2;
     JLabel acceptedPlayer;
     JLabel acceptedInvite;
     JLabel listText;
+    JLabel listText2;
 
 
     public ServerDetailsPanel() {
-        serverDetailsPanel = new JPanel();
-        serverDetailsPanel.setPreferredSize(new Dimension(400,400));
-        serverDetailsPanel.setLayout(new GridLayout(3,2));
+        setPreferredSize(new Dimension(400,400));
+        setLayout(new GridLayout(3,2));
 
-        listText = new JLabel("<html><br><span style='font-size: 25px'>"+"Playerlist :"+"</span></html>");
-		listText.setForeground(Color.WHITE);
-		serverDetailsPanel.add(listText,0.1);
+        listText = new JLabel("Playerlist :");
+		add(listText);
 
-        listText = new JLabel("<html><br>"+"Invitelist :"+"</html>");
-        listText.setForeground(Color.WHITE);
-        serverDetailsPanel.add(listText,1);
+        listText2 = new JLabel("Invitelist :");
+        add(listText2);
 
-		String players[]= { "player1", "john doe", "foo", "bar"};
+		String players[]= { "player1", "john doe", "foo", "bar","oke"};
 		if (players.length>0){
 			playerList = new JList(players);
 			playerList.setFixedCellWidth(100);
 
 			/* Challenge btn */
 			listBtn = new JButton("Challenge");
+			listBtn.addActionListener(e -> System.out.println("Challenge"));
 
 			/* See challenged player */
 			acceptedPlayer = new JLabel("");
@@ -40,26 +39,31 @@ public class ServerDetailsPanel {
 
 			listBtn.addActionListener(e -> seeAcceptedPlayer());
 
-			serverDetailsPanel.add(playerList);
+			add(playerList);
+			add(listBtn);
 		}
 		else {
 			acceptedPlayer = new JLabel("No players found");
 			acceptedPlayer.setForeground(Color.WHITE);
 		}
 
-		String invites[]= { "player1", "john doe", "foo", "bar"};
+		String invites[]= { "inv1", "inv2", "inv3", "inv4"};
 		if (invites.length>0){
 			inviteList = new JList(invites);
 			inviteList.setFixedCellWidth(100);
 
 			/* Accept btn */
-			listBtn = new JButton("Accept");
+			listBtn2 = new JButton("Accept");
+			add(listBtn2);
 
 			/* See accepted challenge */
 			acceptedInvite = new JLabel("");
 			acceptedInvite.setForeground(Color.WHITE);
 
 			listBtn.addActionListener(e -> seeAcceptedInvite());
+
+			add(inviteList);
+			add(listBtn2);
 		}
 		else {
 			acceptedInvite = new JLabel("No players found");
@@ -81,8 +85,4 @@ public class ServerDetailsPanel {
 			acceptedInvite.setText(data);
 		}
 	}
-
-	public JPanel getServerDetailsPanel() {
-        return serverDetailsPanel;
-    }
 }
