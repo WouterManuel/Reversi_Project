@@ -1,5 +1,7 @@
 package model.AI;
 
+import model.game.Game;
+
 import java.awt.*;
 import java.util.ArrayList;
 

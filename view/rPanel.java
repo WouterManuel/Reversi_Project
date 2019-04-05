@@ -21,12 +21,10 @@
 //	boolean interrupted = false;
 //    Piece[][] cells;
 //    JLabel score;
-//	JLabel listText;
-//	JList playerList;
-//	JList inviteList;
-//	JButton listBtn;
-//	JLabel acceptedPlayer;
-//	JLabel acceptedInvite;
+//
+
+//
+//
 //	JPanel tempPanel;
 //
 //	JLabel playAs;
@@ -118,33 +116,6 @@
 //
 //		/******************************************** InviteList *********************************************/
 //
-//		listText = new JLabel("<html><br>"+"Invitelist :"+"</html>");
-//		listText.setForeground(Color.WHITE);
-//
-//		String invites[]= { "player1", "john doe", "foo", "bar"};
-//		if (invites.length>0){
-//			inviteList = new JList(invites);
-//			inviteList.setFixedCellWidth(100);
-//
-//			/* Accept btn */
-//			listBtn = new JButton("Accept");
-//
-//			/* See accepted challenge */
-//			acceptedInvite = new JLabel("");
-//			acceptedInvite.setForeground(Color.WHITE);
-//
-//			listBtn.addActionListener(e -> seeAcceptedInvite());
-//
-//		}
-//		else {
-//			acceptedInvite = new JLabel("No players found");
-//			acceptedInvite.setForeground(Color.WHITE);
-//		}
-//
-//		add(tempPanel, BorderLayout.WEST);
-//		add(loginBoard, BorderLayout.EAST);
-//		setVisible(true);
-//    }
 //
 //	public void highlightPossibleMoves(byte[][] board, byte turn) {
 //		ArrayList<Point> res = Rules.getAllPossibleMoves(board, turn);
@@ -220,20 +191,6 @@
 //		repaint();
 //    }
 //
-//	public void seeAcceptedPlayer() {
-//		if (playerList.getSelectedValue() != null) {
-//			String data = "";
-//			data = "" + playerList.getSelectedValue();
-//			acceptedPlayer.setText(data);
-//		}
-//	}
-//	public void seeAcceptedInvite() {
-//		if (inviteList.getSelectedValue() != null) {
-//			String data = "";
-//			data = "" + inviteList.getSelectedValue();
-//			acceptedInvite.setText(data);
-//		}
-//	}
 //
 //	public JPanel showReversiBoard() {
 //		JPanel reversiBoard = new JPanel();

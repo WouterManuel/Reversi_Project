@@ -9,7 +9,7 @@ public class randomAI extends AI {
 		return random(board, player);
 	}
 
-	public static Point random(byte[][] board, byte turn) {
+	public Point random(byte[][] board, byte turn) {
 		if(!possibleMoves.isEmpty()) {
 			int rnd = ThreadLocalRandom.current().nextInt(0, possibleMoves.size());
 			return(possibleMoves.get(rnd));

@@ -1,5 +1,8 @@
 package model.AI;
 
+import model.game.Game;
+import model.game.Reversi;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -8,22 +11,27 @@ public class negaAI extends AI {
 	final int INF = 1000000;
 	private int maxDepth = 9;
 
+	Reversi game;
+	public negaAI(Game game) {
+		this.game = (Reversi) game;
+	}
+
 	public Point findMove(byte[][] board, byte player){
 		MoveScore moveScore = negascout(board, player, 0, -INF, INF);
 		return moveScore.getMove();
 	}
 
 	public MoveScore negascout(byte[][] board, byte player, int depth, int alpha, int beta) {
-		byte opp = player== Rules.BLACK?Rules.WHITE:Rules.BLACK;
+		byte opp = player== game.BLACK?game.WHITE:game.BLACK;
 		if(depth == maxDepth)
-			return new MoveScore(null, Rules.scoreH(board, player));
+			return new MoveScore(null, game.scoreH(board, player));
 
 		int currentScore;
 		int bestScore = -INF;
 		Point bestMove = null;
 		int adaptiveBeta = beta;
 
-		ArrayList<Point> possibleMoves = Rules.getAllPossibleMoves(board, player);
+		ArrayList<Point> possibleMoves = game.getAllPossibleMoves(board, player);
 		if(possibleMoves.isEmpty())
 			return new MoveScore(null, bestScore);
 		bestMove = possibleMoves.get(0);
@@ -34,7 +42,7 @@ public class negaAI extends AI {
 			for (int i = 0; i < 8; i++)
 				mBoard[i] = board[i].clone();
 			mBoard[p.x][p.y] = player;
-			Rules.flipv2(mBoard, player, p.x, p.y);
+			game.flipv2(mBoard, player, p.x, p.y);
 
 			MoveScore current = negascout(mBoard, opp, depth+1, -adaptiveBeta, -Math.max(alpha, bestScore));
 			currentScore = -current.getScore();

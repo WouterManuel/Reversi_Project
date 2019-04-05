@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class GameSidebarPanel {
@@ -15,8 +16,9 @@ public class GameSidebarPanel {
     public GameSidebarPanel() {
         sidebar = new JPanel();
         sidebar.setLayout(new BoxLayout(sidebar,BoxLayout.Y_AXIS));
-        sidebar.setPreferredSize(new Dimension(250,200));
+        sidebar.setPreferredSize(new Dimension(100,400));
         sidebar.setBackground(Color.DARK_GRAY);
+        //sidebar.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
 
         playerTurn = new JLabel(String.valueOf("player turn here"));
         playerTurn.setForeground(Color.WHITE);
