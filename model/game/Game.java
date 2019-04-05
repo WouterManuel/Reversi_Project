@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class Game {
-    protected final byte BLACK = 1, WHITE = 2;
+    public final byte BLACK = 1, WHITE = 2;
     protected byte[][] board;
 
     /******************************************** Game logic *********************************************/

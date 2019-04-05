@@ -4,7 +4,7 @@ import model.game.Game;
 
 import java.awt.*;
 
-public class TestAI implements Runnable{
+public class AITester implements Runnable{
     final long t = System.currentTimeMillis();
     long time;
 
@@ -14,7 +14,7 @@ public class TestAI implements Runnable{
     private byte turn;
     private Game game;
 
-    public TestAI(AI ai1, AI ai2, byte[][] board, byte turn, Game game, long time) {
+    public AITester(AI ai1, AI ai2, byte[][] board, byte turn, Game game, long time) {
         this.ai1 = ai1;
         this.ai2 = ai2;
         this.board = board;

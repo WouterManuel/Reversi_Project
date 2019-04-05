@@ -12,28 +12,34 @@ public class Window extends JFrame {
 	private JPanel LoginPanel;
 	private JPanel sidePanel;
 
-	private GameSidebarPanel sidebar;
+	private GameSidebarPanel gameSidebar;
 	private ReversiPanel reversi;
-	private SettingsPanel settingsPanel;
+	private GameSettingsPanel gameSettingsPanel;
+	private ServerDetailsPanel serverDetailsPanel;
 
 	public Window(){
-
 		defaultConstructedSetup();
 		setTitle("Reversi");
 		setLocationByPlatform(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setVisible(true);
 		pack();
-
+		setResizable(false);
 	}
 
 	public void defaultConstructedSetup() {
-		sidebar = new GameSidebarPanel();
-		add(sidebar.getSidebar(), BorderLayout.EAST);
+//		gameSettingsPanel = new GameSettingsPanel();
+//		add(gameSettingsPanel.getGameDetails(), BorderLayout.WEST);
+
 		reversi = new ReversiPanel(new Reversi());
 		add(reversi.getReversi(), BorderLayout.WEST);
-		settingsPanel = new SettingsPanel();
-		add(settingsPanel.getGameDetails(), BorderLayout.CENTER);
+
+		gameSidebar = new GameSidebarPanel();
+		add(gameSidebar.getSidebar(), BorderLayout.CENTER);
+
+		serverDetailsPanel = new ServerDetailsPanel();
+		add(serverDetailsPanel.getServerDetailsPanel(), BorderLayout.EAST);
+
 	}
 	public static void main(String[] args) {
 		new Window();

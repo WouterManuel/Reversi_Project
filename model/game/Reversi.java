@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class Reversi extends Game {
     byte player;
-    public final byte BLACK = 1, WHITE = 2;
 
     protected final int[] DX = { -1,  0,  1, -1, 1, -1, 0, 1 };
     protected final int[] DY = { -1, -1, -1,  0, 0,  1, 1, 1 };
@@ -174,6 +173,115 @@ public class Reversi extends Game {
     }
 
     public void flip(byte[][] board, byte player, int i, int j) {
+        int moveI, moveJ, cells;
+        int opponent = ((player == 1) ? 2 : 1);
+
+        //up
+        moveI = i - 1;
+        moveJ = j;
+        cells = 0;
+        while(moveI>0 && board[moveI][moveJ] == opponent){moveI--; cells++;}
+        if(moveI>=0 && board[moveI][moveJ] == player){
+            moveI = i-1;
+            moveJ = j;
+            for (int k = 0; k < cells; k++) {
+                board[moveI--][moveJ] = player;
+            }
+        }
+
+        //down
+        moveI = i + 1;
+        moveJ = j;
+        cells = 0;
+        while(moveI<7 && board[moveI][moveJ] == opponent){moveI++; cells++;}
+        if(moveI<=7 && board[moveI][moveJ] == player){
+            moveI = i + 1;
+            moveJ = j;
+            for (int k = 0; k < cells; k++) {
+                board[moveI++][moveJ] = player;
+            }
+        }
+
+        //left
+        moveI = i;
+        moveJ = j - 1;
+        cells = 0;
+        while(moveJ>0 && board[moveI][moveJ] == opponent){moveJ--; cells++;}
+        if(moveJ>=0 && board[moveI][moveJ] == player){
+            moveI = i;
+            moveJ = j - 1;
+            for (int k = 0; k < cells; k++) {
+                board[moveI][moveJ--] = player;
+            }
+        }
+
+        //right
+        moveI = i;
+        moveJ = j + 1;
+        cells = 0;
+        while(moveJ<7 && board[moveI][moveJ] == opponent){moveJ++; cells++;}
+        if(moveJ<=7 && board[moveI][moveJ] == player){
+            moveI = i;
+            moveJ = j + 1;
+            for (int k = 0; k < cells; k++) {
+                board[moveI][moveJ++] = player;
+            }
+        }
+
+        //left up
+        moveI = i - 1;
+        moveJ = j - 1;
+        cells = 0;
+        while(moveI>0 && moveJ>0 && board[moveI][moveJ] == opponent){moveI--; moveJ--; cells++;}
+        if(moveI>=0 && moveJ>=0 && board[moveI][moveJ] == player){
+            moveI = i - 1;
+            moveJ = j - 1;
+            for (int k = 0; k < cells; k++) {
+                board[moveI--][moveJ--] = player;
+            }
+        }
+
+        //right up
+        moveI = i - 1;
+        moveJ = j + 1;
+        cells = 0;
+        while(moveI>0 && moveJ<7 && board[moveI][moveJ] == opponent){moveI--; moveJ++; cells++;}
+        if(moveI>=0 && moveJ<=7 && board[moveI][moveJ] == player){
+            moveI = i - 1;
+            moveJ = j + 1;
+            for (int k = 0; k < cells; k++) {
+                board[moveI--][moveJ++] = player;
+            }
+        }
+
+        //left down
+        moveI = i + 1;
+        moveJ = j - 1;
+        cells = 0;
+        while(moveI<7 && moveJ>0 && board[moveI][moveJ] == opponent){moveI++; moveJ--; cells++;}
+        if(moveI<=7 && moveJ>=0 && board[moveI][moveJ] == player){
+            moveI = i + 1;
+            moveJ = j - 1;
+            for (int k = 0; k < cells; k++) {
+                board[moveI++][moveJ--] = player;
+            }
+        }
+
+        //right down
+        moveI = i + 1;
+        moveJ = j + 1;
+        cells = 0;
+        while(moveI<7 && moveJ<7 && board[moveI][moveJ] == opponent){moveI++; moveJ++; cells++;}
+        if(moveI<=7 && moveJ<=7 && board[moveI][moveJ] == player){
+            moveI = i + 1;
+            moveJ = j + 1;
+            for (int k = 0; k < cells; k++) {
+                board[moveI++][moveJ++] = player;
+            }
+        }
+    }
+
+    public void flipv2(byte[][] board, byte player, int i, int j) {
         int moveI, moveJ, cells;
         int opponent = ((player == 1) ? 2 : 1);
 
