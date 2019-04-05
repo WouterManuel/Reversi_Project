@@ -3,8 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-public class ServerDetailsPanel {
-    JPanel serverDetailsPanel;
+public class ServerDetailsPanel extends JPanel {
     JList playerList;
     JList inviteList;
     JButton listBtn;
@@ -14,17 +13,16 @@ public class ServerDetailsPanel {
 
 
     public ServerDetailsPanel() {
-        serverDetailsPanel = new JPanel();
-        serverDetailsPanel.setPreferredSize(new Dimension(400,400));
-        serverDetailsPanel.setLayout(new GridLayout(3,2));
+        setPreferredSize(new Dimension(300,400));
+        setLayout(new GridLayout(3,2));
 
         listText = new JLabel("<html><br><span style='font-size: 25px'>"+"Playerlist :"+"</span></html>");
 		listText.setForeground(Color.WHITE);
-		serverDetailsPanel.add(listText,0.1);
+		add(listText,0.1);
 
         listText = new JLabel("<html><br>"+"Invitelist :"+"</html>");
         listText.setForeground(Color.WHITE);
-        serverDetailsPanel.add(listText,1);
+        add(listText,1);
 
 		String players[]= { "player1", "john doe", "foo", "bar"};
 		if (players.length>0){
@@ -40,7 +38,7 @@ public class ServerDetailsPanel {
 
 			listBtn.addActionListener(e -> seeAcceptedPlayer());
 
-			serverDetailsPanel.add(playerList);
+			add(playerList);
 		}
 		else {
 			acceptedPlayer = new JLabel("No players found");
@@ -81,8 +79,4 @@ public class ServerDetailsPanel {
 			acceptedInvite.setText(data);
 		}
 	}
-
-	public JPanel getServerDetailsPanel() {
-        return serverDetailsPanel;
-    }
 }

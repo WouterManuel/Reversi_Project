@@ -1,5 +1,6 @@
 package view;
 
+import model.game.Game;
 import model.game.Reversi;
 
 import javax.swing.*;
@@ -23,23 +24,22 @@ public class Window extends JFrame {
 		setTitle("Reversi");
 		setLocationByPlatform(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setVisible(true);
 		pack();
-		setResizable(false);
+		setVisible(true);
+		//setResizable(false);
 	}
 
 	public void defaultConstructedSetup() {
 //		gameSettingsPanel = new GameSettingsPanel();
 //		add(gameSettingsPanel.getGameDetails(), BorderLayout.WEST);
 
-		reversi = new ReversiPanel(new Reversi());
-		add(reversi.getReversi(), BorderLayout.WEST);
+		add(new ReversiPanel(new Reversi()), BorderLayout.WEST);
 
 		gameSidebar = new GameSidebarPanel();
-		add(gameSidebar.getSidebar(), BorderLayout.CENTER);
+		add(gameSidebar, BorderLayout.CENTER);
 
 		serverConnectionPanel = new ServerConnectionPanel();
-		add(serverConnectionPanel.getServerConnectionPanel(), BorderLayout.EAST);
+		add(serverConnectionPanel, BorderLayout.EAST);
 
 	}
 	public static void main(String[] args) {

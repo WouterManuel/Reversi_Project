@@ -4,8 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        ServerConnection serverConnection = new ServerConnection("localhost", 7789);
-        ServerCommand command = new ServerCommand(serverConnection);
+        ServerCommand command = new ServerCommand("localhost", 7789);
         Scanner inputScanner = new Scanner(System.in);
         String input;
 
