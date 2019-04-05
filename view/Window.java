@@ -16,6 +16,7 @@ public class Window extends JFrame {
 	private ReversiPanel reversi;
 	private GameSettingsPanel gameSettingsPanel;
 	private ServerDetailsPanel serverDetailsPanel;
+	private ServerConnectionPanel serverConnectionPanel;
 
 	public Window(){
 		defaultConstructedSetup();
@@ -37,8 +38,8 @@ public class Window extends JFrame {
 		gameSidebar = new GameSidebarPanel();
 		add(gameSidebar.getSidebar(), BorderLayout.CENTER);
 
-		serverDetailsPanel = new ServerDetailsPanel();
-		add(serverDetailsPanel.getServerDetailsPanel(), BorderLayout.EAST);
+		serverConnectionPanel = new ServerConnectionPanel();
+		add(serverConnectionPanel.getServerConnectionPanel(), BorderLayout.EAST);
 
 	}
 	public static void main(String[] args) {
