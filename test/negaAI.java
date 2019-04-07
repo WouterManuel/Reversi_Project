@@ -1,13 +1,13 @@
 package test;
 
 import java.awt.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
 
 public class negaAI implements AI {
 
 	static final int INF = 1000000;
 	private static int maxDepth = 9;
+
 
 	public static Point findMove(byte[][] board, byte player){
 		MoveScore moveScore = negascout(board, player, 0, -INF, INF);
@@ -24,39 +24,40 @@ public class negaAI implements AI {
 		Point bestMove = null;
 		int adaptiveBeta = beta;
 
-		ArrayList<Point> possibleMoves = Rules.getAllPossibleMoves(board, player);
-		if(possibleMoves.isEmpty())
-			return new MoveScore(null, bestScore);
-		bestMove = possibleMoves.get(0);
-
-
-		for(Point p : possibleMoves) {
-			byte[][] mBoard = new byte[8][8];
-			for (int i = 0; i < 8; i++)
-				mBoard[i] = board[i].clone();
-			mBoard[p.x][p.y] = player;
-			Rules.flipv2(mBoard, player, p.x, p.y);
-
-			MoveScore current = negascout(mBoard, opp, depth+1, -adaptiveBeta, -Math.max(alpha, bestScore));
-			currentScore = -current.getScore();
-
-			if(currentScore>bestScore) {
-				if(adaptiveBeta == beta || depth>=(maxDepth-2)) {
-					bestScore = currentScore;
-					bestMove = p;
-				} else {
-					current = negascout(mBoard, opp, depth+1, beta, currentScore);
-					bestScore = -current.getScore();
-					bestMove = p;
-			}
-
-			if(bestScore>=beta)
-				return new MoveScore(bestMove, bestScore);
-
-			adaptiveBeta = Math.max(alpha, bestScore) + 1;
-			}
-
-		}
+		// ArrayList<Point> possibleMoves = Rules.getAllPossibleMoves(board, player);
+		// if(possibleMoves.isEmpty())
+		// 	return new MoveScore(null, bestScore);
+		// bestMove = possibleMoves.get(0);
+        //
+        //
+		// // possibleMoves.forEach(System.out::println);
+		// for(Point p : possibleMoves) {
+		// 	byte[][] mBoard = new byte[8][8];
+		// 	for (int i = 0; i < 8; i++)
+		// 		mBoard[i] = board[i].clone();
+		// 	mBoard[p.x][p.y] = player;
+		// 	Rules.flipv2(mBoard, player, p.x, p.y);
+        //
+		// 	MoveScore current = negascout(mBoard, opp, depth+1, -adaptiveBeta, -Math.max(alpha, bestScore));
+		// 	currentScore = -current.getScore();
+        //
+		// 	if(currentScore>bestScore) {
+		// 		if(adaptiveBeta == beta || depth>=(maxDepth-2)) {
+		// 			bestScore = currentScore;
+		// 			bestMove = p;
+		// 		} else {
+		// 			current = negascout(mBoard, opp, depth+1, beta, currentScore);
+		// 			bestScore = -current.getScore();
+		// 			bestMove = p;
+		// 	}
+        //
+		// 	if(bestScore>=beta)
+		// 		return new MoveScore(bestMove, bestScore);
+        //
+		// 	adaptiveBeta = Math.max(alpha, bestScore) + 1;
+		// 	}
+        //
+		// }
 		return new MoveScore(bestMove, bestScore);
 	}
 

@@ -27,9 +27,27 @@ public class rPanel extends JPanel implements Game {
 	JLabel acceptedPlayer;
 	JLabel acceptedInvite;
 
+	public static long blackBB = 34628173824L;
+    public static long whiteBB = 68853694464L;
+	public static long possibleBB = 17729692631040L;
+
+	public byte getSquare(int squareIndex)
+	{
+		if ((blackBB & (1L << squareIndex)) != 0L)
+			return Rules.BLACK;
+
+		if ((whiteBB & (1L << squareIndex)) != 0L)
+			return Rules.WHITE;
+
+		if ((possibleBB & (1L << squareIndex)) != 0L)
+			return -3;
+
+		return (byte)0;
+	}
+
     @Override
     public int getSquare(int i, int j) {
-        return board[i][j];
+		return getSquare(8*i+j);
     }
 
 	@Override
@@ -38,30 +56,44 @@ public class rPanel extends JPanel implements Game {
 			repaint();
 	}
 
-	@Override
-	public void highlight(int i, int j) {
-		if(board[i][j] <= 0) {
-			highlightPossibleMoves(board, turn);
-			if(turn==1)
-				board[i][j] = -1;
-			else
-				board[i][j] = -2;
-			repaint();
-		}
-	}
+	// @Override
+	// public void highlight(int i, int j) {
+	// 	if(board[i][j] <= 0) {
+	// 		highlightPossibleMoves(board, turn);
+	// 		if(turn==1)
+	// 			board[i][j] = -1;
+	// 		else
+	// 			board[i][j] = -2;
+	// 		repaint();
+	// 	}
+	// }
+    //
+	// @Override
+	// public void highlightRemove(int i, int j) {
+	// 	if(board[i][j] < 0) {
+	// 		board[i][j] = 0;
+	// 		highlightPossibleMoves(board, turn);
+	// 		repaint();
+	// 	}
+	// }
+    //
+	public void setSquare(int squareIndex, byte square) {
+        emptySquare(squareIndex);
 
-	@Override
-	public void highlightRemove(int i, int j) {
-		if(board[i][j] < 0) {
-			board[i][j] = 0;
-			highlightPossibleMoves(board, turn);
-			repaint();
-		}
-	}
+        if (square == Rules.BLACK)
+            blackBB |= (1L << squareIndex);
+        else if (square == Rules.WHITE)
+            whiteBB |= (1L << squareIndex);
+    }
+
+    private void emptySquare(int squareIndex) {
+        blackBB &= ~(1L << squareIndex);
+        whiteBB &= ~(1L << squareIndex);
+    }
 
     @Override
     public void setSquare(int i,int j,byte value) {
-        board[i][j] = value;
+		setSquare(8*i+j, value);
     }
 
     public rPanel() {
@@ -91,7 +123,7 @@ public class rPanel extends JPanel implements Game {
 		test.setForeground(Color.WHITE);
         sidebar.add(test);
 
-        score = new JLabel("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
+        score = new JLabel("<html>"+"Zwart: "+String.valueOf(Rules.score(blackBB))+"<br/>"+"Wit: "+String.valueOf(Rules.score(whiteBB))+"</html>");
 		score.setForeground(Color.WHITE);
         sidebar.add(score);
 
@@ -179,12 +211,15 @@ public class rPanel extends JPanel implements Game {
 		test.setText(s);
 	}
 
-	public void highlightPossibleMoves(byte[][] board, byte turn) {
-		ArrayList<Point> res = Rules.getAllPossibleMoves(board, turn);
-		for(Point r : res)
-			highlightPossible(r.x, r.y);
+	public void highlightPossibleMoves(long turnBoard, long opBoard) {
+		possibleBB = Rules.getAllPossibleMoves(turnBoard, opBoard);
 	}
-
+	// public void highlightPossibleMoves(byte[][] board, byte turn) {
+	// 	ArrayList<Point> res = Rules.getAllPossibleMoves(board, turn);
+	// 	for(Point r : res)
+	// 		highlightPossible(r.x, r.y);
+	// }
+    //
 	public void removeHighlightPossibleMoves() {
 		for (int i = 0; i < 8; i++)
 			for (int j = 0; j < 8; j++)
@@ -195,62 +230,70 @@ public class rPanel extends JPanel implements Game {
     public void playMovez(int i, int j) {
 			Rules.flipv2(board, turn, i, j);
 			setSquare(i, j, turn);
-			if(!Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty())
+			long curBoard = turn==Rules.BLACK?blackBB:whiteBB;
+			long opBoard = turn==Rules.BLACK?whiteBB:blackBB;
+
+			if(Rules.getAllPossibleMoves(curBoard, opBoard)!=0L)
 				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
 	}
 
-    public void playMove(int i, int j) {
-		if (Rules.possibleMove(board, turn, i, j)) {
-			Rules.flipv2(board, turn, i, j);
-			setSquare(i, j, turn);
-			if(!Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty())
-				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
-			removeHighlightPossibleMoves();
-			highlightPossibleMoves(board, turn);
-			updateSidebarLabel1(String.valueOf(turn));
-			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
-		}
-		if(Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty()&&Rules.getAllPossibleMoves(board, turn).isEmpty())
-			test.setText("test.Game over");
+	public void playMove(int i, int j) {
+		long curBoard = turn==Rules.BLACK?blackBB:whiteBB;
+		long opBoard = turn==Rules.BLACK?whiteBB:blackBB;
+		setSquare(i, j, turn);
+		if(Rules.getAllPossibleMoves(curBoard, opBoard)!=0L)
+			turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
+		highlightPossibleMoves(curBoard, opBoard);
+		updateSidebarLabel1(String.valueOf(turn));
+		updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(blackBB))+"<br/>"+"Wit: "+String.valueOf(Rules.score(whiteBB))+"</html>");
+
 		repaint();
-		if(turn==Rules.WHITE)
-		do{
-			Point p = negaAI.findMove(board, turn);
-			Rules.flipv2(board, turn, p.x, p.y);
-			setSquare(p.x, p.y, turn);
-			if(!Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty())
-				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
-			removeHighlightPossibleMoves();
-			highlightPossibleMoves(board, turn);
-			updateSidebarLabel1(String.valueOf(turn));
-			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
-		} while(Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty());
-		// nega();
-		// repaint();
-		// random();
-		// repaint();
 	}
-
-    public void resetBoard() {
-        board = new byte[8][8];
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                board[i][j]=0;
-            }
-        }
-        setSquare(3,3,Rules.WHITE);
-        setSquare(3,4,Rules.BLACK);
-        setSquare(4,3,Rules.BLACK);
-        setSquare(4,4,Rules.WHITE);
-		highlightPossibleMoves(board, turn);
+    // public void playMove(int i, int j) {
+	// 	if (Rules.possibleMove(board, turn, i, j)) {
+	// 		Rules.flipv2(board, turn, i, j);
+	// 		setSquare(i, j, turn);
+	// 		if(!Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty())
+	// 			turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
+	// 		removeHighlightPossibleMoves();
+	// 		highlightPossibleMoves(board, turn);
+	// 		updateSidebarLabel1(String.valueOf(turn));
+	// 		updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
+	// 	}
+	// 	if(Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty()&&Rules.getAllPossibleMoves(board, turn).isEmpty())
+	// 		test.setText("test.Game over");
+	// 	repaint();
+	// }
+    //
+	public void resetBoard() {
+		blackBB = 34628173824L;
+		whiteBB = 68853694464L;
+		possibleBB = 17729692631040L;
+	}
+	public static long emptyBoard()
+    {
+        return ~(blackBB | whiteBB);
     }
-
+    // public void resetBoard() {
+    //     board = new byte[8][8];
+    //     for (int i = 0; i < 8; i++) {
+    //         for (int j = 0; j < 8; j++) {
+    //             board[i][j]=0;
+    //         }
+    //     }
+    //     setSquare(3,3,Rules.WHITE);
+    //     setSquare(3,4,Rules.BLACK);
+    //     setSquare(4,3,Rules.BLACK);
+    //     setSquare(4,4,Rules.WHITE);
+	// 	highlightPossibleMoves(board, turn);
+    // }
+    //
 	public void resetAll() {
 		running = false;
 		turn = 1;
 		resetBoard();
 		updateSidebarLabel1(String.valueOf(turn));
-		updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
+		updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(blackBB))+"<br/>"+"Wit: "+String.valueOf(Rules.score(whiteBB))+"</html>");
 		repaint();
 	}
 
@@ -269,33 +312,6 @@ public class rPanel extends JPanel implements Game {
 		}
 	}
 
-	public void nega() {
-		while(turn == 2){
-		ArrayList<Point> possibleMoves2 = Rules.getAllPossibleMoves(board, turn);
-		for(Point p : possibleMoves2) {
-			bestMove = p;
-			for (int kk = 0; kk < 8; kk++)
-				mBoard[kk] = board[kk].clone();
-			mBoard[p.x][p.y] = turn;
-			Rules.flipv2(mBoard, turn, p.x, p.y);
-			// value = negaAI.negamax(mBoard, turn, 7, 1);
-			if(value > best){
-				best = value;
-				bestMove = p;
-			}
-		}
-			board[bestMove.x][bestMove.y] = turn;
-			Rules.flipv2(board, turn, bestMove.x, bestMove.y);
-			if(!Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty())
-				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
-			removeHighlightPossibleMoves();
-			highlightPossibleMoves(board, turn);
-			updateSidebarLabel1(String.valueOf(turn));
-			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
-			// playMove(bestMove.x, bestMove.y);
-	}
-	}
-
 	int aantal = 0, zwart = 0, wit = 0, gelijk = 0;
 	int value = 0, best = 0;
 	Point bestMove = new Point();
@@ -305,20 +321,20 @@ public class rPanel extends JPanel implements Game {
 			long t = System.currentTimeMillis();
 			long end = t+300000;
 			while(System.currentTimeMillis() < end){
-				possibleMoves = Rules.getAllPossibleMoves(board, turn);
+				// possibleMoves = Rules.getAllPossibleMoves(board, turn);
 				if(!possibleMoves.isEmpty()){
 					if(turn == Rules.WHITE)
 						try{
-							Point p = negaAI.findMove(board, turn);
-							playMovez(p.x, p.y);
+							// Point p = negaAI.findMove(board, turn);
+							// playMovez(p.x, p.y);
 						} catch(NullPointerException n){
 							// System.out.println("null");
 						}
 					else if(turn == Rules.BLACK)
 						try{
-							Point p = randomAI.random(board, turn);
+							// Point p = randomAI.random(board, turn);
 							// Point p = greedyAI.greedy(board, turn);
-							playMovez(p.x, p.y);
+							// playMovez(p.x, p.y);
 						} catch(NullPointerException n){
 							System.out.println("null");
 						}
@@ -326,9 +342,9 @@ public class rPanel extends JPanel implements Game {
 					aantal++;
 					if(aantal%10==0)
 						System.out.println(aantal);
-					if(Rules.score(board, Rules.BLACK)>Rules.score(board, Rules.WHITE))
+					if(Rules.score(blackBB)>Rules.score(whiteBB))
 						zwart++;
-					else if(Rules.score(board, Rules.BLACK)<Rules.score(board, Rules.WHITE))
+					else if(Rules.score(blackBB)<Rules.score(whiteBB))
 						wit++;
 					else
 						gelijk++;
@@ -356,7 +372,7 @@ public class rPanel extends JPanel implements Game {
 			long t = System.currentTimeMillis();
 			long end = t+10000;
 			while(System.currentTimeMillis() < end){
-				possibleMoves = Rules.getAllPossibleMoves(board, turn);
+				// possibleMoves = Rules.getAllPossibleMoves(board, turn);
 				if(!possibleMoves.isEmpty()){
 					if(turn == 1)
 						try{
@@ -376,9 +392,9 @@ public class rPanel extends JPanel implements Game {
 					aantal++;
 					if(aantal%1000==0)
 						System.out.println(aantal);
-					if(Rules.score(board, Rules.BLACK)>Rules.score(board, Rules.WHITE))
+					if(Rules.score(blackBB)>Rules.score(whiteBB))
 						zwart++;
-					else if(Rules.score(board, Rules.BLACK)<Rules.score(board, Rules.WHITE))
+					else if(Rules.score(blackBB)<Rules.score(whiteBB))
 						wit++;
 					else
 						gelijk++;

@@ -8,9 +8,9 @@ public interface Game{
 
     public void playMove(int i,int j);
 
-	public void highlight(int i, int j);
-
-	public void highlightRemove(int i, int j);
+	// public void highlight(int i, int j);
+    //
+	// public void highlightRemove(int i, int j);
 
 	public void highlightPossible(int i, int j);
 

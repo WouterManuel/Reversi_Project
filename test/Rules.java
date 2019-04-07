@@ -6,14 +6,14 @@ import java.util.ArrayList;
 public class Rules {
 
 	public static final byte BLACK = 1, WHITE = 2;
-    public static ArrayList<Point> getAllPossibleMoves(byte[][] board, byte player){
-        ArrayList<Point> result = new ArrayList<>();
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++)
-                if(board[i][j] <= 0 && possibleMovev2(board,player,i,j))
-                    result.add(new Point(i,j));
-        return result;
-    }
+    // public static ArrayList<Point> getAllPossibleMoves(byte[][] board, byte player){
+    //     ArrayList<Point> result = new ArrayList<>();
+    //     for (int i = 0; i < 8; i++)
+    //         for (int j = 0; j < 8; j++)
+    //             if(board[i][j] <= 0 && possibleMovev2(board,player,i,j))
+    //                 result.add(new Point(i,j));
+    //     return result;
+    // }
 
 	public static int scoreH(byte[][] board, byte color) {
 		int ret = 0;
@@ -65,21 +65,24 @@ public class Rules {
 		return ret;
 	}
 
-	public static int score(byte[][] board, byte color) {
-		int ret = 0;
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++)
-				if(board[i][j]==color)
-					ret++;
-		return ret;
+	public static int score(long board) {
+		return Long.bitCount(board);
 	}
+	// public static int score(byte[][] board, byte color) {
+	// 	int ret = 0;
+    //     for (int i = 0; i < 8; i++)
+    //         for (int j = 0; j < 8; j++)
+	// 			if(board[i][j]==color)
+	// 				ret++;
+	// 	return ret;
+	// }
 
-	public static void printPossibleMoves(byte[][] board, byte turn) {
-		ArrayList<Point> res = getAllPossibleMoves(board, turn);
-		for(Point r : res)
-			System.out.println(r);
-	}
-
+	// public static void printPossibleMoves(byte[][] board, byte turn) {
+	// 	ArrayList<Point> res = getAllPossibleMoves(board, turn);
+	// 	for(Point r : res)
+	// 		System.out.println(r);
+	// }
+    //
 	public static int flipScore(byte[][] board, byte player, int i, int j) {
         int moveI, moveJ, cells;
         int opponent = ((player == 1) ? 2 : 1);
@@ -271,6 +274,107 @@ public class Rules {
 				board[moveI++][moveJ++] = player;
 			}
 		}
+	}
+
+	public static final long RIGHT_MASK = 9187201950435737471L;
+    public static final long LEFT_MASK = -72340172838076674L;
+    public static final long UP_MASK = -256L;
+    public static final long DOWN_MASK = 72057594037927935L;
+	public static final long PASS = -1L;
+
+	public int getNumMoves(long legalBB) {
+        return legalBB == PASS ? 1 : Long.bitCount(legalBB);
+    }
+
+	public static long getAllPossibleMoves(long turnBoard, long opBoard) {
+		long legalBB = 0L;
+		long potentialMoves;
+		long curBoard = turnBoard;
+		long oppBoard = opBoard;
+		long emptyBoard = rPanel.emptyBoard();
+		final int SIZE = 8;
+
+		// UP
+		potentialMoves = (curBoard >> SIZE) & DOWN_MASK & oppBoard;
+
+		while (potentialMoves != 0L)
+		{
+			long tmp = (potentialMoves >> SIZE) & DOWN_MASK;
+			legalBB |= tmp & emptyBoard;
+			potentialMoves = tmp & oppBoard;
+		}
+
+		// DOWN
+		potentialMoves = (curBoard << SIZE) & UP_MASK & oppBoard;
+
+		while (potentialMoves != 0L)
+		{
+			long tmp = (potentialMoves << SIZE) & UP_MASK;
+			legalBB |= tmp & emptyBoard;
+			potentialMoves = tmp & oppBoard;
+		}
+
+		// LEFT
+		potentialMoves = (curBoard >> 1L) & RIGHT_MASK & oppBoard;
+
+		while (potentialMoves != 0L)
+		{
+			long tmp = (potentialMoves >> 1L) & RIGHT_MASK;
+			legalBB |= tmp & emptyBoard;
+			potentialMoves = tmp & oppBoard;
+		}
+
+		// RIGHT
+		potentialMoves = (curBoard << 1L) & LEFT_MASK & oppBoard;
+
+		while (potentialMoves != 0L)
+		{
+			long tmp = (potentialMoves << 1L) & LEFT_MASK;
+			legalBB |= tmp & emptyBoard;
+			potentialMoves = tmp & oppBoard;
+		}
+
+		// UP LEFT
+		potentialMoves = (curBoard >> (SIZE + 1L)) & RIGHT_MASK & DOWN_MASK & oppBoard;
+
+		while (potentialMoves != 0L)
+		{
+			long tmp = (potentialMoves >> (SIZE + 1L)) & RIGHT_MASK & DOWN_MASK;
+			legalBB |= tmp & emptyBoard;
+			potentialMoves = tmp & oppBoard;
+		}
+
+		// UP RIGHT
+		potentialMoves = (curBoard >> (SIZE - 1L)) & LEFT_MASK & DOWN_MASK & oppBoard;
+
+		while (potentialMoves != 0L)
+		{
+			long tmp = (potentialMoves >> (SIZE - 1L)) & LEFT_MASK & DOWN_MASK;
+			legalBB |= tmp & emptyBoard;
+			potentialMoves = tmp & oppBoard;
+		}
+
+		// DOWN LEFT
+		potentialMoves = (curBoard << (SIZE - 1L)) & RIGHT_MASK & UP_MASK & oppBoard;
+
+		while (potentialMoves != 0L)
+		{
+			long tmp = (potentialMoves << (SIZE - 1L)) & RIGHT_MASK & UP_MASK;
+			legalBB |= tmp & emptyBoard;
+			potentialMoves = tmp & oppBoard;
+		}
+
+		// DOWN RIGHT
+		potentialMoves = (curBoard << (SIZE + 1L)) & LEFT_MASK & UP_MASK & oppBoard;
+
+		while (potentialMoves != 0L)
+		{
+			long tmp = (potentialMoves << (SIZE + 1L)) & LEFT_MASK & UP_MASK;
+			legalBB |= tmp & emptyBoard;
+			potentialMoves = tmp & oppBoard;
+		}
+
+		return legalBB;
 	}
 
 	protected static final int[] DX = { -1,  0,  1, -1, 1, -1, 0, 1 };
