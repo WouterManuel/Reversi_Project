@@ -1,5 +1,7 @@
 package model.game;
 
+import controller.ServerCommand;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ public class Reversi extends Game {
     protected final int[] DX = { -1,  0,  1, -1, 1, -1, 0, 1 };
     protected final int[] DY = { -1, -1, -1,  0, 0,  1, 1, 1 };
 
-    public Reversi() {
+    public Reversi(ServerCommand servercommander) {
         board = new byte[8][8];
         player = 1; // zwart eerst
 

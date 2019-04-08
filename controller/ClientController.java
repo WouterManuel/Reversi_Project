@@ -9,9 +9,10 @@ public class ClientController {
     private static ServerCommand serverCommander;
     Window window;
     Reversi reversi;
+    boolean connected;
 
     public ClientController() {
-        reversi = new Reversi();
+        reversi = new Reversi(serverCommander);
         window = new Window(this);
     }
 
