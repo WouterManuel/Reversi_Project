@@ -21,7 +21,10 @@ public abstract class Game {
     public void setSquare(int i,int j, byte value) {
         board[i][j] = value;
     }
+
     public abstract void setPanel(JPanel panel);
+
+    public abstract void setSidebar(JPanel sidebar);
 
     public abstract void resetBoard();
 
@@ -39,5 +42,8 @@ public abstract class Game {
 
     public abstract void removeHighlightPossibleMoves();
 
+    public void update(String value) {
+
+    }
 
 }

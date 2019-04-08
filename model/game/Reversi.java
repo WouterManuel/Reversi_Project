@@ -1,6 +1,7 @@
 package model.game;
 
 import controller.ServerCommand;
+import controller.ServerListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,13 +10,22 @@ import java.util.ArrayList;
 public class Reversi extends Game {
     byte player;
     JPanel reversiPanel;
+    JPanel sidebar;
+    boolean turn;
+    ServerCommand serverCommander;
+    String username;
 
     protected final int[] DX = { -1,  0,  1, -1, 1, -1, 0, 1 };
     protected final int[] DY = { -1, -1, -1,  0, 0,  1, 1, 1 };
 
-    public Reversi(ServerCommand servercommander) {
+    public Reversi(ServerCommand serverCommander) {
         board = new byte[8][8];
         player = 1; // zwart eerst
+        this.serverCommander = serverCommander;
+        if(serverCommander.getConnectionStatus()) {
+            username = serverCommander.getUsername();
+            ServerListener.registerObserver(this);
+        }
     }
 
     public Reversi() {
@@ -27,6 +37,20 @@ public class Reversi extends Game {
     public void setPanel(JPanel reversiPanel) {
         this.reversiPanel = reversiPanel;
     }
+
+    public void setSidebar(JPanel GameSidebarPanel) {this.sidebar = GameSidebarPanel;}
+
+    public void update(String value){
+            if(value.equals("YOURTURN") || value.equals(username))
+                turn = true;
+            else
+                try
+                { Integer.parseInt(value); }
+                catch (NumberFormatException ex)
+                { ex.printStackTrace(); }
+
+    }
+
     public ArrayList<Point> getAllPossibleMoves(byte[][] board, byte player){
         ArrayList<Point> result = new ArrayList<>();
         for (int i = 0; i < 8; i++)

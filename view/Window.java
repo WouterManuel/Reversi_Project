@@ -18,6 +18,7 @@ public class Window extends JFrame {
 	private JPanel serverConnectionPanel;
 	private JPanel gameSettingsPanel;
 	private JPanel serverDetailsPanel;
+	private ServerLoginPanel serverLoginPanel;
 
 	WindowState introState;
 	WindowState connectedToServer;
@@ -31,9 +32,9 @@ public class Window extends JFrame {
 		reversiPanel = new ReversiPanel(clientController.getOfflineReversiGame());
 		gameSidebarPanel = new GameSidebarPanel();
 		serverConnectionPanel = new ServerConnectionPanel(clientController);
-		loginPanel = new ServerLoginPanel(clientController);
 		gameSettingsPanel = new GameSettingsPanel(clientController);
 		serverDetailsPanel = new ServerDetailsPanel();
+		serverLoginPanel = new ServerLoginPanel(clientController);
 
 		introState = new IntroState(this);
 		//startReversiGameState = new StartReversiGameState(this);
@@ -91,7 +92,7 @@ public class Window extends JFrame {
 		return serverDetailsPanel;
 	}
 
-	public JPanel getLoginPanel() {
-		return loginPanel;
+	public ServerLoginPanel getServerLoginPanel() {
+		return serverLoginPanel;
 	}
 }

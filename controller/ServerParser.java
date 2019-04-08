@@ -5,6 +5,11 @@ import java.util.Arrays;
 
 public class ServerParser {
 
+        ServerListener listener;
+
+        public ServerParser(ServerListener listener) {
+            this.listener = listener;
+        }
         /**
          * Parses the output from the controller.server and puts each message in an arrayList.
          * By going through the elements in the array the appropriate action is selected.
@@ -13,7 +18,7 @@ public class ServerParser {
          * and handled by a second switch statement.
          * */
 
-        public static ArrayList<String> parseServerOutput(String s) {
+        public ArrayList<String> parseServerOutput(String s) {
 			ArrayList<String> outputList = new ArrayList<>(Arrays.asList(s.split(" ")));
 			ArrayList<String> playerlist = new ArrayList<>();
 
@@ -43,11 +48,13 @@ public class ServerParser {
      * @param list
      * @return
      */
-    public static ArrayList<String> parseGameOutput(ArrayList<String> list) {
+    public ArrayList<String> parseGameOutput(ArrayList<String> list) {
         ArrayList<String> temp = new ArrayList<>();
             switch(list.get(2)) {
                 case "MATCH":
-                    listIterator(list, temp, 3);
+                    listIterator(list, temp, 2);
+                    String turn = listIterator(list, temp, 3).get(1);
+                    listener.notifyObservers(turn);
 					break;
                 // TODO
                 // Check if the PLAYERTOMOVE name = the clients name.
@@ -56,7 +63,8 @@ public class ServerParser {
                 //Handles the move message from the controller.server to store the value in temp
                 // and then passing it on to the model to set the last move to the receiver value
                 case "MOVE":
-                    listIterator(list, temp, 3);
+                    String move = listIterator(list, temp, 3).get(5);
+                    listener.notifyObservers(move);
 					break;
 
                 case "CHALLENGE":
@@ -66,7 +74,7 @@ public class ServerParser {
 					break;
 
                 case "YOURTURN":
-                    listIterator(list, temp, 3);
+                    listener.notifyObservers("YOURTURN");
 					break;
 
                 case "WIN":

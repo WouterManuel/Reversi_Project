@@ -18,8 +18,9 @@ public class ClientController {
 
     public void startServerCommand(String hostname, int port) {
         serverCommander = new ServerCommand(hostname, port);
-        window.connected();
         connected = serverCommander.getConnectionStatus();
+        window.getServerLoginPanel().setServerCommander(serverCommander);
+        window.connected();
     }
 
     //TODO add playAs
@@ -33,6 +34,10 @@ public class ClientController {
 
     public Game getOfflineReversiGame() {
         return reversiOffline;
+    }
+
+    public ServerCommand getServerCommander(){
+        return serverCommander;
     }
 
 

@@ -10,6 +10,7 @@ public class ServerCommand {
     ServerListener listener;
     PrintStream output;
     InputStreamReader input;
+    String username;
 
     public ServerCommand(String host, int port) {
         try {
@@ -17,8 +18,8 @@ public class ServerCommand {
             this.output = new PrintStream(connection.getSocket().getOutputStream());
             this.input = new InputStreamReader(connection.getSocket().getInputStream());
             this.listener = new ServerListener(input);
-            Thread serverThread = new Thread(listener);
 
+            Thread serverThread = new Thread(listener);
             serverThread.start();
         } catch (IOException e) {
             System.out.println("\033[34;1m[SERVER]\033[0m : \033[31;1m[ERROR]\033[0m Not available.");
@@ -31,7 +32,9 @@ public class ServerCommand {
         try {
             output.println("login " + username);
             Thread.sleep(100);
-            checkIfValidCommand();
+            if(checkIfValidCommand()) {
+                this.username = username;
+            }
         } catch (NullPointerException ex) {
             System.out.println("\033[34;1m[SERVERCOMMAND]\033[0m : Server not available.");
         } catch (InterruptedException e) {
@@ -148,6 +151,10 @@ public class ServerCommand {
 
     public boolean getConnectionStatus(){
        return connection.getConnectionStatus();
+    }
+
+    public String getUsername() {
+        return username;
     }
 
 }
