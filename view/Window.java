@@ -33,6 +33,7 @@ public class Window extends JFrame {
 		serverConnectionPanel = new ServerConnectionPanel(clientController);
 		loginPanel = new ServerLoginPanel(clientController);
 		gameSettingsPanel = new GameSettingsPanel();
+		serverDetailsPanel = new ServerDetailsPanel();
 
 		introState = new IntroState(this);
 		currentState = introState;
@@ -89,6 +90,10 @@ public class Window extends JFrame {
 
 	public JPanel getServerConnectionPanel() {
 		return serverConnectionPanel;
+	}
+
+	public JPanel getServerDetailsPanel() {
+		return serverDetailsPanel;
 	}
 
 	public JPanel getLoginPanel() {

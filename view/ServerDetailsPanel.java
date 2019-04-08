@@ -1,30 +1,43 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class ServerDetailsPanel extends JPanel {
-    JList playerList;
-    JList inviteList;
-    JButton listBtn;
-    JButton listBtn2;
-    JLabel acceptedPlayer;
-    JLabel acceptedInvite;
-    JLabel listText;
-    JLabel listText2;
+	JList playerList;
+	JList inviteList;
+	JButton listBtn;
+	JButton listBtn2;
+	JLabel acceptedPlayer;
+	JLabel acceptedInvite;
+	JLabel listText;
+	JLabel listText2;
 
 
-    public ServerDetailsPanel() {
-        setPreferredSize(new Dimension(300,400));
-        setLayout(new GridLayout(3,2));
+	public ServerDetailsPanel() {
+		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+		setPreferredSize(new Dimension(400,300));
+		setBackground(Color.GRAY);
 
-        listText = new JLabel("Playerlist :");
+		GridBagLayout experimentLayout = new GridBagLayout();
+		GridBagConstraints gbc = new GridBagConstraints();
+		setLayout(experimentLayout);
+		GridBagLayout layout = new GridBagLayout();
+		this.setLayout((layout));
+
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.ipadx = 20;
+
+		listText = new JLabel("Playerlist :");
 		listText.setForeground(Color.WHITE);
-		add(listText,0.1);
+		add(listText, gbc);
 
-        listText = new JLabel("Invitelist :");
-        listText.setForeground(Color.WHITE);
-        add(listText,1);
+		gbc.weighty = 10;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
 
 		String players[]= { "player1", "john doe", "foo", "bar","oke"};
 		if (players.length>0){
@@ -33,7 +46,6 @@ public class ServerDetailsPanel extends JPanel {
 
 			/* Challenge btn */
 			listBtn = new JButton("Challenge");
-			listBtn.addActionListener(e -> System.out.println("Challenge"));
 
 			/* See challenged player */
 			acceptedPlayer = new JLabel("");
@@ -41,13 +53,27 @@ public class ServerDetailsPanel extends JPanel {
 
 			listBtn.addActionListener(e -> seeAcceptedPlayer());
 
-			add(playerList);
-			add(listBtn);
+			add(playerList, gbc);
+
+			gbc.gridx = 0;
+			gbc.gridy = 2;
+			add(listBtn, gbc);
 		}
 		else {
 			acceptedPlayer = new JLabel("No players found");
 			acceptedPlayer.setForeground(Color.WHITE);
 		}
+
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.ipadx = 20;
+
+		listText = new JLabel("Invitelist :");
+		listText.setForeground(Color.WHITE);
+		add(listText, gbc);
+
+		gbc.gridx = 1;
+		gbc.gridy = 1;
 
 		String invites[]= { "inv1", "inv2", "inv3", "inv4"};
 		if (invites.length>0){
@@ -62,22 +88,27 @@ public class ServerDetailsPanel extends JPanel {
 			acceptedInvite = new JLabel("");
 			acceptedInvite.setForeground(Color.WHITE);
 
-			listBtn.addActionListener(e -> seeAcceptedInvite());
+			listBtn2.addActionListener(e -> seeAcceptedInvite());
 
-			add(inviteList);
-			add(listBtn2);
+			add(inviteList, gbc);
+
+			gbc.weighty = 4;
+			gbc.gridx = 1;
+			gbc.gridy = 2;
+			add(listBtn2, gbc);
 		}
 		else {
 			acceptedInvite = new JLabel("No players found");
 			acceptedInvite.setForeground(Color.WHITE);
 		}
-    }
+	}
 
 	public void seeAcceptedPlayer() {
 		if (playerList.getSelectedValue() != null) {
 			String data = "";
 			data = "" + playerList.getSelectedValue();
 			acceptedPlayer.setText(data);
+			System.out.println(data);
 		}
 	}
 	public void seeAcceptedInvite() {
@@ -85,6 +116,7 @@ public class ServerDetailsPanel extends JPanel {
 			String data = "";
 			data = "" + inviteList.getSelectedValue();
 			acceptedInvite.setText(data);
+			System.out.println(data);
 		}
 	}
 }
