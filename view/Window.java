@@ -28,10 +28,12 @@ public class Window extends JFrame {
 
 	public Window(ClientController clientController){
 		this.clientController = clientController;
-		reversiPanel = new ReversiPanel(clientController.getReversiGame());
+		reversiPanel = new ReversiPanel(new Reversi());
 		gameSidebarPanel = new GameSidebarPanel();
 		serverConnectionPanel = new ServerConnectionPanel(clientController);
 		loginPanel = new ServerLoginPanel(clientController);
+		gameSettingsPanel = new GameSettingsPanel();
+		serverDetailsPanel = new ServerDetailsPanel();
 
 		introState = new IntroState(this);
 		currentState = introState;
@@ -82,15 +84,19 @@ public class Window extends JFrame {
 		return reversiPanel;
 	}
 
+	public JPanel getGameSettingsPanel() {
+		return gameSettingsPanel;
+	}
+
 	public JPanel getServerConnectionPanel() {
 		return serverConnectionPanel;
+	}
+
+	public JPanel getServerDetailsPanel() {
+		return serverDetailsPanel;
 	}
 
 	public JPanel getLoginPanel() {
 		return loginPanel;
 	}
-
-//	public void makeReversiPanel(Game reversi) {
-//		this.reversiPanel = new ReversiPanel(reversi);
-//	}
 }

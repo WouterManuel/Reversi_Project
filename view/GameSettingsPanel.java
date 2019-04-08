@@ -13,27 +13,46 @@ public class GameSettingsPanel extends JPanel{
     JButton playGame;
 
     public GameSettingsPanel() {
+
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(400,300));
         setBackground(Color.DARK_GRAY);
 
-        GridLayout experimentLayout = new GridLayout(3,2);
+        GridBagLayout experimentLayout = new GridBagLayout();
+        GridBagConstraints gbc = new GridBagConstraints();
         setLayout(experimentLayout);
+        GridBagLayout layout = new GridBagLayout();
+        this.setLayout((layout));
 
-        add(new JLabel("<html><br><div style='margin: 10; color: white;'>"+"Play as :"+"</div></html>"));
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.ipadx = 20;
+        add(new JLabel("<html><br><div style='color: white;'>"+"Play as :"+"</div></html>"),gbc);
 
+        gbc.gridx = 1;
+        gbc.gridy = 0;
         String[] playsAs = new String[] {"Myself","AI","Kiran"};
         JComboBox<String> playAs = new JComboBox<>(playsAs);
-        add(playAs);
+        add(playAs,gbc);
 
-        add(new JLabel("<html><br><div style='margin: 10; color: white;'>"+"Gamemode :"+"</div></html>"));
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        add(new JLabel("<html><br><div style='color: white;'>"+"Game:"+"</div></html>"),gbc);
         String[] gameTypes = new String[] {"Reversi","Tic-Tac-Toe"};
         JComboBox<String> gameType = new JComboBox<>(gameTypes);
-        add(gameType);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        add(gameType,gbc);
 
-        playGame = new JButton("<html><div style='padding: 0'>"+"Play :"+"</div></html>");
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridwidth = 2;
+        playGame = new JButton("<html><div style='padding: 0'>"+"Play now"+"</div></html>");
         //playGame.addActionListener(e -> {this.getComponent(0).remove(); this.add(showReversiBoard(), BorderLayout.WEST);});
-        add(playGame);
+        add(playGame,gbc);
 
     }
 

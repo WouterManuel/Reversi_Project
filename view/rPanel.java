@@ -162,7 +162,7 @@
 //			highlightPossibleMoves(board, turn);
 //			//updateSidebarLabel1(String.valueOf(turn));
 //			//updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
-//		} while(Rules.ibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty());
+//		} while(Rules.getAllPossibleMoves(board, turn==Rules.BLACK?Rules.WHITE:Rules.BLACK).isEmpty());
 //		// nega();
 //		// repaint();
 //		// random();
