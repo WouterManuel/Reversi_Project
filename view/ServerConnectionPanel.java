@@ -40,7 +40,7 @@ public class ServerConnectionPanel extends JPanel {
         /* Connect btn */
         gbc.gridx = 0;
         gbc.gridy = 4;
-        JButton listBtn = new JButton("Connect");
+        JButton listBtn = new JButton("Connect now");
         listBtn.addActionListener(e -> clientController.startServerCommand(hostname.getText(), Integer.valueOf(port.getText())));
         add(listBtn, gbc);
     }
