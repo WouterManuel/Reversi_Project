@@ -28,7 +28,7 @@ public class Window extends JFrame {
 
 	public Window(ClientController clientController){
 		this.clientController = clientController;
-		reversiPanel = new ReversiPanel(new Reversi());
+		reversiPanel = new ReversiPanel(clientController.getReversiGame());
 		gameSidebarPanel = new GameSidebarPanel();
 		serverConnectionPanel = new ServerConnectionPanel(clientController);
 		loginPanel = new ServerLoginPanel(clientController);
@@ -89,4 +89,8 @@ public class Window extends JFrame {
 	public JPanel getLoginPanel() {
 		return loginPanel;
 	}
+
+//	public void makeReversiPanel(Game reversi) {
+//		this.reversiPanel = new ReversiPanel(reversi);
+//	}
 }

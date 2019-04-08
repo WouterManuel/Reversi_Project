@@ -1,10 +1,12 @@
 package model.game;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Reversi extends Game {
     byte player;
+    JPanel reversiPanel;
 
     protected final int[] DX = { -1,  0,  1, -1, 1, -1, 0, 1 };
     protected final int[] DY = { -1, -1, -1,  0, 0,  1, 1, 1 };
@@ -12,8 +14,13 @@ public class Reversi extends Game {
     public Reversi() {
         board = new byte[8][8];
         player = 1; // zwart eerst
+
     }
 
+    @Override
+    public void setPanel(JPanel reversiPanel) {
+        this.reversiPanel = reversiPanel;
+    }
     public ArrayList<Point> getAllPossibleMoves(byte[][] board, byte player){
         ArrayList<Point> result = new ArrayList<>();
         for (int i = 0; i < 8; i++)
@@ -491,31 +498,31 @@ public class Reversi extends Game {
     }
 
 //    public void playMove(int i, int j) {
-//        if (possibleMove(board, turn, i, j)) {
-//            flipv2(board, turn, i, j);
-//            setSquare(i, j, turn);
-//            if(!getAllPossibleMoves(board, turn==BLACK?WHITE:BLACK).isEmpty())
-//                turn = turn==BLACK?WHITE:BLACK;
+//        if (possibleMove(board, player, i, j)) {
+//            flipv2(board, player, i, j);
+//            setSquare(i, j, player);
+//            if(!getAllPossibleMoves(board, player==BLACK?WHITE:BLACK).isEmpty())
+//                player = player==BLACK?WHITE:BLACK;
 //            removeHighlightPossibleMoves();
-//            highlightPossibleMoves(board, turn);
-//            updateSidebarLabel1(String.valueOf(turn));
+//            highlightPossibleMoves(board, player);
+//            updateSidebarLabel1(String.valueOf(player));
 //            updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(score(board, BLACK))+"<br/>"+"Wit: "+String.valueOf(score(board, WHITE))+"</html>");
 //        }
-//        if(getAllPossibleMoves(board, turn==BLACK?WHITE:BLACK).isEmpty()&&getAllPossibleMoves(board, turn).isEmpty())
+//        if(getAllPossibleMoves(board, player==BLACK?WHITE:BLACK).isEmpty()&&getAllPossibleMoves(board, player).isEmpty())
 //            test.setText("model.Board over");
 //        repaint();
-//        if(turn==WHITE)
+//        if(player==WHITE)
 //            do{
-//                Point p = negaAI.findMove(board, turn);
-//                flipv2(board, turn, p.x, p.y);
-//                setSquare(p.x, p.y, turn);
-//                if(!getAllPossibleMoves(board, turn==BLACK?WHITE:BLACK).isEmpty())
-//                    turn = turn==BLACK?WHITE:BLACK;
+//                Point p = negaAI.findMove(board, player);
+//                flipv2(board, player, p.x, p.y);
+//                setSquare(p.x, p.y, player);
+//                if(!getAllPossibleMoves(board, player==BLACK?WHITE:BLACK).isEmpty())
+//                    player = player==BLACK?WHITE:BLACK;
 //                removeHighlightPossibleMoves();
-//                highlightPossibleMoves(board, turn);
-//                updateSidebarLabel1(String.valueOf(turn));
+//                highlightPossibleMoves(board, player);
+//                updateSidebarLabel1(String.valueOf(player));
 //                updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(score(board, BLACK))+"<br/>"+"Wit: "+String.valueOf(score(board, WHITE))+"</html>");
-//            } while(getAllPossibleMoves(board, turn==BLACK?WHITE:BLACK).isEmpty());
+//            } while(getAllPossibleMoves(board, player==BLACK?WHITE:BLACK).isEmpty());
 //        // nega();
 //        // repaint();
 //        // random();
@@ -523,23 +530,59 @@ public class Reversi extends Game {
 //    }
 
     public void playMove(int i,int j) {
-        //TODO
+        if (possibleMove(board, player, i, j)) {
+			flipv2(board, player, i, j);
+			setSquare(i, j, player);
+			if(!getAllPossibleMoves(board, player==BLACK?WHITE:BLACK).isEmpty())
+				player = player==BLACK?WHITE:BLACK;
+			removeHighlightPossibleMoves();
+			highlightPossibleMoves(board, player);
+			reversiPanel.repaint();
+
+			//updateSidebarLabel1(String.valueOf(player));
+			//updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(score(board, BLACK))+"<br/>"+"Wit: "+String.valueOf(score(board, WHITE))+"</html>");
+		}
+		//if(getAllPossibleMoves(board, player==BLACK?WHITE:BLACK).isEmpty()&&getAllPossibleMoves(board, player).isEmpty())
+			//test.setText("test.Game over");
     }
 
     public void highlight(int i, int j) {
-        //TODO
+      if(board[i][j] <= 0) {
+			highlightPossibleMoves(board, player);
+			if(player==1) {
+                board[i][j] = -1;
+            }
+			else {
+                board[i][j] = -2;
+            }
+          reversiPanel.repaint();
+      }
     }
 
     public void highlightRemove(int i, int j) {
-        //TODO
+        if(board[i][j] < 0) {
+			board[i][j] = 0;
+			highlightPossibleMoves(board, player);
+            reversiPanel.repaint();
+		}
     }
 
     public void highlightPossible(int i, int j) {
-        //TODO
+        board[i][j] = -3;
+		reversiPanel.repaint();
     }
 
+    public void highlightPossibleMoves(byte[][] board, byte player) {
+		ArrayList<Point> res = getAllPossibleMoves(board, player);
+		for(Point r : res)
+			highlightPossible(r.x, r.y);
+	}
+
     public void removeHighlightPossibleMoves() {
-        //TODO
+        for (int i = 0; i < 8; i++)
+			for (int j = 0; j < 8; j++)
+				if(board[i][j] == -3)
+					board[i][j] = 0;
     }
 
     public void resetBoard() {
@@ -555,12 +598,12 @@ public class Reversi extends Game {
         setSquare(3,4,BLACK);
         setSquare(4,3,BLACK);
         setSquare(4,4,WHITE);
-        //highlightPossibleMoves(board, turn);
+        highlightPossibleMoves(board, player);
 
         player = 1;
         //resetBoard();
-        //updateSidebarLabel1(String.valueOf(turn));
-        //updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
+        //updateSidebarLabel1(String.valueOf(player));
+        //updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(score(board, BLACK))+"<br/>"+"Wit: "+String.valueOf(score(board, WHITE))+"</html>");
         //repaint();
     }
 

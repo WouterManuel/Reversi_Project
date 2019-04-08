@@ -11,7 +11,6 @@ public class Piece extends JLabel implements MouseListener{
 	static final long serialVersionUID = 1L;
 
 	int i,j;
-    byte[][] board;
     Game game;
     JPanel parent;
 
@@ -19,7 +18,6 @@ public class Piece extends JLabel implements MouseListener{
 
     public Piece(Game game, JPanel parent, int i, int j) {
         this.game = game;
-        this.board = game.getBoard();
         this.parent = parent;
         this.i = i;
         this.j = j;
@@ -56,16 +54,16 @@ public class Piece extends JLabel implements MouseListener{
     }
 
     @Override
-	public void mouseEntered(MouseEvent e) { game.highlight(i,j); }
+	public void mouseEntered(MouseEvent e) { game.highlight(i,j);}
 
     @Override
-	public void mouseExited(MouseEvent e) { game.highlightRemove(i,j); }
+	public void mouseExited(MouseEvent e) { game.highlightRemove(i,j);}
 
     @Override
     public void mouseClicked(MouseEvent e) {}
 
     @Override
-    public void mousePressed(MouseEvent e) { game.playMove(i,j); }
+    public void mousePressed(MouseEvent e) { game.playMove(i,j);}
 
     @Override
     public void mouseReleased(MouseEvent e) {}

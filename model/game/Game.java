@@ -1,5 +1,6 @@
 package model.game;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public abstract class Game {
     public void setSquare(int i,int j, byte value) {
         board[i][j] = value;
     }
+    public abstract void setPanel(JPanel panel);
 
     public abstract void resetBoard();
 

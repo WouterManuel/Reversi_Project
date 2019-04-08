@@ -1,6 +1,7 @@
 package view;
 
 import model.game.Game;
+import model.game.Reversi;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +15,7 @@ public class ReversiPanel extends JPanel {
     JButton playGame;
 
     public ReversiPanel(Game reversi) {
+        reversi.setPanel(this);
 		setLayout(new GridLayout(8,8));
 		setPreferredSize(new Dimension(400,400));
 		setBackground(new Color(0, 102, 0));
