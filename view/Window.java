@@ -32,6 +32,7 @@ public class Window extends JFrame {
 		gameSidebarPanel = new GameSidebarPanel();
 		serverConnectionPanel = new ServerConnectionPanel(clientController);
 		loginPanel = new ServerLoginPanel(clientController);
+		gameSettingsPanel = new GameSettingsPanel();
 
 		introState = new IntroState(this);
 		currentState = introState;
@@ -80,6 +81,10 @@ public class Window extends JFrame {
 
 	public JPanel getReversiPanel() {
 		return reversiPanel;
+	}
+
+	public JPanel getGameSettingsPanel() {
+		return gameSettingsPanel;
 	}
 
 	public JPanel getServerConnectionPanel() {

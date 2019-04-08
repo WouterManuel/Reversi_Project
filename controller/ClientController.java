@@ -16,6 +16,8 @@ public class ClientController {
         window.connected();
     }
 
+
+
     public static void main(String[] args) {
         new ClientController();
     }
