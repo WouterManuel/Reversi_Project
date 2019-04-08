@@ -83,6 +83,166 @@ public class Rules {
 	// 		System.out.println(r);
 	// }
     //
+
+	public static long[] flip(int move, long currentBoard, long opponentBoard, byte turn) {
+		int totCellcount = 0, curCellcount = 0;
+		int SIZE = 8;
+		long[] totCells = new long[64];
+		long[] curCells = new long[64];
+		long potMove, playerCell;
+		long oppBoard = opponentBoard;
+		long curBoard = currentBoard;
+		long bMove = 1L << move;
+		currentBoard |= bMove; // place the new stone on the board
+		totCellcount = 0;
+
+		// UP
+		playerCell = 0L;
+		curCellcount = 0;
+		potMove = (bMove >> SIZE) & DOWN_MASK & oppBoard;
+
+		while (potMove != 0L)
+		{
+			curCells[curCellcount++] = potMove;
+			long tmp = (potMove >> SIZE) & DOWN_MASK;
+			playerCell = tmp & curBoard;
+			potMove = tmp & oppBoard;
+		}
+
+		if (playerCell != 0L)
+			for (int i = 0; i < curCellcount; i++)
+				totCells[totCellcount++] = curCells[i];
+
+		// DOWN
+		playerCell = 0L;
+		curCellcount = 0;
+		potMove = (bMove << SIZE) & UP_MASK & oppBoard;
+
+		while (potMove != 0L)
+		{
+			curCells[curCellcount++] = potMove;
+			long tmp = (potMove << SIZE) & UP_MASK;
+			playerCell = tmp & curBoard;
+			potMove = tmp & oppBoard;
+		}
+
+		if (playerCell != 0L)
+			for (int i = 0; i < curCellcount; i++)
+				totCells[totCellcount++] = curCells[i];
+
+		// LEFT
+		playerCell = 0L;
+		curCellcount = 0;
+		potMove = (bMove >> 1L) & RIGHT_MASK & oppBoard;
+
+		while (potMove != 0L)
+		{
+			curCells[curCellcount++] = potMove;
+			long tmp = (potMove >> 1L) & RIGHT_MASK;
+			playerCell = tmp & curBoard;
+			potMove = tmp & oppBoard;
+		}
+
+		if (playerCell != 0L)
+			for (int i = 0; i < curCellcount; i++)
+				totCells[totCellcount++] = curCells[i];
+
+		// RIGHT
+		playerCell = 0L;
+		curCellcount = 0;
+		potMove = (bMove << 1L) & LEFT_MASK & oppBoard;
+
+		while (potMove != 0L)
+		{
+			curCells[curCellcount++] = potMove;
+			long tmp = (potMove << 1L) & LEFT_MASK;
+			playerCell = tmp & curBoard;
+			potMove = tmp & oppBoard;
+		}
+
+		if (playerCell != 0L)
+			for (int i = 0; i < curCellcount; i++)
+				totCells[totCellcount++] = curCells[i];
+
+		// TOP LEFT
+		playerCell = 0L;
+		curCellcount = 0;
+		potMove = (bMove >> (SIZE + 1L)) & RIGHT_MASK & DOWN_MASK & oppBoard;
+
+		while (potMove != 0L)
+		{
+			curCells[curCellcount++] = potMove;
+			long tmp = (potMove >> (SIZE + 1L)) & RIGHT_MASK & DOWN_MASK;
+			playerCell = tmp & curBoard;
+			potMove = tmp & oppBoard;
+		}
+
+		if (playerCell != 0L)
+			for (int i = 0; i < curCellcount; i++)
+				totCells[totCellcount++] = curCells[i];
+
+		// TOP RIGHT
+		playerCell = 0L;
+		curCellcount = 0;
+		potMove = (bMove >> (SIZE - 1L)) & LEFT_MASK & DOWN_MASK & oppBoard;
+
+		while (potMove != 0L)
+		{
+			curCells[curCellcount++] = potMove;
+			long tmp = (potMove >> (SIZE - 1L)) & LEFT_MASK & DOWN_MASK;
+			playerCell = tmp & curBoard;
+			potMove = tmp & oppBoard;
+		}
+
+		if (playerCell != 0L)
+			for (int i = 0; i < curCellcount; i++)
+				totCells[totCellcount++] = curCells[i];
+
+		// DOWN LEFT
+		playerCell = 0L;
+		curCellcount = 0;
+		potMove = (bMove << (SIZE - 1L)) & RIGHT_MASK & UP_MASK & oppBoard;
+
+		while (potMove != 0L)
+		{
+			curCells[curCellcount++] = potMove;
+			long tmp = (potMove << (SIZE - 1L)) & RIGHT_MASK & UP_MASK;
+			playerCell = tmp & curBoard;
+			potMove = tmp & oppBoard;
+		}
+
+		if (playerCell != 0L)
+			for (int i = 0; i < curCellcount; i++)
+				totCells[totCellcount++] = curCells[i];
+
+		// DOWN RIGHT
+		playerCell = 0L;
+		curCellcount = 0;
+		potMove = (bMove << (SIZE + 1L)) & LEFT_MASK & UP_MASK & oppBoard;
+
+		while (potMove != 0L)
+		{
+			curCells[curCellcount++] = potMove;
+			long tmp = (potMove << (SIZE + 1L)) & LEFT_MASK & UP_MASK;
+			playerCell = tmp & curBoard;
+			potMove = tmp & oppBoard;
+		}
+
+		if (playerCell != 0L)
+			for (int i = 0; i < curCellcount; i++)
+				totCells[totCellcount++] = curCells[i];
+
+		// flip the stones
+		for (int i = 0; i < totCellcount; i++)
+		{
+			currentBoard |= totCells[i];
+			opponentBoard &= ~totCells[i];
+		}
+
+	long[] a = {currentBoard, opponentBoard};
+	return a;
+	}
+
 	public static int flipScore(byte[][] board, byte player, int i, int j) {
         int moveI, moveJ, cells;
         int opponent = ((player == 1) ? 2 : 1);
@@ -468,3 +628,4 @@ public class Rules {
         return false;
     }
 }
+

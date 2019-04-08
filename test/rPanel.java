@@ -238,16 +238,41 @@ public class rPanel extends JPanel implements Game {
 	}
 
 	public void playMove(int i, int j) {
-		long curBoard = turn==Rules.BLACK?blackBB:whiteBB;
-		long opBoard = turn==Rules.BLACK?whiteBB:blackBB;
-		setSquare(i, j, turn);
-		if(Rules.getAllPossibleMoves(curBoard, opBoard)!=0L)
-			turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
-		highlightPossibleMoves(curBoard, opBoard);
-		updateSidebarLabel1(String.valueOf(turn));
-		updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(blackBB))+"<br/>"+"Wit: "+String.valueOf(Rules.score(whiteBB))+"</html>");
+		if((possibleBB&(1L<<(8*i+j)))!=0L){
+			long curBoard = turn==Rules.BLACK?blackBB:whiteBB;
+			long opBoard = turn==Rules.BLACK?whiteBB:blackBB;
+			long[] res = Rules.flip((8*i+j), curBoard, opBoard, turn);
+				if(turn==Rules.BLACK){
+					blackBB = res[0];
+					whiteBB = res[1];
+				} else {
+					blackBB = res[1];
+					whiteBB = res[0];
+				}
+			setSquare(i, j, turn);
+			// if(Rules.getAllPossibleMoves(curBoard, opBoard)!=0L)
+				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
+			highlightPossibleMoves(curBoard, opBoard);
+			double bla = (Long.numberOfTrailingZeros(Long.highestOneBit(possibleBB))+1);
+			System.out.println(bla);
+			updateSidebarLabel1(String.valueOf(turn));
+			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(blackBB))+"<br/>"+"Wit: "+String.valueOf(Rules.score(whiteBB))+"</html>");
 
-		repaint();
+			curBoard = turn==Rules.BLACK?blackBB:whiteBB;
+			opBoard = turn==Rules.BLACK?whiteBB:blackBB;
+			Point p = negaAI.findMove(curBoard, opBoard, turn);
+			res = Rules.flip((8*i+j), curBoard, opBoard, turn);
+				if(turn==Rules.BLACK){
+					blackBB = res[0];
+					whiteBB = res[1];
+				} else {
+					blackBB = res[1];
+					whiteBB = res[0];
+				}
+			setSquare(p.x, p.y, turn);
+
+			repaint();
+		}
 	}
     // public void playMove(int i, int j) {
 	// 	if (Rules.possibleMove(board, turn, i, j)) {

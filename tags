@@ -1,0 +1,249 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AI	model/AI/AI.java	/^public abstract class AI {$/;"	c
+AITester	model/AI/AITester.java	/^    public AITester(AI ai1, AI ai2, byte[][] board, byte turn, Game game, long time) {$/;"	m	class:AITester
+AITester	model/AI/AITester.java	/^public class AITester implements Runnable{$/;"	c
+BLACK	model/game/Game.java	/^    public final byte BLACK = 1, WHITE = 2;$/;"	f	class:Game
+ClientApplication	ClientApplication.java	/^public class ClientApplication {$/;"	c
+ClientController	controller/ClientController.java	/^    public ClientController() {$/;"	m	class:ClientController
+ClientController	controller/ClientController.java	/^public class ClientController {$/;"	c
+ConnectedToServerState	view/states/ConnectedToServerState.java	/^    public ConnectedToServerState(Window window) {$/;"	m	class:ConnectedToServerState
+ConnectedToServerState	view/states/ConnectedToServerState.java	/^public class ConnectedToServerState implements WindowState {$/;"	c
+DX	model/game/Reversi.java	/^    protected final int[] DX = { -1,  0,  1, -1, 1, -1, 0, 1 };$/;"	f	class:Reversi
+DY	model/game/Reversi.java	/^    protected final int[] DY = { -1, -1, -1,  0, 0,  1, 1, 1 };$/;"	f	class:Reversi
+Game	model/game/Game.java	/^public abstract class Game {$/;"	c
+GameSettingsPanel	view/GameSettingsPanel.java	/^    public GameSettingsPanel() {$/;"	m	class:GameSettingsPanel
+GameSettingsPanel	view/GameSettingsPanel.java	/^public class GameSettingsPanel extends JPanel{$/;"	c
+GameSidebarPanel	view/GameSidebarPanel.java	/^    public GameSidebarPanel() {$/;"	m	class:GameSidebarPanel
+GameSidebarPanel	view/GameSidebarPanel.java	/^public class GameSidebarPanel extends JPanel{$/;"	c
+INF	model/AI/negaAI.java	/^	final int INF = 1000000;$/;"	f	class:negaAI
+IntroState	view/states/IntroState.java	/^    public IntroState(Window window) {$/;"	m	class:IntroState
+IntroState	view/states/IntroState.java	/^public class IntroState implements WindowState {$/;"	c
+Main	controller/Main.java	/^public class Main {$/;"	c
+MoveScore	model/AI/MoveScore.java	/^    public MoveScore(Point move, int score){$/;"	m	class:MoveScore
+MoveScore	model/AI/MoveScore.java	/^public class MoveScore {$/;"	c
+Piece	view/Piece.java	/^    public Piece(Game game, JPanel parent, int i, int j) {$/;"	m	class:Piece
+Piece	view/Piece.java	/^public class Piece extends JLabel implements MouseListener{$/;"	c
+Reversi	model/game/Reversi.java	/^    public Reversi() {$/;"	m	class:Reversi
+Reversi	model/game/Reversi.java	/^public class Reversi extends Game {$/;"	c
+ReversiPanel	view/ReversiPanel.java	/^    public ReversiPanel(Game reversi) {$/;"	m	class:ReversiPanel
+ReversiPanel	view/ReversiPanel.java	/^public class ReversiPanel extends JPanel {$/;"	c
+ServerCommand	controller/ServerCommand.java	/^    public ServerCommand(String host, int port) {$/;"	m	class:ServerCommand
+ServerCommand	controller/ServerCommand.java	/^public class ServerCommand {$/;"	c
+ServerConnection	controller/ServerConnection.java	/^    public ServerConnection(String host, int port) {$/;"	m	class:ServerConnection
+ServerConnection	controller/ServerConnection.java	/^public class ServerConnection {$/;"	c
+ServerConnectionPanel	view/ServerConnectionPanel.java	/^    public ServerConnectionPanel(ClientController clientController) {$/;"	m	class:ServerConnectionPanel
+ServerConnectionPanel	view/ServerConnectionPanel.java	/^public class ServerConnectionPanel extends JPanel {$/;"	c
+ServerDetailsPanel	view/ServerDetailsPanel.java	/^    public ServerDetailsPanel() {$/;"	m	class:ServerDetailsPanel
+ServerDetailsPanel	view/ServerDetailsPanel.java	/^public class ServerDetailsPanel extends JPanel {$/;"	c
+ServerListener	controller/ServerListener.java	/^    public ServerListener(InputStreamReader input) {$/;"	m	class:ServerListener
+ServerListener	controller/ServerListener.java	/^public class ServerListener implements Runnable{$/;"	c
+ServerLoginPanel	view/ServerLoginPanel.java	/^    public ServerLoginPanel(ClientController clientController) {$/;"	m	class:ServerLoginPanel
+ServerLoginPanel	view/ServerLoginPanel.java	/^public class ServerLoginPanel extends JPanel {$/;"	c
+ServerParser	controller/ServerParser.java	/^public class ServerParser {$/;"	c
+TicTacToe	model/game/TicTacToe.java	/^public class TicTacToe {$/;"	c
+WHITE	model/game/Game.java	/^    public final byte BLACK = 1, WHITE = 2;$/;"	f	class:Game
+Window	view/Window.java	/^	public Window(ClientController clientController){$/;"	m	class:Window
+Window	view/Window.java	/^public class Window extends JFrame {$/;"	c
+WindowState	view/states/WindowState.java	/^public interface WindowState {$/;"	i
+acceptedInvite	view/ServerDetailsPanel.java	/^    JLabel acceptedInvite;$/;"	f	class:ServerDetailsPanel
+acceptedPlayer	view/ServerDetailsPanel.java	/^    JLabel acceptedPlayer;$/;"	f	class:ServerDetailsPanel
+ai1	model/AI/AITester.java	/^    private AI ai1;$/;"	f	class:AITester	file:
+ai2	model/AI/AITester.java	/^    private AI ai2;$/;"	f	class:AITester	file:
+board	model/AI/AITester.java	/^    private byte[][] board;$/;"	f	class:AITester	file:
+board	model/game/Game.java	/^    protected byte[][] board;$/;"	f	class:Game
+board	view/Piece.java	/^    byte[][] board;$/;"	f	class:Piece
+checkIfValidCommand	controller/ServerCommand.java	/^    public boolean checkIfValidCommand() {$/;"	m	class:ServerCommand
+clientController	view/ServerConnectionPanel.java	/^    ClientController clientController;$/;"	f	class:ServerConnectionPanel
+clientController	view/ServerLoginPanel.java	/^    ClientController clientController;$/;"	f	class:ServerLoginPanel
+clientController	view/Window.java	/^	protected ClientController clientController;$/;"	f	class:Window
+connected	controller/ServerConnection.java	/^    boolean connected;$/;"	f	class:ServerConnection
+connected	view/Window.java	/^    public void connected() {$/;"	m	class:Window
+connected	view/states/ConnectedToServerState.java	/^    public void connected() {$/;"	m	class:ConnectedToServerState
+connected	view/states/IntroState.java	/^    public void connected() {$/;"	m	class:IntroState
+connected	view/states/WindowState.java	/^    void connected();$/;"	m	interface:WindowState
+connectedToServer	view/Window.java	/^	WindowState connectedToServer;$/;"	f	class:Window
+connection	controller/ServerCommand.java	/^    ServerConnection connection;$/;"	f	class:ServerCommand
+controller	controller/ClientController.java	/^package controller;$/;"	p
+controller	controller/Main.java	/^package controller;$/;"	p
+controller	controller/ServerCommand.java	/^package controller;$/;"	p
+controller	controller/ServerConnection.java	/^package controller;$/;"	p
+controller	controller/ServerListener.java	/^package controller;$/;"	p
+controller	controller/ServerParser.java	/^package controller;$/;"	p
+currentState	view/Window.java	/^	WindowState currentState;$/;"	f	class:Window
+findMove	model/AI/AI.java	/^    public abstract Point findMove(byte[][] board, byte player);$/;"	m	class:AI
+findMove	model/AI/greedyAI.java	/^	public Point findMove(byte[][] board, byte player){$/;"	m	class:greedyAI
+findMove	model/AI/negaAI.java	/^	public Point findMove(byte[][] board, byte player){$/;"	m	class:negaAI
+findMove	model/AI/randomAI.java	/^	public Point findMove(byte[][] board, byte player){$/;"	m	class:randomAI
+flip	model/game/Reversi.java	/^    public void flip(byte[][] board, byte player, int i, int j) {$/;"	m	class:Reversi
+flipScore	model/game/Reversi.java	/^    public int flipScore(byte[][] board, byte player, int i, int j) {$/;"	m	class:Reversi
+flipv2	model/game/Reversi.java	/^    public void flipv2(byte[][] board, byte player, int i, int j) {$/;"	m	class:Reversi
+game	model/AI/AITester.java	/^    private Game game;$/;"	f	class:AITester	file:
+game	model/AI/greedyAI.java	/^	Reversi game;$/;"	f	class:greedyAI
+game	model/AI/negaAI.java	/^	Reversi game;$/;"	f	class:negaAI
+game	view/Piece.java	/^    Game game;$/;"	f	class:Piece
+gameSettingsPanel	view/Window.java	/^	private JPanel gameSettingsPanel;$/;"	f	class:Window	file:
+gameSidebarPanel	view/Window.java	/^	private JPanel gameSidebarPanel;$/;"	f	class:Window	file:
+getAllPossibleMoves	model/game/Game.java	/^    public abstract ArrayList<Point> getAllPossibleMoves(byte[][] board, byte player);$/;"	m	class:Game
+getAllPossibleMoves	model/game/Reversi.java	/^    public ArrayList<Point> getAllPossibleMoves(byte[][] board, byte player){$/;"	m	class:Reversi
+getBoard	model/game/Game.java	/^    public byte[][] getBoard() {$/;"	m	class:Game
+getBoard	model/game/Reversi.java	/^    public byte[][] getBoard() {$/;"	m	class:Reversi
+getGameSidebarPanel	view/Window.java	/^	public JPanel getGameSidebarPanel() {$/;"	m	class:Window
+getIntroState	view/Window.java	/^	public WindowState getIntroState() {$/;"	m	class:Window
+getLoggedInState	view/Window.java	/^	public WindowState getLoggedInState() {$/;"	m	class:Window
+getLoginPanel	view/Window.java	/^	public JPanel getLoginPanel() {$/;"	m	class:Window
+getMove	model/AI/MoveScore.java	/^    public Point getMove(){$/;"	m	class:MoveScore
+getParsedMessage	controller/ServerListener.java	/^    public ArrayList<String> getParsedMessage() {$/;"	m	class:ServerListener
+getPlayerlist	controller/ServerCommand.java	/^    public synchronized ArrayList<String> getPlayerlist() {$/;"	m	class:ServerCommand
+getReversiPanel	view/Window.java	/^	public JPanel getReversiPanel() {$/;"	m	class:Window
+getScore	model/AI/MoveScore.java	/^    public int getScore(){$/;"	m	class:MoveScore
+getServerConnectionPanel	view/Window.java	/^	public JPanel getServerConnectionPanel() {$/;"	m	class:Window
+getSocket	controller/ServerConnection.java	/^    public Socket getSocket() {$/;"	m	class:ServerConnection
+getSquare	model/game/Game.java	/^    public int getSquare(int i,int j) {return board[i][j];}$/;"	m	class:Game
+getWinner	model/game/Game.java	/^    public abstract byte getWinner();$/;"	m	class:Game
+getWinner	model/game/Reversi.java	/^    public byte getWinner() {$/;"	m	class:Reversi
+greedy	model/AI/greedyAI.java	/^	public Point greedy(byte[][] board, byte turn) {$/;"	m	class:greedyAI
+greedyAI	model/AI/greedyAI.java	/^	public greedyAI(Game game) {$/;"	m	class:greedyAI
+greedyAI	model/AI/greedyAI.java	/^public class greedyAI extends AI {$/;"	c
+highlight	model/game/Game.java	/^    public abstract void highlight(int i, int j);$/;"	m	class:Game
+highlight	model/game/Reversi.java	/^    public void highlight(int i, int j) {$/;"	m	class:Reversi
+highlight	view/Piece.java	/^    public int highlight = 0;$/;"	f	class:Piece
+highlightPossible	model/game/Game.java	/^    public abstract void highlightPossible(int i, int j);$/;"	m	class:Game
+highlightPossible	model/game/Reversi.java	/^    public void highlightPossible(int i, int j) {$/;"	m	class:Reversi
+highlightRemove	model/game/Game.java	/^    public abstract void highlightRemove(int i, int j);$/;"	m	class:Game
+highlightRemove	model/game/Reversi.java	/^    public void highlightRemove(int i, int j) {$/;"	m	class:Reversi
+host	controller/ServerConnection.java	/^    private String host;$/;"	f	class:ServerConnection	file:
+i	view/Piece.java	/^	int i,j;$/;"	f	class:Piece
+input	controller/ServerCommand.java	/^    InputStreamReader input;$/;"	f	class:ServerCommand
+input	controller/ServerListener.java	/^    BufferedReader input;$/;"	f	class:ServerListener
+interruptBtn	view/GameSettingsPanel.java	/^    JButton interruptBtn;$/;"	f	class:GameSettingsPanel
+interruptBtn	view/GameSidebarPanel.java	/^    JButton interruptBtn;$/;"	f	class:GameSidebarPanel
+interruptBtn	view/ReversiPanel.java	/^    JButton interruptBtn;$/;"	f	class:ReversiPanel
+introState	view/Window.java	/^	WindowState introState;$/;"	f	class:Window
+inviteList	view/ServerDetailsPanel.java	/^    JList inviteList;$/;"	f	class:ServerDetailsPanel
+j	view/Piece.java	/^	int i,j;$/;"	f	class:Piece
+listBtn	view/ServerDetailsPanel.java	/^    JButton listBtn;$/;"	f	class:ServerDetailsPanel
+listBtn2	view/ServerDetailsPanel.java	/^    JButton listBtn2;$/;"	f	class:ServerDetailsPanel
+listIterator	controller/ServerParser.java	/^        private static ArrayList<String> listIterator(ArrayList<String> list, ArrayList<String> temp, int index) {$/;"	m	class:ServerParser	file:
+listText	view/ServerDetailsPanel.java	/^    JLabel listText;$/;"	f	class:ServerDetailsPanel
+listText2	view/ServerDetailsPanel.java	/^    JLabel listText2;$/;"	f	class:ServerDetailsPanel
+listener	controller/ServerCommand.java	/^    ServerListener listener;$/;"	f	class:ServerCommand
+loginPanel	view/Window.java	/^	private JPanel loginPanel;$/;"	f	class:Window	file:
+main	controller/ClientController.java	/^    public static void main(String[] args) {$/;"	m	class:ClientController
+main	controller/Main.java	/^    public static void main(String[] args) throws Exception {$/;"	m	class:Main
+maxDepth	model/AI/negaAI.java	/^	private int maxDepth = 9;$/;"	f	class:negaAI	file:
+model.AI	model/AI/AI.java	/^package model.AI;$/;"	p
+model.AI	model/AI/AITester.java	/^package model.AI;$/;"	p
+model.AI	model/AI/MoveScore.java	/^package model.AI;$/;"	p
+model.AI	model/AI/greedyAI.java	/^package model.AI;$/;"	p
+model.AI	model/AI/negaAI.java	/^package model.AI;$/;"	p
+model.AI	model/AI/randomAI.java	/^package model.AI;$/;"	p
+model.game	model/game/Game.java	/^package model.game;$/;"	p
+model.game	model/game/Reversi.java	/^package model.game;$/;"	p
+model.game	model/game/TicTacToe.java	/^package model.game;$/;"	p
+mouseClicked	view/Piece.java	/^    public void mouseClicked(MouseEvent e) {}$/;"	m	class:Piece
+mouseEntered	view/Piece.java	/^	public void mouseEntered(MouseEvent e) { game.highlight(i,j); }$/;"	m	class:Piece
+mouseExited	view/Piece.java	/^	public void mouseExited(MouseEvent e) { game.highlightRemove(i,j); }$/;"	m	class:Piece
+mousePressed	view/Piece.java	/^    public void mousePressed(MouseEvent e) { game.playMove(i,j); }$/;"	m	class:Piece
+mouseReleased	view/Piece.java	/^    public void mouseReleased(MouseEvent e) {}$/;"	m	class:Piece
+move	model/AI/MoveScore.java	/^    private Point move ;$/;"	f	class:MoveScore	file:
+negaAI	model/AI/negaAI.java	/^	public negaAI(Game game) {$/;"	m	class:negaAI
+negaAI	model/AI/negaAI.java	/^public class negaAI extends AI {$/;"	c
+negascout	model/AI/negaAI.java	/^	public MoveScore negascout(byte[][] board, byte player, int depth, int alpha, int beta) {$/;"	m	class:negaAI
+notifyObservers	controller/ServerListener.java	/^    public void notifyObservers(){$/;"	m	class:ServerListener
+output	controller/ServerCommand.java	/^    PrintStream output;$/;"	f	class:ServerCommand
+paint	view/Piece.java	/^    public void paint(Graphics g) {$/;"	m	class:Piece
+parent	view/Piece.java	/^    JPanel parent;$/;"	f	class:Piece
+parseGameOutput	controller/ServerParser.java	/^    public static ArrayList<String> parseGameOutput(ArrayList<String> list) {$/;"	m	class:ServerParser
+parseServerOutput	controller/ServerParser.java	/^        public static ArrayList<String> parseServerOutput(String s) {$/;"	m	class:ServerParser
+parsedMessageList	controller/ServerListener.java	/^    ArrayList<String> parsedMessageList;$/;"	f	class:ServerListener
+playGame	view/GameSettingsPanel.java	/^    JButton playGame;$/;"	f	class:GameSettingsPanel
+playGame	view/GameSidebarPanel.java	/^    JButton playGame;$/;"	f	class:GameSidebarPanel
+playGame	view/ReversiPanel.java	/^    JButton playGame;$/;"	f	class:ReversiPanel
+playMove	model/game/Game.java	/^    public abstract void playMove(int i,int j);$/;"	m	class:Game
+playMove	model/game/Reversi.java	/^    public void playMove(int i,int j) {$/;"	m	class:Reversi
+playMovez	model/game/Game.java	/^    public abstract void playMovez(byte[][] board, Point move, byte player);$/;"	m	class:Game
+playMovez	model/game/Reversi.java	/^    public void playMovez(byte[][] board, Point move, byte player) {$/;"	m	class:Reversi
+player	model/game/Reversi.java	/^    byte player;$/;"	f	class:Reversi
+playerList	view/ServerDetailsPanel.java	/^    JList playerList;$/;"	f	class:ServerDetailsPanel
+playerTurn	view/GameSettingsPanel.java	/^    JLabel playerTurn;$/;"	f	class:GameSettingsPanel
+playerTurn	view/GameSidebarPanel.java	/^    JLabel playerTurn;$/;"	f	class:GameSidebarPanel
+playerTurn	view/ReversiPanel.java	/^    JLabel playerTurn;$/;"	f	class:ReversiPanel
+port	controller/ServerConnection.java	/^    private int port;$/;"	f	class:ServerConnection	file:
+possibleMove	model/game/Reversi.java	/^    public boolean possibleMove(byte[][] board, byte player, int i, int j){$/;"	m	class:Reversi
+possibleMoves	model/AI/AI.java	/^    public static ArrayList<Point> possibleMoves = new ArrayList<>();$/;"	f	class:AI
+possibleMovev2	model/game/Game.java	/^    public abstract boolean possibleMovev2(byte[][] board, byte player, int i, int j);$/;"	m	class:Game
+possibleMovev2	model/game/Reversi.java	/^    public boolean possibleMovev2(byte[][] board, byte player, int i, int j) {$/;"	m	class:Reversi
+printPossibleMoves	model/game/Reversi.java	/^    public void printPossibleMoves(byte[][] board, byte player) {$/;"	m	class:Reversi
+randBtn	view/GameSettingsPanel.java	/^    JButton randBtn;$/;"	f	class:GameSettingsPanel
+randBtn	view/GameSidebarPanel.java	/^    JButton randBtn;$/;"	f	class:GameSidebarPanel
+randBtn	view/ReversiPanel.java	/^    JButton randBtn;$/;"	f	class:ReversiPanel
+random	model/AI/randomAI.java	/^	public Point random(byte[][] board, byte turn) {$/;"	m	class:randomAI
+randomAI	model/AI/randomAI.java	/^public class randomAI extends AI {$/;"	c
+regexStringClean	controller/ServerParser.java	/^        private static String regexStringClean(String s) {$/;"	m	class:ServerParser	file:
+removeHighlightPossibleMoves	model/game/Game.java	/^    public abstract void removeHighlightPossibleMoves();$/;"	m	class:Game
+removeHighlightPossibleMoves	model/game/Reversi.java	/^    public void removeHighlightPossibleMoves() {$/;"	m	class:Reversi
+resetBoard	model/game/Game.java	/^    public abstract void resetBoard();$/;"	m	class:Game
+resetBoard	model/game/Reversi.java	/^    public void resetBoard() {$/;"	m	class:Reversi
+resetBtn	view/GameSettingsPanel.java	/^    JButton resetBtn;$/;"	f	class:GameSettingsPanel
+resetBtn	view/GameSidebarPanel.java	/^    JButton resetBtn;$/;"	f	class:GameSidebarPanel
+resetBtn	view/ReversiPanel.java	/^    JButton resetBtn;$/;"	f	class:ReversiPanel
+reversiPanel	view/Window.java	/^	private JPanel reversiPanel;$/;"	f	class:Window	file:
+run	controller/ServerListener.java	/^    public void run() {$/;"	m	class:ServerListener
+run	model/AI/AITester.java	/^    public void run(){$/;"	m	class:AITester
+score	model/AI/MoveScore.java	/^    private int score ;$/;"	f	class:MoveScore	file:
+score	model/game/Game.java	/^    public abstract int score(byte[][] board, byte color);$/;"	m	class:Game
+score	model/game/Reversi.java	/^    public int score(byte[][] board, byte color) {$/;"	m	class:Reversi
+scoreH	model/game/Reversi.java	/^    public int scoreH(byte[][] board, byte color) {$/;"	m	class:Reversi
+scoreLabel	view/GameSettingsPanel.java	/^    JLabel scoreLabel;$/;"	f	class:GameSettingsPanel
+scoreLabel	view/GameSidebarPanel.java	/^    JLabel scoreLabel;$/;"	f	class:GameSidebarPanel
+scoreLabel	view/ReversiPanel.java	/^    JLabel scoreLabel;$/;"	f	class:ReversiPanel
+seeAcceptedInvite	view/ServerDetailsPanel.java	/^	public void seeAcceptedInvite() {$/;"	m	class:ServerDetailsPanel
+seeAcceptedPlayer	view/ServerDetailsPanel.java	/^	public void seeAcceptedPlayer() {$/;"	m	class:ServerDetailsPanel
+sendAcceptChallengeCommand	controller/ServerCommand.java	/^    public synchronized void sendAcceptChallengeCommand(int challengerNumber) {$/;"	m	class:ServerCommand
+sendChallengeCommand	controller/ServerCommand.java	/^    public synchronized void sendChallengeCommand(String playername, String game) {$/;"	m	class:ServerCommand
+sendForfeitCommand	controller/ServerCommand.java	/^    public synchronized void sendForfeitCommand() {$/;"	m	class:ServerCommand
+sendLoginCommand	controller/ServerCommand.java	/^    public synchronized void sendLoginCommand(String username) {$/;"	m	class:ServerCommand
+sendLogoutCommand	controller/ServerCommand.java	/^    public synchronized void sendLogoutCommand() {$/;"	m	class:ServerCommand
+sendMoveCommand	controller/ServerCommand.java	/^    public synchronized void sendMoveCommand(int move) {$/;"	m	class:ServerCommand
+sendSubscribeCommand	controller/ServerCommand.java	/^    public synchronized void sendSubscribeCommand(String game) {$/;"	m	class:ServerCommand
+serialVersionUID	view/Piece.java	/^	static final long serialVersionUID = 1L;$/;"	f	class:Piece
+serialVersionUID	view/Window.java	/^	static final long serialVersionUID = 1L;$/;"	f	class:Window
+serverCommander	controller/ClientController.java	/^    private static ServerCommand serverCommander;$/;"	f	class:ClientController	file:
+serverConnectionPanel	view/Window.java	/^	private JPanel serverConnectionPanel;$/;"	f	class:Window	file:
+serverDetailsPanel	view/Window.java	/^	private JPanel serverDetailsPanel;$/;"	f	class:Window	file:
+serverLine	controller/ServerListener.java	/^	String serverLine;$/;"	f	class:ServerListener
+setSquare	model/game/Game.java	/^    public void setSquare(int i,int j, byte value) {$/;"	m	class:Game
+setWindowState	view/Window.java	/^	public void setWindowState(WindowState windowState) {$/;"	m	class:Window
+sidePanel	view/Window.java	/^	private JPanel sidePanel;$/;"	f	class:Window	file:
+socket	controller/ServerConnection.java	/^    private Socket socket;$/;"	f	class:ServerConnection	file:
+startServerCommand	controller/ClientController.java	/^    public void startServerCommand(String hostname, int port) {$/;"	m	class:ClientController
+t	model/AI/AITester.java	/^    final long t = System.currentTimeMillis();$/;"	f	class:AITester
+ticTacToePanel	view/Window.java	/^	private JPanel ticTacToePanel;$/;"	f	class:Window	file:
+time	model/AI/AITester.java	/^    long time;$/;"	f	class:AITester
+toString	controller/ServerListener.java	/^    public String toString() {$/;"	m	class:ServerListener
+turn	model/AI/AITester.java	/^    private byte turn;$/;"	f	class:AITester	file:
+updateSidebarLabelPlayerTurn	view/GameSettingsPanel.java	/^    public void updateSidebarLabelPlayerTurn(String s) {$/;"	m	class:GameSettingsPanel
+updateSidebarLabelPlayerTurn	view/GameSidebarPanel.java	/^    public void updateSidebarLabelPlayerTurn(String s) {$/;"	m	class:GameSidebarPanel
+updateSidebarLabelPlayerTurn	view/ReversiPanel.java	/^    public void updateSidebarLabelPlayerTurn(String s) {$/;"	m	class:ReversiPanel
+updateSidebarLabelScore	view/GameSettingsPanel.java	/^    public void updateSidebarLabelScore(String s) {$/;"	m	class:GameSettingsPanel
+updateSidebarLabelScore	view/GameSidebarPanel.java	/^    public void updateSidebarLabelScore(String s) {$/;"	m	class:GameSidebarPanel
+updateSidebarLabelScore	view/ReversiPanel.java	/^    public void updateSidebarLabelScore(String s) {$/;"	m	class:ReversiPanel
+view	view/GameSettingsPanel.java	/^package view;$/;"	p
+view	view/GameSidebarPanel.java	/^package view;$/;"	p
+view	view/Piece.java	/^package view;$/;"	p
+view	view/ReversiPanel.java	/^package view;$/;"	p
+view	view/ServerConnectionPanel.java	/^package view;$/;"	p
+view	view/ServerDetailsPanel.java	/^package view;$/;"	p
+view	view/ServerLoginPanel.java	/^package view;$/;"	p
+view	view/Window.java	/^package view;$/;"	p
+view.states	view/states/ConnectedToServerState.java	/^package view.states;$/;"	p
+view.states	view/states/IntroState.java	/^package view.states;$/;"	p
+view.states	view/states/WindowState.java	/^package view.states;$/;"	p
+window	controller/ClientController.java	/^    Window window;$/;"	f	class:ClientController
+window	view/states/ConnectedToServerState.java	/^    Window window;$/;"	f	class:ConnectedToServerState
+window	view/states/IntroState.java	/^    Window window;$/;"	f	class:IntroState
