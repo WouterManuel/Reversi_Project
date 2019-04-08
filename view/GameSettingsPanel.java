@@ -27,6 +27,7 @@ public class GameSettingsPanel extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.ipadx = 20;
         add(new JLabel("<html><br><div style='color: white;'>"+"Play as :"+"</div></html>"),gbc);
 
         gbc.gridx = 1;

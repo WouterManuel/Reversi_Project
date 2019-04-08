@@ -9,7 +9,7 @@ public class IntroState implements WindowState {
     public IntroState(Window window) {
         this.window = window;
 
-        //window.add(window.getGameSettingsPanel(), BorderLayout.WEST);
+        window.add(window.getGameSettingsPanel(), BorderLayout.WEST);
         window.add(window.getServerConnectionPanel(), BorderLayout.EAST);
         window.repaint();
     }
