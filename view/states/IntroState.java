@@ -10,7 +10,6 @@ public class IntroState implements WindowState {
         this.window = window;
 
         window.add(window.getGameSettingsPanel(), BorderLayout.WEST);
-        //window.add(window.getGameSidebarPanel(), BorderLayout.CENTER);
         window.add(window.getServerConnectionPanel(), BorderLayout.EAST);
         window.repaint();
     }
