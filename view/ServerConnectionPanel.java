@@ -19,21 +19,27 @@ public class ServerConnectionPanel extends JPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
+
+        JLabel playOnline = new JLabel("Play online");
+        playOnline.setFont(new Font("Serif", Font.PLAIN, 20));
+        add(playOnline);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         JLabel hostnameLabel = new JLabel("Hostname:");
         add(hostnameLabel, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         JTextField hostname = new JTextField("localhost", 15);
         add(hostname, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         JLabel portLabel = new JLabel("Port:");
         add(portLabel, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         JTextField port = new JTextField("7789", 15);
         add(port, gbc);
 
@@ -41,7 +47,7 @@ public class ServerConnectionPanel extends JPanel {
         JButton listBtn = new JButton("Connect now");
         gbc.gridx = 0;
         gbc.gridy = 4;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 2;
         listBtn.addActionListener(e -> clientController.startServerCommand(hostname.getText(), Integer.valueOf(port.getText())));

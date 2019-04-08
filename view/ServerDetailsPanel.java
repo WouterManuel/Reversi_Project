@@ -17,13 +17,14 @@ public class ServerDetailsPanel extends JPanel {
 
 	public ServerDetailsPanel() {
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-		setPreferredSize(new Dimension(400,300));
+		setPreferredSize(new Dimension(300,400));
 		setBackground(Color.GRAY);
 
 		GridBagLayout experimentLayout = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		setLayout(experimentLayout);
 		GridBagLayout layout = new GridBagLayout();
+		gbc.insets = new Insets(5, 5, 5 ,20);
 		this.setLayout((layout));
 
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -35,14 +36,13 @@ public class ServerDetailsPanel extends JPanel {
 		listText.setForeground(Color.WHITE);
 		add(listText, gbc);
 
-		gbc.weighty = 10;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 
-		String players[]= { "player1", "john doe", "foo", "bar","oke"};
+		String players[]= { "player1", "john doe", "foo", "bar","oke", "1", "2", "3", "4", "5" };
 		if (players.length>0){
 			playerList = new JList(players);
-			playerList.setFixedCellWidth(100);
+			//playerList.setFixedCellWidth(100);
 
 			/* Challenge btn */
 			listBtn = new JButton("Challenge");
@@ -53,7 +53,7 @@ public class ServerDetailsPanel extends JPanel {
 
 			listBtn.addActionListener(e -> seeAcceptedPlayer());
 
-			add(playerList, gbc);
+			add(new JScrollPane(playerList), gbc);
 
 			gbc.gridx = 0;
 			gbc.gridy = 2;
@@ -75,10 +75,9 @@ public class ServerDetailsPanel extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 
-		String invites[]= { "inv1", "inv2", "inv3", "inv4"};
+		String invites[]= { "inv1", "inv2", "inv3", "inv4", "inv5"};
 		if (invites.length>0){
 			inviteList = new JList(invites);
-			inviteList.setFixedCellWidth(100);
 
 			/* Accept btn */
 			listBtn2 = new JButton("Accept");
@@ -90,9 +89,8 @@ public class ServerDetailsPanel extends JPanel {
 
 			listBtn2.addActionListener(e -> seeAcceptedInvite());
 
-			add(inviteList, gbc);
+			add(new JScrollPane(inviteList), gbc);
 
-			gbc.weighty = 4;
 			gbc.gridx = 1;
 			gbc.gridy = 2;
 			add(listBtn2, gbc);

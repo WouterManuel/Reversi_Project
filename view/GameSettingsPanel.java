@@ -15,7 +15,7 @@ public class GameSettingsPanel extends JPanel{
     public GameSettingsPanel() {
 
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        setPreferredSize(new Dimension(400,300));
+        setPreferredSize(new Dimension(400,400));
         setBackground(Color.DARK_GRAY);
 
         GridBagLayout experimentLayout = new GridBagLayout();
@@ -27,27 +27,30 @@ public class GameSettingsPanel extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
+        add(new JLabel("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>"+"Play offline"+"</div></html>"),gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         gbc.ipadx = 20;
         add(new JLabel("<html><br><div style='color: white;'>"+"Play as :"+"</div></html>"),gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         String[] playsAs = new String[] {"Myself","AI","Kiran"};
         JComboBox<String> playAs = new JComboBox<>(playsAs);
         add(playAs,gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         add(new JLabel("<html><br><div style='color: white;'>"+"Game:"+"</div></html>"),gbc);
         String[] gameTypes = new String[] {"Reversi","Tic-Tac-Toe"};
         JComboBox<String> gameType = new JComboBox<>(gameTypes);
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         add(gameType,gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 2;
         playGame = new JButton("<html><div style='padding: 0'>"+"Play now"+"</div></html>");
