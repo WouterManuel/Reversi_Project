@@ -146,4 +146,8 @@ public class ServerCommand {
         } else return true;
     }
 
+    public boolean getConnectionStatus(){
+       return connection.getConnectionStatus();
+    }
+
 }

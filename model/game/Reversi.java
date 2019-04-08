@@ -16,7 +16,11 @@ public class Reversi extends Game {
     public Reversi(ServerCommand servercommander) {
         board = new byte[8][8];
         player = 1; // zwart eerst
+    }
 
+    public Reversi() {
+        board = new byte[8][8];
+        player = 1; // zwart eerst
     }
 
     @Override

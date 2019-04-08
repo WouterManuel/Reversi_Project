@@ -1,5 +1,7 @@
 package view;
 
+import controller.ClientController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,7 +14,7 @@ public class GameSettingsPanel extends JPanel{
     JButton interruptBtn;
     JButton playGame;
 
-    public GameSettingsPanel() {
+    public GameSettingsPanel(ClientController clientController) {
 
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(400,300));
@@ -51,7 +53,7 @@ public class GameSettingsPanel extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 2;
         playGame = new JButton("<html><div style='padding: 0'>"+"Play now"+"</div></html>");
-        //playGame.addActionListener(e -> {this.getComponent(0).remove(); this.add(showReversiBoard(), BorderLayout.WEST);});
+        playGame.addActionListener(e -> {clientController.startGame(gameType.getSelectedItem().toString());});
         add(playGame,gbc);
 
     }

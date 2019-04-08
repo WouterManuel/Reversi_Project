@@ -1,14 +1,11 @@
 package view;
 
 import controller.ClientController;
-import model.game.Game;
-import model.game.Reversi;
 import view.states.IntroState;
 import view.states.ConnectedToServerState;
 import view.states.WindowState;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Window extends JFrame {
 	static final long serialVersionUID = 1L;
@@ -25,17 +22,22 @@ public class Window extends JFrame {
 	WindowState introState;
 	WindowState connectedToServer;
 	WindowState currentState;
+	WindowState startReversiGameState;
 
 	public Window(ClientController clientController){
 		this.clientController = clientController;
-		reversiPanel = new ReversiPanel(new Reversi());
+
+		// Define all panels
+		reversiPanel = new ReversiPanel(clientController.getOfflineReversiGame());
 		gameSidebarPanel = new GameSidebarPanel();
 		serverConnectionPanel = new ServerConnectionPanel(clientController);
 		loginPanel = new ServerLoginPanel(clientController);
-		gameSettingsPanel = new GameSettingsPanel();
+		gameSettingsPanel = new GameSettingsPanel(clientController);
 		serverDetailsPanel = new ServerDetailsPanel();
 
 		introState = new IntroState(this);
+		//startReversiGameState = new StartReversiGameState(this);
+
 		currentState = introState;
 
 		setTitle("GamerTool");
@@ -49,20 +51,9 @@ public class Window extends JFrame {
 		currentState.connected();
     }
 
-//	public void defaultConstructedSetup() {
-//		gameSettingsPanel = new GameSettingsPanel();
-//		add(gameSettingsPanel.getGameDetails(), BorderLayout.WEST);
-//
-//		reversi = new ReversiPanel(new Reversi());
-//		add(reversi, BorderLayout.WEST);
-//
-//		gameSidebar = new GameSidebarPanel();
-//		add(gameSidebar, BorderLayout.CENTER);
-//
-//		serverDetailsPanel = new ServerDetailsPanel();
-//		add(serverDetailsPanel, BorderLayout.EAST);
-//
-//	}
+    public void gameStarted(String gameName) {
+		currentState.gameStarted(gameName);
+	}
 
 	public void setWindowState(WindowState windowState) {
 		this.currentState = windowState;
@@ -74,6 +65,10 @@ public class Window extends JFrame {
 
 	public WindowState getIntroState() {
 		return introState;
+	}
+
+	public WindowState getStartReversiGameState() {
+		return startReversiGameState;
 	}
 
 	public JPanel getGameSidebarPanel() {

@@ -1,7 +1,6 @@
 package view;
 
 import model.game.Game;
-import model.game.Reversi;
 
 import javax.swing.*;
 import java.awt.*;

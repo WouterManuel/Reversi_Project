@@ -19,4 +19,8 @@ public class ConnectedToServerState implements WindowState {
     public void connected() {
         //
     }
+
+    public void gameStarted(String gameName){
+        //
+    }
 }
