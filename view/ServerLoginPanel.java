@@ -42,7 +42,7 @@ public class ServerLoginPanel extends JPanel {
         JButton loginBtn = new JButton("Login");
         loginBtn.addActionListener(e -> {
             if(!(username.getText().equals("") || username.getText().isEmpty()))
-                {serverCommander.sendLoginCommand(username.getText());}
+                {clientController.tryLogin(username.getText());}
             else {messageLabel.setVisible(true);}
         });
         add(loginBtn,gbc);

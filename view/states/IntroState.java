@@ -16,7 +16,15 @@ public class IntroState implements WindowState {
     }
 
     public void connected() {
-        window.setWindowState(window.getLoggedInState());
+        window.setWindowState(window.getConnectedToServerState());
+    }
+
+    public void disconnected() {
+        //
+    }
+
+    public void loggedIn() {
+        //
     }
 
     public void disconnected() {

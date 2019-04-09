@@ -36,6 +36,8 @@ public class ServerDetailsPanel extends JPanel {
             clientController.getServerCommander().sendSubscribeCommand("Reversi");
         });
 
+        add(subscribeBtn);
+
         listText = new JLabel("Playerlist :");
         listText.setForeground(Color.WHITE);
         add(listText, gbc);
@@ -122,4 +124,3 @@ public class ServerDetailsPanel extends JPanel {
         }
     }
 }
-

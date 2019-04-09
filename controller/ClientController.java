@@ -11,6 +11,7 @@ public class ClientController {
     Reversi reversiOffline;
     Reversi reversiOnline;
     boolean connected;
+    String username;
 
     public ClientController() {
         reversiOffline = new Reversi();
@@ -23,6 +24,13 @@ public class ClientController {
         if (connected) {
             window.getServerLoginPanel().setServerCommander(serverCommander);
             window.connected();
+        }
+    }
+
+    public void tryLogin(String username){
+        if(serverCommander.sendLoginCommand(username) != null) {
+            window.loggedIn();
+            this.username = username;
         }
     }
 
