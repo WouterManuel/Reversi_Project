@@ -1,7 +1,6 @@
 package model.game;
 
 import controller.ClientController;
-import controller.ServerListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +26,7 @@ public class Reversi extends Game {
 
     public void setSidebar(JPanel GameSidebarPanel) {this.sidebar = GameSidebarPanel;}
 
-    public ArrayList<Point> getAllPossibleMoves(byte[][] board, byte turn){
+    public ArrayList<Point> getAllPossibleMoves(byte turn){
         ArrayList<Point> result = new ArrayList<>();
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++)
@@ -96,7 +95,7 @@ public class Reversi extends Game {
     }
 
     public void printPossibleMoves(byte[][] board, byte turn) {
-        ArrayList<Point> res = getAllPossibleMoves(board, turn);
+        ArrayList<Point> res = getAllPossibleMoves(turn);
         for(Point r : res)
             System.out.println(r);
     }
@@ -582,7 +581,7 @@ public class Reversi extends Game {
     }
 
     public void highlightPossibleMoves(byte turn) {
-		ArrayList<Point> res = getAllPossibleMoves(board, turn);
+		ArrayList<Point> res = getAllPossibleMoves(turn);
 		for(Point r : res)
 			highlightPossible(r.x, r.y);
 	}

@@ -9,7 +9,7 @@ public abstract class Game {
     protected byte[][] board;
 
     /******************************************** Game logic *********************************************/
-    public abstract ArrayList<Point> getAllPossibleMoves(byte[][] board, byte turn);
+    public abstract ArrayList<Point> getAllPossibleMoves(byte turn);
     public abstract boolean possibleMovev2(byte turn, int i, int j);
     public abstract int score(byte[][] board, byte color);
     public abstract void playMovez(byte[][] board, Point move, byte turn);

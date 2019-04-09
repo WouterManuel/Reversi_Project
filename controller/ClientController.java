@@ -95,12 +95,14 @@ public class ClientController {
 					movelist.add(move);
                     System.out.println("Opponent move: " + move);
                     play(i, j, opp);
-                    myTurn = true;
+					if(!reversiGame.getAllPossibleMoves(turn).isEmpty())
+						myTurn = true;
                 } else {
 					movelist.add(move);
                     System.out.println("My move: " + move);
                     play(i, j, turn);
-                    myTurn = false;
+					if(!reversiGame.getAllPossibleMoves(opp).isEmpty())
+						myTurn = false;
                 }
                 break;
             case "YOURTURN":
