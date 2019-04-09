@@ -20,23 +20,16 @@ public class ServerDetailsPanel extends JPanel {
 	public ServerDetailsPanel(ClientController clientController) {
 		this.clientController = clientController;
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-		setPreferredSize(new Dimension(400,300));
+		setPreferredSize(new Dimension(350,400));
 		setBackground(Color.GRAY);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		setLayout(new GridBagLayout());
+        gbc.insets = new Insets(5, 5, 5 ,10);
 
-		gbc.fill = GridBagConstraints.CENTER;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.ipadx = 20;
-
-        JButton subscribeBtn = new JButton("Subscribe reversi");
-        subscribeBtn.addActionListener(e -> {
-            clientController.getServerCommander().sendSubscribeCommand("Reversi");
-        });
-
-        add(subscribeBtn);
 
         listText = new JLabel("Playerlist :");
         listText.setForeground(Color.WHITE);
@@ -45,10 +38,9 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 1;
 
-        String players[]= { "player1", "john doe", "foo", "bar","oke", "1", "2", "3", "4", "5" };
+        String players[]= { "player1", "john doe", "fyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy", "bar","oke", "1", "2", "3", "4", "5" };
         if (players.length>0){
             playerList = new JList(players);
-            //playerList.setFixedCellWidth(100);
 
             /* Challenge btn */
             listBtn = new JButton("Challenge");
@@ -57,9 +49,15 @@ public class ServerDetailsPanel extends JPanel {
             acceptedPlayer = new JLabel("");
             acceptedPlayer.setForeground(Color.WHITE);
 
-            listBtn.addActionListener(e -> seeAcceptedPlayer());
+            listBtn.addActionListener(e -> {clientController.startGame("Reversi"); System.out.println("Clicked");});
 
-            add(new JScrollPane(playerList), gbc);
+            JScrollPane playerListScroll = new JScrollPane(playerList);
+
+            playerListScroll.setMinimumSize(new Dimension(30, 130));
+            playerListScroll.setPreferredSize(new Dimension(50, 150));
+            //playerListScroll.setMaximumSize(new Dimension(80, 200));
+
+            add(playerListScroll, gbc);
 
             gbc.gridx = 0;
             gbc.gridy = 2;
@@ -72,7 +70,6 @@ public class ServerDetailsPanel extends JPanel {
 
         gbc.gridx = 1;
         gbc.gridy = 0;
-        gbc.ipadx = 20;
 
         listText = new JLabel("Invitelist :");
         listText.setForeground(Color.WHITE);
@@ -81,7 +78,7 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 1;
 
-        String invites[]= { "inv1", "inv2", "inv3", "inv4", "inv5"};
+        String invites[]= { "inv1", "inv2", "inv3", "inv4", "inv5", "inv1", "inv2", "invrrrrrrrrrrrrrrrtyrtytrytrytrytrytrytrrrrrrrr3", "inv4", "inv5"};
         if (invites.length>0){
             inviteList = new JList(invites);
 
@@ -95,7 +92,13 @@ public class ServerDetailsPanel extends JPanel {
 
             listBtn2.addActionListener(e -> seeAcceptedInvite());
 
-            add(new JScrollPane(inviteList), gbc);
+            JScrollPane inviteListScroll = new JScrollPane(inviteList);
+
+            inviteListScroll.setMinimumSize(new Dimension(30, 130));
+            inviteListScroll.setPreferredSize(new Dimension(50, 150));
+            //inviteListScroll.setMaximumSize(new Dimension(80, 200));
+
+            add(inviteListScroll, gbc);
 
             gbc.gridx = 1;
             gbc.gridy = 2;
@@ -105,6 +108,45 @@ public class ServerDetailsPanel extends JPanel {
             acceptedInvite = new JLabel("No players found");
             acceptedInvite.setForeground(Color.WHITE);
         }
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+
+        listText = new JLabel("Subscribe:");
+        listText.setForeground(Color.WHITE);
+        add(listText, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+
+        add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+
+        add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+
+        JButton subscribeBtn = new JButton("Subscribe reversi  ");
+        subscribeBtn.addActionListener(e -> {
+            clientController.getServerCommander().sendSubscribeCommand("Reversi");
+        });
+
+        add(subscribeBtn, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+
+        JButton subscribeBtnTTT = new JButton("Subscribe TicTacToe");
+        subscribeBtn.addActionListener(e -> {
+            clientController.getServerCommander().sendSubscribeCommand("Reversi");
+        });
+
+        add(subscribeBtnTTT, gbc);
+
+
     }
 
     public void seeAcceptedPlayer() {

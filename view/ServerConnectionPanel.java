@@ -10,13 +10,15 @@ public class ServerConnectionPanel extends JPanel {
 
     public ServerConnectionPanel(ClientController clientController) {
         this.clientController = clientController;
-        setPreferredSize(new Dimension(300,400));
-        setLayout(new GridBagLayout());
+        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        setPreferredSize(new Dimension(350,400));
         setBackground(Color.GRAY);
-        setBorder(BorderFactory.createLineBorder(Color.GRAY.brighter()));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(2, 10, 2 ,10);
 
+        GridBagConstraints gbc = new GridBagConstraints();
+        setLayout(new GridBagLayout());
+        gbc.insets = new Insets(5, 5, 5 ,10);
+
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
 

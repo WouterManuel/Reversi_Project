@@ -20,14 +20,6 @@ public class IntroState implements WindowState {
     }
 
     public void disconnected() {
-        //
-    }
-
-    public void loggedIn() {
-        //
-    }
-
-    public void disconnected() {
         window.setWindowState(window.getLoggedInState());
     }
 

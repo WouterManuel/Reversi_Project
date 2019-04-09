@@ -13,7 +13,7 @@ public class ServerLoginPanel extends JPanel {
     public ServerLoginPanel(ClientController clientController) {
         this.clientController = clientController;
 
-        setPreferredSize(new Dimension(300,400));
+        setPreferredSize(new Dimension(350,400));
         setLayout(new GridBagLayout());
         setBackground(Color.GRAY);
         setBorder(BorderFactory.createLineBorder(Color.GRAY.brighter(), 5));
@@ -33,7 +33,7 @@ public class ServerLoginPanel extends JPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        JTextField username = new JTextField( 15);
+        JTextField username = new JTextField( "misha",15);
         add(username, gbc);
 
         gbc.gridx = 0;

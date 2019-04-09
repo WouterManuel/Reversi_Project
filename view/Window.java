@@ -62,10 +62,6 @@ public class Window extends JFrame implements WindowState {
 		currentState.loggedIn();
 	}
 
-	public void disconnected() {
-    	currentState.disconnected();
-	}
-
 	public void gameStarted(String gameName) {
 		currentState.gameStarted(gameName);
 	}
