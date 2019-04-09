@@ -1,41 +1,43 @@
 package view;
 
 import controller.ClientController;
-import model.game.Game;
-import model.game.Reversi;
 import view.states.IntroState;
 import view.states.ConnectedToServerState;
 import view.states.WindowState;
 
 import javax.swing.*;
-import java.awt.*;
 
-public class Window extends JFrame {
+public class Window extends JFrame implements WindowState {
 	static final long serialVersionUID = 1L;
 	protected ClientController clientController;
 	private JPanel reversiPanel;
 	private JPanel ticTacToePanel;
-	private JPanel loginPanel;
 	private JPanel sidePanel;
 	private JPanel gameSidebarPanel;
 	private JPanel serverConnectionPanel;
 	private JPanel gameSettingsPanel;
 	private JPanel serverDetailsPanel;
+	private ServerLoginPanel serverLoginPanel;
 
 	WindowState introState;
 	WindowState connectedToServer;
 	WindowState currentState;
+	WindowState startReversiGameState;
 
 	public Window(ClientController clientController){
 		this.clientController = clientController;
-		reversiPanel = new ReversiPanel(new Reversi());
+
+		// Define all panels
+		reversiPanel = new ReversiPanel(clientController.getOfflineReversiGame());
 		gameSidebarPanel = new GameSidebarPanel();
 		serverConnectionPanel = new ServerConnectionPanel(clientController);
-		loginPanel = new ServerLoginPanel(clientController);
-		gameSettingsPanel = new GameSettingsPanel();
-		serverDetailsPanel = new ServerDetailsPanel();
+		gameSettingsPanel = new GameSettingsPanel(clientController);
+		serverDetailsPanel = new ServerDetailsPanel(clientController);
+		serverLoginPanel = new ServerLoginPanel(clientController);
 
 		introState = new IntroState(this);
+		//startReversiGameState = new StartReversiGameState(this);
+
 		currentState = introState;
 
 		setTitle("GamerTool");
@@ -45,24 +47,26 @@ public class Window extends JFrame {
         setVisible(true);
     }
 
+	/******************************************** State invocation *********************************************/
+
     public void connected() {
 		currentState.connected();
     }
 
-//	public void defaultConstructedSetup() {
-//		gameSettingsPanel = new GameSettingsPanel();
-//		add(gameSettingsPanel.getGameDetails(), BorderLayout.WEST);
-//
-//		reversi = new ReversiPanel(new Reversi());
-//		add(reversi, BorderLayout.WEST);
-//
-//		gameSidebar = new GameSidebarPanel();
-//		add(gameSidebar, BorderLayout.CENTER);
-//
-//		serverDetailsPanel = new ServerDetailsPanel();
-//		add(serverDetailsPanel, BorderLayout.EAST);
-//
-//	}
+    public void disconnected() {
+        currentState.disconnected();
+    }
+
+    public void loggedIn() {
+		//currentState.loggedIn();
+	}
+
+	public void gameStarted(String gameName) {
+		currentState.gameStarted(gameName);
+	}
+	/******************************************** State logic *********************************************/
+
+
 
 	public void setWindowState(WindowState windowState) {
 		this.currentState = windowState;
@@ -75,6 +79,12 @@ public class Window extends JFrame {
 	public WindowState getIntroState() {
 		return introState;
 	}
+
+	public WindowState getStartReversiGameState() {
+		return startReversiGameState;
+	}
+
+	/******************************************** Panel getters *********************************************/
 
 	public JPanel getGameSidebarPanel() {
 		return gameSidebarPanel;
@@ -96,7 +106,7 @@ public class Window extends JFrame {
 		return serverDetailsPanel;
 	}
 
-	public JPanel getLoginPanel() {
-		return loginPanel;
+	public ServerLoginPanel getServerLoginPanel() {
+		return serverLoginPanel;
 	}
 }

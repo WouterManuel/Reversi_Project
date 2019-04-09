@@ -3,17 +3,12 @@ package controller;
 import java.net.Socket;
 
 public class ServerConnection {
-    private String host;
-    private int port;
     private Socket socket;
     boolean connected;
     /**
      * Connect to controller.server using variables for the socket that are set in the GUI
      **/
     public ServerConnection(String host, int port) {
-        this.host = host;
-        this.port = port;
-
         try {
             //Create a socket to connect to the controller.server
             while(!connected) {
@@ -30,4 +25,7 @@ public class ServerConnection {
         return socket;
     }
 
+    public boolean getConnectionStatus(){
+        return connected;
+    }
 }

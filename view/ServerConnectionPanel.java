@@ -43,14 +43,20 @@ public class ServerConnectionPanel extends JPanel {
         JTextField port = new JTextField("7789", 15);
         add(port, gbc);
 
-        /* Connect btn */
-        JButton listBtn = new JButton("Connect now");
         gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridy = 3;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridwidth = 2;
-        listBtn.addActionListener(e -> clientController.startServerCommand(hostname.getText(), Integer.valueOf(port.getText())));
-        add(listBtn, gbc);
+        gbc.gridy = 6;
+        JLabel messageLabel = new JLabel("<html><font color='red'><b>Error:</b></font> Failed to connect to server</html>");
+        messageLabel.setVisible(false);
+        add(messageLabel, gbc);
+
+        /* Connect btn */
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        JButton connectBtn = new JButton("Connect");
+        connectBtn.addActionListener(e -> {clientController.startServerCommand(hostname.getText(), Integer.valueOf(port.getText()));
+            if(!clientController.getConnectionStatus())
+                messageLabel.setVisible(true);
+        });
+        add(connectBtn, gbc);
     }
 }

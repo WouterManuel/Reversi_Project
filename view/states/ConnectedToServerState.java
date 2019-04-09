@@ -11,12 +11,26 @@ public class ConnectedToServerState implements WindowState {
         this.window = window;
 
         window.getContentPane().remove(window.getServerConnectionPanel());
-        window.getContentPane().add(window.getServerDetailsPanel(), BorderLayout.EAST);
+        window.getContentPane().add(window.getServerLoginPanel(), BorderLayout.EAST);
         window.invalidate();
         window.validate();
     }
 
+    @Override
     public void connected() {
+        //
+    }
+
+    @Override
+    public void disconnected() {
+        //
+    }
+
+    public void loggedIn() {
+        window.setWindowState(window.getLoggedInState());
+    }
+
+    public void gameStarted(String gameName){
         //
     }
 }

@@ -1,5 +1,6 @@
 package view.states;
 
+import view.ReversiPanel;
 import view.Window;
 import java.awt.*;
 
@@ -16,5 +17,20 @@ public class IntroState implements WindowState {
 
     public void connected() {
         window.setWindowState(window.getLoggedInState());
+    }
+
+    public void disconnected() {
+        window.setWindowState(window.getLoggedInState());
+    }
+
+    public void loggedIn() {
+        window.setWindowState(window.getLoggedInState());
+    }
+
+    @Override
+    public void gameStarted(String gameName) {
+        if(gameName.equals("Reversi")){
+            window.setWindowState(new StartReversiGameState(window));
+        }
     }
 }

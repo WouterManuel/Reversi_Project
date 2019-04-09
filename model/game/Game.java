@@ -1,5 +1,6 @@
 package model.game;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -21,6 +22,10 @@ public abstract class Game {
         board[i][j] = value;
     }
 
+    public abstract void setPanel(JPanel panel);
+
+    public abstract void setSidebar(JPanel sidebar);
+
     public abstract void resetBoard();
 
     public byte[][] getBoard() {
@@ -37,5 +42,8 @@ public abstract class Game {
 
     public abstract void removeHighlightPossibleMoves();
 
+    public void update(String value) {
+
+    }
 
 }
