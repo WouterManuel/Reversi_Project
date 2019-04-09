@@ -7,12 +7,11 @@ import view.states.WindowState;
 
 import javax.swing.*;
 
-public class Window extends JFrame {
+public class Window extends JFrame implements WindowState {
 	static final long serialVersionUID = 1L;
 	protected ClientController clientController;
 	private JPanel reversiPanel;
 	private JPanel ticTacToePanel;
-	private JPanel loginPanel;
 	private JPanel sidePanel;
 	private JPanel gameSidebarPanel;
 	private JPanel serverConnectionPanel;
@@ -48,13 +47,22 @@ public class Window extends JFrame {
         setVisible(true);
     }
 
+	/******************************************** State invocation *********************************************/
+
     public void connected() {
 		currentState.connected();
     }
 
-    public void gameStarted(String gameName) {
+    public void loggedIn() {
+		//currentState.loggedIn();
+	}
+
+	public void gameStarted(String gameName) {
 		currentState.gameStarted(gameName);
 	}
+	/******************************************** State logic *********************************************/
+
+
 
 	public void setWindowState(WindowState windowState) {
 		this.currentState = windowState;
@@ -71,6 +79,8 @@ public class Window extends JFrame {
 	public WindowState getStartReversiGameState() {
 		return startReversiGameState;
 	}
+
+	/******************************************** Panel getters *********************************************/
 
 	public JPanel getGameSidebarPanel() {
 		return gameSidebarPanel;

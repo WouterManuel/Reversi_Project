@@ -22,29 +22,35 @@ public class ServerConnectionPanel extends JPanel {
         JLabel hostnameLabel = new JLabel("Hostname:");
         add(hostnameLabel, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         JTextField hostname = new JTextField("localhost", 15);
         add(hostname, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         JLabel portLabel = new JLabel("Port:");
         add(portLabel, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 3;
         JTextField port = new JTextField("7789", 15);
         add(port, gbc);
 
-        /* Connect btn */
-        JButton listBtn = new JButton("Connect now");
         gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridy = 2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridwidth = 2;
-        listBtn.addActionListener(e -> clientController.startServerCommand(hostname.getText(), Integer.valueOf(port.getText())));
-        add(listBtn, gbc);
+        gbc.gridy = 6;
+        JLabel messageLabel = new JLabel("<html><font color='red'><b>Error:</b></font> Failed to connect to server</html>");
+        messageLabel.setVisible(false);
+        add(messageLabel, gbc);
+
+        /* Connect btn */
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        JButton connectBtn = new JButton("Connect");
+        connectBtn.addActionListener(e -> {clientController.startServerCommand(hostname.getText(), Integer.valueOf(port.getText()));
+            if(!clientController.getConnectionStatus())
+                messageLabel.setVisible(true);
+        });
+        add(connectBtn, gbc);
     }
 }

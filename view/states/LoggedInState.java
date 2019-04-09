@@ -1,18 +1,15 @@
 package view.states;
 
 import view.Window;
-
 import java.awt.*;
 
-public class StartReversiGameState implements WindowState {
+public class LoggedInState implements WindowState {
     Window window;
 
-    public StartReversiGameState(Window window) {
+    public LoggedInState(Window window) {
         this.window = window;
-
-        window.getContentPane().removeAll();
-        window.getContentPane().add(window.getReversiPanel(), BorderLayout.WEST);
-        window.getContentPane().add(window.getGameSidebarPanel(), BorderLayout.CENTER);
+        window.getContentPane().remove(window.getServerLoginPanel());
+        window.getContentPane().add(window.getServerDetailsPanel(), BorderLayout.CENTER);
         window.invalidate();
         window.validate();
     }
@@ -34,8 +31,8 @@ public class StartReversiGameState implements WindowState {
 
     @Override
     public void gameStarted(String gameName) {
-        //
+        if(gameName.equals("Reversi")){
+            window.setWindowState(window.getStartReversiGameState());
+        }
     }
-
-
 }

@@ -57,6 +57,6 @@ public class ServerLoginPanel extends JPanel {
     }
 
     public void setServerCommander(ServerCommand serverCommander) {
-        this.serverCommander = clientController.getServerCommander();
+        this.serverCommander = serverCommander;
     }
 }

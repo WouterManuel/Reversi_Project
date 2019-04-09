@@ -9,6 +9,7 @@ public class ClientController {
     private static ServerCommand serverCommander;
     Window window;
     Reversi reversiOffline;
+    Reversi reversiOnline;
     boolean connected;
 
     public ClientController() {
@@ -19,8 +20,10 @@ public class ClientController {
     public void startServerCommand(String hostname, int port) {
         serverCommander = new ServerCommand(hostname, port);
         connected = serverCommander.getConnectionStatus();
-        window.getServerLoginPanel().setServerCommander(serverCommander);
-        window.connected();
+        if (connected) {
+            window.getServerLoginPanel().setServerCommander(serverCommander);
+            window.connected();
+        }
     }
 
     //TODO add playAs
@@ -40,6 +43,9 @@ public class ClientController {
         return serverCommander;
     }
 
+    public boolean getConnectionStatus() {
+        return connected;
+    }
 
     public static void main(String[] args) {
         new ClientController();

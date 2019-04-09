@@ -16,8 +16,18 @@ public class ConnectedToServerState implements WindowState {
         window.validate();
     }
 
+    @Override
     public void connected() {
         //
+    }
+
+    @Override
+    public void disconnected() {
+        //
+    }
+
+    public void loggedIn() {
+        window.setWindowState(window.getLoggedInState());
     }
 
     public void gameStarted(String gameName){

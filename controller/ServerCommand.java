@@ -14,13 +14,16 @@ public class ServerCommand {
 
     public ServerCommand(String host, int port) {
         try {
+            // TODO Handle server connection in its own thread
             this.connection = new ServerConnection(host, port);
             this.output = new PrintStream(connection.getSocket().getOutputStream());
             this.input = new InputStreamReader(connection.getSocket().getInputStream());
             this.listener = new ServerListener(input);
 
+            // Start serverlistener
             Thread serverThread = new Thread(listener);
             serverThread.start();
+
         } catch (IOException e) {
             System.out.println("\033[34;1m[SERVER]\033[0m : \033[31;1m[ERROR]\033[0m Not available.");
         } catch (NullPointerException ne) {
