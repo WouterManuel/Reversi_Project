@@ -11,6 +11,8 @@ public class ServerCommand {
     PrintStream output;
     InputStreamReader input;
     String username;
+    String error;
+    boolean connected;
 
     public ServerCommand(String host, int port) {
         try {
@@ -20,6 +22,7 @@ public class ServerCommand {
             this.input = new InputStreamReader(connection.getSocket().getInputStream());
             this.listener = new ServerListener(input);
 
+            this.connected = connection.getConnectionStatus();
             // Start serverlistener
             Thread serverThread = new Thread(listener);
             serverThread.start();
@@ -143,19 +146,29 @@ public class ServerCommand {
     }
 
     public boolean checkIfValidCommand() {
-        ArrayList<String> list = listener.parsedMessageList;
-        if (list != null && list.get(1).equals("ERR")) {
-            String error = "";
-            for(String item : list) {
+        ArrayList<String> list = listener.getParsedMessage();
+        System.out.println("SVR Commander: " + list);
+        if (list != null && list.get(0).equals("ERR")) {
+            error = "";
+            for(String item : list.subList(1, list.size())) {
                 error += item + " ";
             }
             System.out.println("\033[34;1m[SERVER MESSAGE][0m : " + error);
             return false;
-        } else return true;
+        } else
+            return true;
     }
 
     public boolean getConnectionStatus(){
-       return connection.getConnectionStatus();
+       return connected;
+    }
+
+    public String getErrorMessage() {
+        return error;
+    }
+
+    public ServerListener getServerListener() {
+        return listener;
     }
 
     public String getUsername() {

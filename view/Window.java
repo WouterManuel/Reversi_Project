@@ -1,10 +1,8 @@
 package view;
 
 import controller.ClientController;
-import view.states.IntroState;
-import view.states.ConnectedToServerState;
-import view.states.LoggedInState;
-import view.states.WindowState;
+import model.game.Reversi;
+import view.states.*;
 
 import javax.swing.*;
 
@@ -29,7 +27,7 @@ public class Window extends JFrame implements WindowState {
 		this.clientController = clientController;
 
 		// Define all panels
-		reversiPanel = new ReversiPanel(clientController.getOfflineReversiGame());
+		reversiPanel = new ReversiPanel(clientController.getReversiGame(), clientController);
 		gameSidebarPanel = new GameSidebarPanel();
 		serverConnectionPanel = new ServerConnectionPanel(clientController);
 		gameSettingsPanel = new GameSettingsPanel(clientController);
@@ -37,7 +35,6 @@ public class Window extends JFrame implements WindowState {
 		serverLoginPanel = new ServerLoginPanel(clientController);
 
 		introState = new IntroState(this);
-		//startReversiGameState = new StartReversiGameState(this);
 
 		currentState = introState;
 
@@ -69,6 +66,7 @@ public class Window extends JFrame implements WindowState {
 	/******************************************** State logic *********************************************/
 	public void setWindowState(WindowState windowState) {
 		this.currentState = windowState;
+		System.out.println(currentState);
 	}
 
 	public WindowState getIntroState() {

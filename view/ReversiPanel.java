@@ -1,5 +1,6 @@
 package view;
 
+import controller.ClientController;
 import model.game.Game;
 
 import javax.swing.*;
@@ -12,8 +13,10 @@ public class ReversiPanel extends JPanel {
     JButton randBtn;
     JButton interruptBtn;
     JButton playGame;
+    ClientController clientController;
 
-    public ReversiPanel(Game reversi) {
+    public ReversiPanel(Game reversi, ClientController clientController) {
+        this.clientController = clientController;
         reversi.setPanel(this);
 		setLayout(new GridLayout(8,8));
 		setPreferredSize(new Dimension(400,400));
@@ -23,13 +26,15 @@ public class ReversiPanel extends JPanel {
         Piece[][] cells = new Piece[8][8];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                cells[i][j] = new Piece(reversi, this,i,j);
+                cells[i][j] = new Piece(reversi,this,i,j);
                 this.add(cells[i][j]);
             }
         }
-        reversi.resetBoard();
     }
 
+    public ClientController getController(){
+        return clientController;
+    }
     public void updateSidebarLabelScore(String s) {
         scoreLabel.setText(s);
     }
