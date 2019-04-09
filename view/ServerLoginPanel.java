@@ -33,6 +33,15 @@ public class ServerLoginPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 2;
         JTextField username = new JTextField( 15);
+		username.addActionListener(e -> {
+            if(!(username.getText().equals("") || username.getText().isEmpty()))
+                {clientController.tryLogin(username.getText());
+                if(!clientController.isUsernameSet()) {
+                    messageLabel.setText("<html><b>Error:</b> <font color='red'>" + clientController.getServerCommander().getErrorMessage() + "</font></html>");
+                    messageLabel.setVisible(true);}
+                }
+            else {messageLabel.setVisible(true);}
+		});
         add(username, gbc);
 
         gbc.gridx = 0;
