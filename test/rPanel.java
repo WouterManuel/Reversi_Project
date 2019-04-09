@@ -237,40 +237,49 @@ public class rPanel extends JPanel implements Game {
 				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
 	}
 
+	long curBoard = turn==Rules.BLACK?blackBB:whiteBB;
+	long opBoard = turn==Rules.BLACK?whiteBB:blackBB;
+
 	public void playMove(int i, int j) {
-		if((possibleBB&(1L<<(8*i+j)))!=0L){
-			long curBoard = turn==Rules.BLACK?blackBB:whiteBB;
-			long opBoard = turn==Rules.BLACK?whiteBB:blackBB;
-			long[] res = Rules.flip((8*i+j), curBoard, opBoard, turn);
-				if(turn==Rules.BLACK){
+		if((possibleBB&(1L<<(8*i+j)))!=0L){ // if move is possible
+			long[] res = Rules.flip((8*i+j), curBoard, opBoard, turn); // load transformation into res
+				if(turn==Rules.BLACK){ // apply res to correct board
 					blackBB = res[0];
 					whiteBB = res[1];
 				} else {
 					blackBB = res[1];
 					whiteBB = res[0];
 				}
-			setSquare(i, j, turn);
-			// if(Rules.getAllPossibleMoves(curBoard, opBoard)!=0L)
+			setSquare(i, j, turn); // apply the current move
+			if(Rules.getAllPossibleMoves(curBoard, opBoard)!=0L) // if opponent has no possible moves, don't update turn
 				turn = turn==Rules.BLACK?Rules.WHITE:Rules.BLACK;
+			curBoard = turn==Rules.BLACK?blackBB:whiteBB; // switch boards for player
+			opBoard = turn==Rules.BLACK?whiteBB:blackBB;
+			possibleBB = Rules.getAllPossibleMoves(curBoard, opBoard); // update possible moves
+
 			highlightPossibleMoves(curBoard, opBoard);
 			double bla = (Long.numberOfTrailingZeros(Long.highestOneBit(possibleBB))+1);
 			System.out.println(bla);
 			updateSidebarLabel1(String.valueOf(turn));
 			updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(blackBB))+"<br/>"+"Wit: "+String.valueOf(Rules.score(whiteBB))+"</html>");
 
-			curBoard = turn==Rules.BLACK?blackBB:whiteBB;
-			opBoard = turn==Rules.BLACK?whiteBB:blackBB;
-			Point p = negaAI.findMove(curBoard, opBoard, turn);
-			res = Rules.flip((8*i+j), curBoard, opBoard, turn);
-				if(turn==Rules.BLACK){
-					blackBB = res[0];
-					whiteBB = res[1];
-				} else {
-					blackBB = res[1];
-					whiteBB = res[0];
-				}
-			setSquare(p.x, p.y, turn);
-
+			//AI turn
+			// curBoard = turn==Rules.BLACK?blackBB:whiteBB;
+			// opBoard = turn==Rules.BLACK?whiteBB:blackBB;
+			// Point p = negaAI.findMove(curBoard, opBoard, turn);
+			// res = Rules.flip((8*p.x+p.y), curBoard, opBoard, turn);
+			// 	if(turn==Rules.BLACK){
+			// 		blackBB = res[0];
+			// 		whiteBB = res[1];
+			// 	} else {
+			// 		blackBB = res[1];
+			// 		whiteBB = res[0];
+			// 	}
+			// setSquare(p.x, p.y, turn);
+			// highlightPossibleMoves(curBoard, opBoard);
+			// updateSidebarLabel1(String.valueOf(turn));
+			// updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(Rules.score(blackBB))+"<br/>"+"Wit: "+String.valueOf(Rules.score(whiteBB))+"</html>");
+            //
 			repaint();
 		}
 	}
