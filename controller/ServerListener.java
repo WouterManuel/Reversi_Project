@@ -38,7 +38,12 @@ public class ServerListener implements Runnable{
     }
 
     public ArrayList<String> getParsedMessage() {
-        return parsedMessageList;
+        ArrayList<String> temp = new ArrayList<>();
+        for(String item : parsedMessageList){
+            temp.add(item);
+        }
+        parsedMessageList.clear();
+        return temp;
     }
 
     public void notifyObservers(ArrayList<String> message){

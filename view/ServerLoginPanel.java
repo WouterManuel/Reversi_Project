@@ -1,7 +1,6 @@
 package view;
 
 import controller.ClientController;
-import controller.ServerCommand;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,14 +33,15 @@ public class ServerLoginPanel extends JPanel {
         gbc.gridy = 2;
         JTextField username = new JTextField( 15);
 		username.addActionListener(e -> {
-            if(!(username.getText().equals("") || username.getText().isEmpty()))
-                {clientController.tryLogin(username.getText());
+            String selectedUsername = username.getText();
+            if(!(selectedUsername == null || selectedUsername.isEmpty())) {
+                clientController.isLoggedIn(selectedUsername);
                 if(!clientController.isUsernameSet()) {
                     messageLabel.setText("<html><b>Error:</b> <font color='red'>" + clientController.getServerCommander().getErrorMessage() + "</font></html>");
-                    messageLabel.setVisible(true);}
+                    messageLabel.setVisible(true);
                 }
-            else {messageLabel.setVisible(true);}
-		});
+            } else messageLabel.setVisible(true);
+        });
         add(username, gbc);
 
         gbc.gridx = 0;
@@ -49,13 +49,14 @@ public class ServerLoginPanel extends JPanel {
         /* Connect btn */
         JButton loginBtn = new JButton("Login");
         loginBtn.addActionListener(e -> {
-            if(!(username.getText().equals("") || username.getText().isEmpty()))
-                {clientController.tryLogin(username.getText());
+            String selectedUsername = username.getText();
+            if(!(selectedUsername == null || selectedUsername.isEmpty())) {
+                clientController.isLoggedIn(selectedUsername);
                 if(!clientController.isUsernameSet()) {
                     messageLabel.setText("<html><b>Error:</b> <font color='red'>" + clientController.getServerCommander().getErrorMessage() + "</font></html>");
-                    messageLabel.setVisible(true);}
+                    messageLabel.setVisible(true);
                 }
-            else {messageLabel.setVisible(true);}
+            } else messageLabel.setVisible(true);
         });
         add(loginBtn,gbc);
 

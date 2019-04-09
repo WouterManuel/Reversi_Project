@@ -36,10 +36,10 @@ public class ClientController {
         }
     }
 
-    public void tryLogin(String username){
+    public void isLoggedIn(String username){
         if(serverCommander.sendLoginCommand(username) != null) {
-            window.loggedIn();
             this.username = username;
+            window.loggedIn();
         }
     }
 
@@ -69,7 +69,7 @@ public class ClientController {
     }
 
     public boolean isUsernameSet() {
-        if(username == null) {
+        if(username == null || username.isEmpty()) {
             return false;
         } else return true;
     }

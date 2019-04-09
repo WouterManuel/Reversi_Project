@@ -147,13 +147,12 @@ public class ServerCommand {
 
     public boolean checkIfValidCommand() {
         ArrayList<String> list = listener.getParsedMessage();
-        System.out.println("SVR Commander: " + list);
-        if (list != null && list.get(0).equals("ERR")) {
+        if (!list.isEmpty() && list.get(0).equals("ERR")) {
             error = "";
             for(String item : list.subList(1, list.size())) {
                 error += item + " ";
             }
-            System.out.println("\033[34;1m[SERVER MESSAGE][0m : " + error);
+            System.out.println("\033[34;1m[SERVER ERROR MESSAGE][0m : " + error);
             return false;
         } else
             return true;
