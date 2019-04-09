@@ -5,6 +5,7 @@ import model.game.Reversi;
 import view.Window;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class ClientController {
 
@@ -14,6 +15,7 @@ public class ClientController {
     Game currentGame;
     boolean connected;
     String username;
+	LinkedList<Integer> movelist = new LinkedList<Integer>();
     byte opp = 2;
     byte turn = 1;
     boolean myTurn = true;
@@ -89,10 +91,12 @@ public class ClientController {
 				int i = move/8;
 				int j = move%8;
                 if(!message.get(2).equals(username)) {
+					movelist.add(move);
                     System.out.println("Opponent move: " + move);
                     play(i, j, opp);
                     myTurn = true;
                 } else {
+					movelist.add(move);
                     System.out.println("My move: " + move);
                     play(i, j, turn);
                     myTurn = false;
@@ -124,7 +128,6 @@ public class ClientController {
             if(!connected)
                 currentGame.playMove(i, j, turn);
             currentGame.removeHighlightPossibleMoves();
-            //currentGame.highlightPossibleMoves(turn);
         }
     }
 
