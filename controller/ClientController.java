@@ -46,6 +46,8 @@ public class ClientController {
             window.gameStarted(gameType);
             currentGame = reversiGame;
             currentGame.resetBoard();
+			if(!myTurn)
+				reversiGame.removeHighlightPossibleMoves();
         } else {
             //TODO
         }
@@ -79,30 +81,25 @@ public class ClientController {
                 if(!message.get(2).equals(username)) {
                     opponentColorSet(1);
                     myTurn = false;
-                    System.out.println("asdfgh: " + turn);
-
                 }
                 startGame(gametype);
                 break;
             case "MOVE":
+				int move = Integer.valueOf(message.get(4).replaceAll("\"", ""));
+				int i = move/8;
+				int j = move%8;
                 if(!message.get(2).equals(username)) {
-                    int move = Integer.valueOf(message.get(4).replaceAll("\"", ""));
-                    int i = move/8;
-                    int j = move%8;
                     System.out.println("Opponent move: " + move);
                     play(i, j, opp);
                     myTurn = true;
                 } else {
-                    int move = Integer.valueOf(message.get(4).replaceAll("\"", ""));
-                    int i = move/8;
-                    int j = move%8;
                     System.out.println("My move: " + move);
                     play(i, j, turn);
                     myTurn = false;
                 }
                 break;
             case "YOURTURN":
-//                turn = 1;
+				// blank on purpose
                 break;
             default:
                 System.err.println("Iets klopt niet helemaal.");
@@ -117,7 +114,6 @@ public class ClientController {
 
     public void play(int i, int j, byte turn) {
         currentGame.playMove(i, j, turn);
-        System.out.println("momomomomomom turn: "+turn);
     }
 
     public void playMove(int i, int j, byte turn) {

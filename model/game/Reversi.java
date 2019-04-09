@@ -1,7 +1,6 @@
 package model.game;
 
 import controller.ClientController;
-import controller.ServerCommand;
 import controller.ServerListener;
 
 import javax.swing.*;
@@ -11,12 +10,13 @@ import java.util.ArrayList;
 public class Reversi extends Game {
     JPanel reversiPanel;
     JPanel sidebar;
-    ServerCommand serverCommander;
+	ClientController clientController;
 
     protected final int[] DX = { -1,  0,  1, -1, 1, -1, 0, 1 };
     protected final int[] DY = { -1, -1, -1,  0, 0,  1, 1, 1 };
 
     public Reversi(ClientController clientController) {
+		this.clientController = clientController;
         board = new byte[8][8];
     }
 
@@ -540,7 +540,8 @@ public class Reversi extends Game {
 			flipv2(board, turn, i, j);
 			setSquare(i, j, turn);
 			removeHighlightPossibleMoves();
-			highlightPossibleMoves(turn);
+			if(clientController.isMyTurn())
+				highlightPossibleMoves(turn);
 			reversiPanel.repaint();
 
 			//updateSidebarLabel1(String.valueOf(turn));
