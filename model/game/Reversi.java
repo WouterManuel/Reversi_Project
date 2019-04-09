@@ -503,6 +503,10 @@ public class Reversi extends Game {
         return 0;
     }
 
+    public void setWinner(byte winner) {
+        //
+    }
+
 //    public void playMove(int i, int j) {
 //        if (possibleMove(board, turn, i, j)) {
 //            flipv2(board, turn, i, j);

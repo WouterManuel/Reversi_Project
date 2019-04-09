@@ -14,6 +14,7 @@ public class ClientController {
     Game currentGame;
     boolean connected;
     String username;
+    String serverComment;
     byte opp = 2;
     byte turn = 1;
     boolean myTurn = true;
@@ -100,6 +101,16 @@ public class ClientController {
                 break;
             case "YOURTURN":
 				// blank on purpose
+                break;
+            case "WIN":
+                reversiGame.setWinner(turn);
+                serverComment = message.get(6);
+                break;
+            case "LOSS":
+                reversiGame.setWinner(opp);
+                break;
+            case "DRAW":
+                //TODO
                 break;
             default:
                 System.err.println("Iets klopt niet helemaal.");
