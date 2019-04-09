@@ -35,6 +35,8 @@ public class ServerDetailsPanel extends JPanel {
 		subscribeBtn.addActionListener(e -> {
 			clientController.getServerCommander().sendSubscribeCommand("Reversi");
 		});
+
+		add(subscribeBtn);
 //
 //		listText = new JLabel("Playerlist :");
 //		listText.setForeground(Color.WHITE);

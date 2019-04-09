@@ -31,18 +31,20 @@ public class ServerCommand {
         }
     }
 
-    public synchronized void sendLoginCommand(String username) {
+    public synchronized String sendLoginCommand(String username) {
         try {
             output.println("login " + username);
             Thread.sleep(100);
             if(checkIfValidCommand()) {
                 this.username = username;
+                return username;
             }
         } catch (NullPointerException ex) {
             System.out.println("\033[34;1m[SERVERCOMMAND]\033[0m : Server not available.");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     public synchronized void sendLogoutCommand() {

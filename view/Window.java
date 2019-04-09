@@ -3,6 +3,7 @@ package view;
 import controller.ClientController;
 import view.states.IntroState;
 import view.states.ConnectedToServerState;
+import view.states.LoggedInState;
 import view.states.WindowState;
 
 import javax.swing.*;
@@ -32,7 +33,7 @@ public class Window extends JFrame implements WindowState {
 		gameSidebarPanel = new GameSidebarPanel();
 		serverConnectionPanel = new ServerConnectionPanel(clientController);
 		gameSettingsPanel = new GameSettingsPanel(clientController);
-		serverDetailsPanel = new ServerDetailsPanel();
+		serverDetailsPanel = new ServerDetailsPanel(clientController);
 		serverLoginPanel = new ServerLoginPanel(clientController);
 
 		introState = new IntroState(this);
@@ -54,27 +55,33 @@ public class Window extends JFrame implements WindowState {
     }
 
     public void loggedIn() {
-		//currentState.loggedIn();
+		currentState.loggedIn();
+	}
+
+	public void disconnected() {
+    	currentState.disconnected();
 	}
 
 	public void gameStarted(String gameName) {
 		currentState.gameStarted(gameName);
 	}
+
 	/******************************************** State logic *********************************************/
-
-
-
 	public void setWindowState(WindowState windowState) {
 		this.currentState = windowState;
 	}
 
-	public WindowState getLoggedInState() {
-	    return new ConnectedToServerState(this);
-    }
-
 	public WindowState getIntroState() {
 		return introState;
 	}
+
+	public WindowState getConnectedToServerState() {
+		return new ConnectedToServerState(this);
+	}
+
+	public WindowState getLoggedInState() {
+	    return new LoggedInState(this);
+    }
 
 	public WindowState getStartReversiGameState() {
 		return startReversiGameState;

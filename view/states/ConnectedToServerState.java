@@ -23,7 +23,7 @@ public class ConnectedToServerState implements WindowState {
 
     @Override
     public void disconnected() {
-        //
+        window.setWindowState(window.getIntroState());
     }
 
     public void loggedIn() {
