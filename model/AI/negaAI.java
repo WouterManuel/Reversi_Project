@@ -17,7 +17,6 @@ public class negaAI extends AI {
 	}
 
 	public Point findMove(byte player){
-		System.out.println("Entering findMove AI");
 		MoveScore moveScore = negascout(game.getBoard(), player, 0, -INF, INF);
 		System.out.println("FOUND MOVE: " + moveScore.getMove());
 		return moveScore.getMove();
@@ -37,7 +36,6 @@ public class negaAI extends AI {
 		if(possibleMoves.isEmpty())
 			return new MoveScore(null, bestScore);
 		bestMove = possibleMoves.get(0);
-
 
 		for(Point p : possibleMoves) {
 			byte[][] mBoard = new byte[8][8];
