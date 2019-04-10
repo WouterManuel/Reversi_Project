@@ -91,9 +91,9 @@ public class ServerCommand {
     public synchronized void sendChallengeCommand(String playername, String game) {
         try {
             if(game.toLowerCase().equals("reversi")){
-                output.println("challenge " + "\"playername\" " + "\"Reversi\"");
+                output.println("challenge " + "\"" + playername + "\" " + "\"Reversi\"");
             } else if (game.toLowerCase().equals("tic-tac-toe")) {
-                output.println("challenge " + "\"playername\" " + "\"Tic-tac-toe\"");
+                output.println("challenge " + "\"" + playername + "\" " + "\"Tic-tac-toe\"");
             }
             Thread.sleep(100);
             checkIfValidCommand();

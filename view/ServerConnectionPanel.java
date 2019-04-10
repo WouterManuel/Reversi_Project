@@ -10,50 +10,57 @@ public class ServerConnectionPanel extends JPanel {
 
     public ServerConnectionPanel(ClientController clientController) {
         this.clientController = clientController;
-        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(350,400));
-        setBackground(Color.GRAY);
-
-        GridBagConstraints gbc = new GridBagConstraints();
         setLayout(new GridBagLayout());
-        gbc.insets = new Insets(5, 5, 5 ,10);
+        setBackground(Color.darkGray.darker());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(2, 10, 2 ,10);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
 
-        JLabel playOnline = new JLabel("Play online");
-        playOnline.setFont(new Font("Serif", Font.PLAIN, 20));
-        add(playOnline);
+        JLabel playOnline = new JLabel("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>Play Online</div></html>");
+        add(playOnline, gbc);
+
         gbc.gridx = 0;
         gbc.gridy = 1;
+
         JLabel hostnameLabel = new JLabel("Hostname:");
+        hostnameLabel.setForeground(Color.WHITE);
         add(hostnameLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        JTextField hostname = new JTextField("localhost", 15);
+        JTextField hostname = new JTextField("localhost", 10);
         add(hostname, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
         JLabel portLabel = new JLabel("Port:");
+        portLabel.setForeground(Color.WHITE);
         add(portLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-        JTextField port = new JTextField("7789", 15);
+        JTextField port = new JTextField("7789",10);
         add(port, gbc);
 
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridwidth = 2;
         gbc.gridx = 0;
-        gbc.gridy = 6;
-        JLabel messageLabel = new JLabel("<html><font color='red'><b>Error:</b></font> Failed to connect to server</html>");
+        gbc.gridy = 4;
+        JLabel messageLabel = new JLabel("<html><font color='red'><b>Error: </b></font>Failed to connect to the server</html>");
         messageLabel.setVisible(false);
+        messageLabel.setForeground(Color.GRAY.brighter());
         add(messageLabel, gbc);
+
 
         /* Connect btn */
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridwidth = 2;
         JButton connectBtn = new JButton("Connect");
         connectBtn.addActionListener(e -> {clientController.startServerCommand(hostname.getText(), Integer.valueOf(port.getText()));
             if(!clientController.getConnectionStatus())

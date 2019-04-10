@@ -12,7 +12,7 @@ public class Window extends JFrame implements WindowState {
 	static final long serialVersionUID = 1L;
 	protected ClientController clientController;
 	private JPanel reversiPanel;
-	private JPanel ticTacToePanel;
+	private JPanel tictactoePanel;
 	private JPanel sidePanel;
 	private JPanel gameSidebarPanel;
 	private JPanel serverConnectionPanel;
@@ -30,7 +30,8 @@ public class Window extends JFrame implements WindowState {
 
 		// Define all panels
 		reversiPanel = new ReversiPanel(clientController.getOfflineReversiGame());
-		gameSidebarPanel = new GameSidebarPanel();
+		//tictactoePanel = new TictactoePanel(clientController.getOfflineReversiGame());
+		gameSidebarPanel = new GameSidebarPanel(clientController);
 		serverConnectionPanel = new ServerConnectionPanel(clientController);
 		gameSettingsPanel = new GameSettingsPanel(clientController);
 		serverDetailsPanel = new ServerDetailsPanel(clientController);
@@ -96,6 +97,10 @@ public class Window extends JFrame implements WindowState {
 	public JPanel getReversiPanel() {
 		return reversiPanel;
 	}
+
+	//public JPanel getTictactoePanel() {
+	//	return tictactoePanel;
+	//}
 
 	public JPanel getGameSettingsPanel() {
 		return gameSettingsPanel;

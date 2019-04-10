@@ -39,7 +39,8 @@ public class ClientController {
         if(!connected) {
             window.gameStarted(gameType);
         } else {
-            //
+            window.gameStarted(gameType);
+            System.out.println("Dit is de clientcontroller");
         }
     }
 

@@ -38,6 +38,8 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 1;
 
+        // clientController.getServerCommander().getPlayerlist();
+
         String players[]= { "player1", "john doe", "fyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy", "bar","oke", "1", "2", "3", "4", "5" };
         if (players.length>0){
             playerList = new JList(players);
@@ -49,7 +51,10 @@ public class ServerDetailsPanel extends JPanel {
             acceptedPlayer = new JLabel("");
             acceptedPlayer.setForeground(Color.WHITE);
 
-            listBtn.addActionListener(e -> {clientController.startGame("Reversi"); System.out.println("Clicked");});
+            listBtn.addActionListener(e -> {
+                clientController.getServerCommander().sendChallengeCommand(playerList.getSelectedValue().toString(), "Tic-tac-toe");
+            });
+
 
             JScrollPane playerListScroll = new JScrollPane(playerList);
 
@@ -71,14 +76,18 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 0;
 
-        listText = new JLabel("Invitelist :");
+        listText = new JLabel("Invites :");
         listText.setForeground(Color.WHITE);
         add(listText, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
 
-        String invites[]= { "inv1", "inv2", "inv3", "inv4", "inv5", "inv1", "inv2", "invrrrrrrrrrrrrrrrtyrtytrytrytrytrytrytrrrrrrrr3", "inv4", "inv5"};
+        // Server data here
+        String player = "PlayerOne";
+        String gameType = "TicTacToe";
+
+        String invites[]= { player+" - "+gameType, "inv2", "inv3", "inv4", "inv5", "inv1", "inv2", "invrrrrrrrrrrrrrrrtyrtytrytrytrytrytrytrrrrrrrr3", "inv4", "inv5"};
         if (invites.length>0){
             inviteList = new JList(invites);
 
@@ -90,7 +99,7 @@ public class ServerDetailsPanel extends JPanel {
             acceptedInvite = new JLabel("");
             acceptedInvite.setForeground(Color.WHITE);
 
-            listBtn2.addActionListener(e -> seeAcceptedInvite());
+            listBtn2.addActionListener(e -> {clientController.startGame("Reversi");});
 
             JScrollPane inviteListScroll = new JScrollPane(inviteList);
 
@@ -140,12 +149,11 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridy = 5;
 
         JButton subscribeBtnTTT = new JButton("Subscribe TicTacToe");
-        subscribeBtn.addActionListener(e -> {
-            clientController.getServerCommander().sendSubscribeCommand("Reversi");
+        subscribeBtnTTT.addActionListener(e -> {
+            clientController.getServerCommander().sendSubscribeCommand("Tic-tac-toe");
         });
 
         add(subscribeBtnTTT, gbc);
-
 
     }
 
