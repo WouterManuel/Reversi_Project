@@ -148,6 +148,7 @@ public class ServerCommand {
 
     public boolean checkIfValidCommand() {
         ArrayList<String> list = listener.getParsedMessage();
+        error = "No response from server";
         if (list != null && list.get(0).equals("ERR")) {
             error = "";
             for(String item : list.subList(1, list.size())) {
@@ -155,8 +156,8 @@ public class ServerCommand {
             }
             System.out.println("\033[34;1m[SERVER ERROR MESSAGE][0m : " + error);
             return false;
-        } else
-            System.out.println("\033[34;1m[SERVER MESSAGE][0m : CONFIRMED");
+        } else if (list.get(0).equals("OK"))
+            System.out.println("\033[34;1m[SERVER MESSAGE][0m : OK");
             return true;
     }
 
