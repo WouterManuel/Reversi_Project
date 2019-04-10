@@ -29,7 +29,7 @@ public class Window extends JFrame implements WindowState {
 		// Define all panels
 		//tictactoePanel = new TictactoePanel(clientController.getOfflineReversiGame());
 		reversiPanel = new ReversiPanel(clientController.getReversiGame(), clientController);
-		gameSidebarPanel = new GameSidebarPanel();
+		gameSidebarPanel = new GameSidebarPanel(clientController);
 		serverConnectionPanel = new ServerConnectionPanel(clientController);
 		gameSettingsPanel = new GameSettingsPanel(clientController);
 		serverDetailsPanel = new ServerDetailsPanel(clientController);

@@ -3,7 +3,6 @@ package controller;
 import model.game.Game;
 import model.game.Reversi;
 import view.Window;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -14,6 +13,7 @@ public class ClientController {
     Reversi reversiGame;
     Game currentGame;
     boolean connected;
+    boolean isLoggedIn;
     String username;
     String serverComment;
 	LinkedList<Integer> movelist = new LinkedList<Integer>();
@@ -40,9 +40,11 @@ public class ClientController {
         if(serverCommander.sendLoginCommand(username) != null) {
             this.username = username;
             window.loggedIn();
+            isLoggedIn = true;
             return true;
         } else {
             System.out.println("Logged in is false");
+            isLoggedIn = false;
             return false;
         }
     }
@@ -160,6 +162,10 @@ public class ClientController {
 
     public boolean isMyTurn() {
         return myTurn;
+    }
+
+    public boolean getLoggedInStatus() {
+        return isLoggedIn;
     }
 
     public static void main(String[] args) {
