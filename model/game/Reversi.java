@@ -85,7 +85,7 @@ public class Reversi extends Game {
         return ret;
     }
 
-    public int score(byte[][] board, byte color) {
+    public int score(byte color) {
         int ret = 0;
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++)
@@ -616,6 +616,10 @@ public class Reversi extends Game {
 
     public void updateView() {
         reversiPanel.repaint();
+    }
+
+    public void setWinner() {
+
     }
 
     public byte[][] getBoard() {

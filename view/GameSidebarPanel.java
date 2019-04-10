@@ -7,7 +7,8 @@ import java.awt.*;
 
 public class GameSidebarPanel extends JPanel{
     JLabel playerTurn;
-    JLabel scoreLabel;
+    JLabel scoreLabelWhite;
+    JLabel scoreLabelBlack;
     JButton resetBtn;
     JButton randBtn;
     JButton interruptBtn;
@@ -33,23 +34,15 @@ public class GameSidebarPanel extends JPanel{
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        scoreLabel = new JLabel(String.valueOf("<html><div style='margin-top:20px'>Score White: 3</div></html>"));
-        scoreLabel.setForeground(Color.WHITE);
-        add(scoreLabel,gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        scoreLabel = new JLabel("<html><div style='margin-top:20px'>Score Black: 2</div></html>");
-        scoreLabel.setForeground(Color.WHITE);
-        add(scoreLabel,gbc);
+        scoreLabelBlack = new JLabel(("<html><div style='margin-top:20px'>Score Black: " + clientController.getCurrentGame().score((byte) 1) + "</div></html>"));
+        scoreLabelBlack.setForeground(Color.WHITE);
+        add(scoreLabelBlack,gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        playerTurn = new JLabel(String.valueOf("<html><div style='margin-bottom:20px'>Player turn: White</div></html>"));
-        playerTurn.setForeground(Color.WHITE);
-        add(playerTurn,gbc);
+        scoreLabelWhite = new JLabel(("<html><div style='margin-bottom:20px'>Score White: " + clientController.getCurrentGame().score((byte) 2) + "</div></html>"));
+        scoreLabelWhite.setForeground(Color.WHITE);
+        add(scoreLabelWhite,gbc);
 
         /* score = new JLabel("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
 		score.setForeground(Color.WHITE);
@@ -86,8 +79,9 @@ public class GameSidebarPanel extends JPanel{
         add(forfeitBtn,gbc);
     }
 
-    public void updateSidebarLabelScore(String s) {
-        scoreLabel.setText(s);
+    public void updateSidebarLabelScore() {
+        scoreLabelBlack.setText("<html><div style='margin-top:20px'>Score Black: " + clientController.getCurrentGame().score((byte) 1) + "</div></html>");
+        scoreLabelWhite.setText("<html><div style='margin-bottom:20px'>Score White: " + clientController.getCurrentGame().score((byte) 2) + "</div></html>");
     }
 
     public void updateSidebarLabelPlayerTurn(String s) {

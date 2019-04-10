@@ -11,7 +11,7 @@ public abstract class Game {
     /******************************************** Game logic *********************************************/
     public abstract ArrayList<Point> getAllPossibleMoves(byte turn);
     public abstract boolean possibleMovev2(byte turn, int i, int j);
-    public abstract int score(byte[][] board, byte color);
+    public abstract int score(byte color);
     public abstract void playMovez(byte[][] board, Point move, byte turn);
     public abstract byte getWinner();
 
@@ -43,5 +43,7 @@ public abstract class Game {
     public abstract void removeHighlightPossibleMoves();
 
     public abstract void updateView();
+
+    public abstract void setWinner(byte winner);
 
 }
