@@ -21,7 +21,6 @@ public class GameSidebarPanel extends JPanel{
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(100,400));
         setBackground(Color.DARK_GRAY.darker());
-        setBorder(BorderFactory.createLineBorder(Color.GRAY, 5));
 
         GridBagConstraints gbc = new GridBagConstraints();
         setLayout(new GridBagLayout());
@@ -29,18 +28,18 @@ public class GameSidebarPanel extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        JLabel playOnline = new JLabel("<html><div style='color: white;font-size: 20px;'>Gamestats:</div></html>");
+        JLabel playOnline = new JLabel("<html><div style='color: white;font-size: 20px;'>Game Stats:</div></html>");
         add(playOnline, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        scoreLabelBlack = new JLabel(("<html><div style='margin-top:20px'>Score Black: " + clientController.getCurrentGame().score((byte) 1) + "</div></html>"));
+        scoreLabelBlack = new JLabel();
         scoreLabelBlack.setForeground(Color.WHITE);
         add(scoreLabelBlack,gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        scoreLabelWhite = new JLabel(("<html><div style='margin-bottom:20px'>Score White: " + clientController.getCurrentGame().score((byte) 2) + "</div></html>"));
+        scoreLabelWhite = new JLabel();
         scoreLabelWhite.setForeground(Color.WHITE);
         add(scoreLabelWhite,gbc);
 
@@ -79,9 +78,9 @@ public class GameSidebarPanel extends JPanel{
         add(forfeitBtn,gbc);
     }
 
-    public void updateSidebarLabelScore() {
-        scoreLabelBlack.setText("<html><div style='margin-top:20px'>Score Black: " + clientController.getCurrentGame().score((byte) 1) + "</div></html>");
-        scoreLabelWhite.setText("<html><div style='margin-bottom:20px'>Score White: " + clientController.getCurrentGame().score((byte) 2) + "</div></html>");
+    public void updateSidebarLabelScore(String player1, int score1, String player2, int score2) {
+        scoreLabelBlack.setText("<html><div style='margin-top:20px; color: black; font-size: 15px;'>" + player1 + ": " + score1 + "</div></html>");
+        scoreLabelWhite.setText("<html><div style='margin-bottom:20px; color: white; font-size: 15px;'>" + player2 + ": " + score2 + "</div></html>");
     }
 
     public void updateSidebarLabelPlayerTurn(String s) {

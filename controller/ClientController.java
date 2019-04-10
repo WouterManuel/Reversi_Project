@@ -109,6 +109,7 @@ public class ClientController {
                     opponentColorSet(1);
                     myTurn = false;
                 }
+                updateSideBarReversiScore();
                 break;
             case "MOVE":
 				int move = Integer.valueOf(message.get(4).replaceAll("\"", ""));
@@ -164,7 +165,7 @@ public class ClientController {
     // Registers the move an passes it to the current game model
     public void play(int i, int j, byte turn) {
         currentGame.playMove(i, j, turn);
-        window.getGameSidebarPanel().updateSidebarLabelScore();
+        updateSideBarReversiScore();
     }
 
     // Registers view input, aka HUMAN input
@@ -179,6 +180,13 @@ public class ClientController {
         else
             if(playingAsAI) System.out.println("AI: not possible move");
             else System.out.println("Human: not possible move");
+    }
+
+    public void updateSideBarReversiScore() {
+        if(opp == (byte) 1) {
+            window.getGameSidebarPanel().updateSidebarLabelScore(opponentName, currentGame.score((byte) 1) ,username, currentGame.score((byte) 2));
+        } else
+            window.getGameSidebarPanel().updateSidebarLabelScore(username, currentGame.score((byte) 1), opponentName, currentGame.score((byte) 2));
     }
 
     public Game getCurrentGame() {
