@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class negaAI extends AI {
 
-	final int INF = 1000000;
+	final double INF = 1000000;
 	private int maxDepth = 9;
 
 	Reversi game;
@@ -21,15 +21,15 @@ public class negaAI extends AI {
 		return moveScore.getMove();
 	}
 
-	public MoveScore negascout(byte[][] board, byte player, int depth, int alpha, int beta) {
+	public MoveScore negascout(byte[][] board, byte player, int depth, double alpha, double beta) {
 		byte opp = player== game.BLACK?game.WHITE:game.BLACK;
 		if(depth == maxDepth)
-			return new MoveScore(null, game.scoreH(board, player));
+			return new MoveScore(null, game.scoreH(player));
 
-		int currentScore;
-		int bestScore = -INF;
+		double currentScore;
+		double bestScore = -INF;
 		Point bestMove = null;
-		int adaptiveBeta = beta;
+		double adaptiveBeta = beta;
 
 		ArrayList<Point> possibleMoves = game.getAllPossibleMoves(player);
 		if(possibleMoves.isEmpty())

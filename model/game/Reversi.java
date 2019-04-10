@@ -35,55 +35,114 @@ public class Reversi extends Game {
         return result;
     }
 
-    public int scoreH(byte[][] board, byte color) {
-        int ret = 0;
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++)
-                //hoeken
-                if(i == 0 && j == 0 && board[i][j]==color)
-                    ret+=15;
-                else if(i == 0 && j == 7 && board[i][j]==color)
-                    ret+=15;
-                else if(i == 7 && j == 0 && board[i][j]==color)
-                    ret+=15;
-                else if(i == 7 && j == 7 && board[i][j]==color)
-                    ret+=15;
+	public double scoreH(byte color) {
+		int[][] V = {
+			{20, -3, 11, 8, 8, 11, -3, 20},
+			{-3, -7, -4, 1, 1, -4, -7, -3},
+			{11, -4, 2, 2, 2, 2, -4, 11},
+			{8, 1, 2, -3, -3, 2, 1, 8},
+			{8, 1, 2, -3, -3, 2, 1, 8},
+			{11, -4, 2, 2, 2, 2, -4, 11},
+			{-3, -7, -4, 1, 1, -4, -7, -3},
+			{20, -3, 11, 8, 8, 11, -3, 20},
+		};
+		int X1[] = {-1, -1, 0, 1, 1, 1, 0, -1};
+		int Y1[] = {0, 1, 1, 1, 0, -1, -1, -1};
+		double ret = 0;
+		double m = 0, p = 0, d = 0, f = 0, c = 0, l = 0;
+		byte opp = color==BLACK?WHITE:BLACK;
+		int myMoves = getAllPossibleMoves(color).size();
+		int oppMoves = getAllPossibleMoves(opp).size();
+		int myFT = 0, oppFT = 0, x = 0, y = 0;
 
-                    // //linksboven
-                    // else if(i == 0 && j == 1 && board[i][j]==color)
-                    // 	ret-=100;
-                    // else if(i == 1 && j == 0 && board[i][j]==color)
-                    // 	ret-=100;
-                    // else if(i == 1 && j == 1 && board[i][j]==color)
-                    // 	ret-=100;
-                    //
-                    // //rechtsboven
-                    // else if(i == 0 && j == 6 && board[i][j]==color)
-                    // 	ret-=100;
-                    // else if(i == 7 && j == 1 && board[i][j]==color)
-                    // 	ret-=100;
-                    // else if(i == 6 && j == 1 && board[i][j]==color)
-                    // 	ret-=100;
-                    //
-                    // //linksonder
-                    // else if(i == 0 && j == 6 && board[i][j]==color)
-                    // 	ret-=100;
-                    // else if(i == 1 && j == 6 && board[i][j]==color)
-                    // 	ret-=100;
-                    // else if(i == 1 && j == 7 && board[i][j]==color)
-                    // 	ret-=100;
-                    //
-                    // //rechtsonder
-                    // else if(i == 7 && j == 6 && board[i][j]==color)
-                    // 	ret-=100;
-                    // else if(i == 6 && j == 6 && board[i][j]==color)
-                    // 	ret-=100;
-                    // else if(i == 6 && j == 7 && board[i][j]==color)
-                    // 	ret-=100;
-                else
-                    ret++;
-        return ret;
-    }
+		for(int i=0; i<8; i++)
+			for(int j=0; j<8; j++)  {
+				if(board[i][j] == color)  {
+					d += V[i][j];
+					myMoves++;
+				} else if(board[i][j] == opp)  {
+					d -= V[i][j];
+					oppMoves++;
+				}
+				if(board[i][j] >= 0)   {
+					for(int k=0; k<8; k++)  {
+						x = i + X1[k]; y = j + Y1[k];
+						if(x >= 0 && x < 8 && y >= 0 && y < 8 && board[x][y] == 0) {
+							if(board[i][j] == color)  myFT++;
+							else oppFT++;
+							break;
+						}
+					}
+				}
+			}
+
+		if(myMoves>oppMoves)
+			m = (100.0*myMoves)/(myMoves+oppMoves);
+		else if(myMoves < oppMoves)
+			m = -(100.0 * oppMoves)/(myMoves + oppMoves);
+		else m = 0;
+
+		if(myFT > oppFT)
+			f = -(100.0 * myFT)/(myFT + oppFT);
+		else if(myFT < oppFT)
+			f = (100.0 * oppFT)/(myFT + oppFT);
+		else f = 0;
+
+		if(myMoves > oppMoves)
+			p = (100.0 * myMoves)/(myMoves + oppMoves);
+		else if(myMoves < oppMoves)
+			p = -(100.0 * oppMoves)/(myMoves + oppMoves);
+		else p = 0;
+
+		myMoves = oppMoves = 0;
+		if(board[0][0] == color) myMoves++;
+		else if(board[0][0] == opp) oppMoves++;
+		if(board[0][7] == color) myMoves++;
+		else if(board[0][7] == opp) oppMoves++;
+		if(board[7][0] == color) myMoves++;
+		else if(board[7][0] == opp) oppMoves++;
+		if(board[7][7] == color) myMoves++;
+		else if(board[7][7] == opp) oppMoves++;
+		c = 25 * (myMoves - oppMoves);
+
+		myMoves = oppMoves = 0;
+		if(board[0][0] == 0)   {
+			if(board[0][1] == color) myMoves++;
+			else if(board[0][1] == opp) oppMoves++;
+			if(board[1][1] == color) myMoves++;
+			else if(board[1][1] == opp) oppMoves++;
+			if(board[1][0] == color) myMoves++;
+			else if(board[1][0] == opp) oppMoves++;
+		}
+		if(board[0][7] == 0)   {
+			if(board[0][6] == color) myMoves++;
+			else if(board[0][6] == opp) oppMoves++;
+			if(board[1][6] == color) myMoves++;
+			else if(board[1][6] == opp) oppMoves++;
+			if(board[1][7] == color) myMoves++;
+			else if(board[1][7] == opp) oppMoves++;
+		}
+		if(board[7][0] == 0)   {
+			if(board[7][1] == color) myMoves++;
+			else if(board[7][1] == opp) oppMoves++;
+			if(board[6][1] == color) myMoves++;
+			else if(board[6][1] == opp) oppMoves++;
+			if(board[6][0] == color) myMoves++;
+			else if(board[6][0] == opp) oppMoves++;
+		}
+		if(board[7][7] == 0)   {
+			if(board[6][7] == color) myMoves++;
+			else if(board[6][7] == opp) oppMoves++;
+			if(board[6][6] == color) myMoves++;
+			else if(board[6][6] == opp) oppMoves++;
+			if(board[7][6] == color) myMoves++;
+			else if(board[7][6] == opp) oppMoves++;
+		}
+		l = -12.5 * (myMoves - oppMoves);
+
+		ret = (78.922*m) + (10*p) + (74.396*f) + (10*d) + (801.724*c) + (382.026*l);
+		return ret;
+	}
 
     public int score(byte color) {
         int ret = 0;
