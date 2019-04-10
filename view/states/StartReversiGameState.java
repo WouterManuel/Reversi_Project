@@ -1,5 +1,6 @@
 package view.states;
 
+import view.GameSidebarPanel;
 import view.Window;
 
 import java.awt.*;
@@ -10,9 +11,9 @@ public class StartReversiGameState implements WindowState {
     public StartReversiGameState(Window window) {
         this.window = window;
         System.out.println("Dit is het reversibord");
-
         window.getContentPane().removeAll();
         window.getContentPane().add(window.getReversiPanel(), BorderLayout.WEST);
+        window.setGameSidebarPanel(new GameSidebarPanel(window.getClientController()));
         window.getContentPane().add(window.getGameSidebarPanel(), BorderLayout.CENTER);
         window.invalidate();
         window.validate();

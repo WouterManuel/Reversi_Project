@@ -15,6 +15,7 @@ public class ClientController {
     boolean connected;
     boolean isLoggedIn;
     String username;
+    String opponentName;
     String serverComment;
 	LinkedList<Integer> movelist = new LinkedList<Integer>();
     byte opp = 2;
@@ -52,9 +53,9 @@ public class ClientController {
     //TODO add playAs
     public void startGame(String gameType) {
         if(gameType.equals("Reversi")) {
-            window.gameStarted(gameType);
             currentGame = reversiGame;
             currentGame.resetBoard();
+            window.gameStarted(gameType);
 			if(!myTurn)
 				reversiGame.removeHighlightPossibleMoves();
         } else {
@@ -87,7 +88,7 @@ public class ClientController {
             case "MATCH":
                 System.out.println("CONTROLLER: " + tag);
                 String gametype = message.get(4);
-                String opponentName = message.get(6);
+                opponentName = message.get(6);
                 if(!message.get(2).equals(username)) {
                     opponentColorSet(1);
                     myTurn = false;
@@ -104,7 +105,7 @@ public class ClientController {
                     play(i, j, opp);
 					if(!reversiGame.getAllPossibleMoves(turn).isEmpty()){
                         myTurn = true;
-                        reversiGame.updateView();
+                        currentGame.updateView();
                     }
 
                 } else {
@@ -119,11 +120,12 @@ public class ClientController {
 				// blank on purpose
                 break;
             case "WIN":
-                reversiGame.setWinner(turn);
+                currentGame.setWinner(turn);
                 serverComment = message.get(6);
                 break;
             case "LOSS":
-                reversiGame.setWinner(opp);
+                currentGame.setWinner(opp);
+                serverComment = message.get(6);
                 break;
             case "DRAW":
                 //TODO
@@ -131,7 +133,6 @@ public class ClientController {
             default:
                 System.err.println("Iets klopt niet helemaal.");
         }
-
     }
 
     private void opponentColorSet(int color) {
@@ -142,6 +143,7 @@ public class ClientController {
     // Registers the move an passes it to the current game model
     public void play(int i, int j, byte turn) {
         currentGame.playMove(i, j, turn);
+        window.getGameSidebarPanel().updateSidebarLabelScore();
     }
 
     // Registers view input, aka HUMAN input
@@ -155,6 +157,19 @@ public class ClientController {
             currentGame.removeHighlightPossibleMoves();
         }
     }
+
+    public Game getCurrentGame() {
+        return currentGame;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getOpponentName() {
+        return opponentName;
+    }
+
 
     public byte getTurn() {
         return turn;

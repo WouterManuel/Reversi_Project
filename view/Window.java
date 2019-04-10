@@ -12,7 +12,7 @@ public class Window extends JFrame implements WindowState {
 	private JPanel reversiPanel;
 	private JPanel tictactoePanel;
 	private JPanel sidePanel;
-	private JPanel gameSidebarPanel;
+	private GameSidebarPanel gameSidebarPanel;
 	private JPanel serverConnectionPanel;
 	private JPanel gameSettingsPanel;
 	private JPanel serverDetailsPanel;
@@ -29,7 +29,6 @@ public class Window extends JFrame implements WindowState {
 		// Define all panels
 		//tictactoePanel = new TictactoePanel(clientController.getOfflineReversiGame());
 		reversiPanel = new ReversiPanel(clientController.getReversiGame(), clientController);
-		gameSidebarPanel = new GameSidebarPanel(clientController);
 		serverConnectionPanel = new ServerConnectionPanel(clientController);
 		gameSettingsPanel = new GameSettingsPanel(clientController);
 		serverDetailsPanel = new ServerDetailsPanel(clientController);
@@ -88,7 +87,7 @@ public class Window extends JFrame implements WindowState {
 
 	/******************************************** Panel getters *********************************************/
 
-	public JPanel getGameSidebarPanel() {
+	public GameSidebarPanel getGameSidebarPanel() {
 		return gameSidebarPanel;
 	}
 
@@ -114,5 +113,13 @@ public class Window extends JFrame implements WindowState {
 
 	public ServerLoginPanel getServerLoginPanel() {
 		return serverLoginPanel;
+	}
+
+	public void setGameSidebarPanel(GameSidebarPanel gameSidebarPanel) {
+		this.gameSidebarPanel = gameSidebarPanel;
+	}
+
+	public ClientController getClientController() {
+		return clientController;
 	}
 }
