@@ -1,9 +1,12 @@
 package controller;
 
+import model.AI.AI;
+import model.AI.negaAI;
 import model.game.Game;
 import model.game.Reversi;
 import view.Window;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -13,6 +16,9 @@ public class ClientController {
     Window window;
     Reversi reversiGame;
     Game currentGame;
+    AI currentAI;
+    boolean playingAsAI;
+
     boolean connected;
     String username;
     String opponentName;
@@ -49,7 +55,7 @@ public class ClientController {
     }
 
     //TODO add playAs
-    public void startGame(String gameType) {
+    public void startGame(String gameType, String playingAs) {
         if(gameType.equals("Reversi")) {
             currentGame = reversiGame;
             currentGame.resetBoard();
@@ -58,6 +64,16 @@ public class ClientController {
 				reversiGame.removeHighlightPossibleMoves();
         } else {
             //TODO
+        }
+
+        if (playingAs.equals("AI")){
+            System.out.println("Playing assss: " + playingAs);
+            currentAI = new negaAI(currentGame);
+            playingAsAI = true;
+        }
+        else if (playingAs.equals("Human")) {
+            currentAI = null;
+            playingAsAI = false;
         }
     }
 
@@ -73,25 +89,30 @@ public class ClientController {
         return connected;
     }
 
-    public boolean isUsernameSet() {
-        if(username == null || username.isEmpty())
-            return false;
-        else
-            return true;
-    }
-
     public void update(ArrayList<String> message){
         String tag = message.get(0);
         switch(tag) {
             case "MATCH":
-                System.out.println("CONTROLLER: " + tag);
                 String gametype = message.get(4);
                 opponentName = message.get(6);
+                String playingAs = window.getGameSettingsPanel().getPlayAs();
+                System.out.println("Player to start: " + message.get(2));
+                startGame(gametype, playingAs);
                 if(!message.get(2).equals(username)) {
                     opponentColorSet(1);
                     myTurn = false;
                 }
-                startGame(gametype);
+                else {
+                    System.out.println("Playing as AI first move" + playingAsAI);
+                    /** AI plays */
+                    if(playingAsAI) {
+                        System.out.println("AI turn");
+                        Point AImove = currentAI.findMove(turn);
+                        System.out.println(AImove.toString());
+                        playMove(AImove.x, AImove.y, turn);
+                        myTurn = false;
+                    }
+                }
                 break;
             case "MOVE":
 				int move = Integer.valueOf(message.get(4).replaceAll("\"", ""));
@@ -104,14 +125,26 @@ public class ClientController {
 					if(!reversiGame.getAllPossibleMoves(turn).isEmpty()){
                         myTurn = true;
                         currentGame.updateView();
+
+                        System.out.println("Playing as AI after opponent move " + playingAsAI);
+                        /** AI plays */
+                        if(playingAsAI) {
+                            System.out.println("AI turn");
+                            Point AImove = currentAI.findMove(turn);
+                            System.out.println("AI move: " + AImove);
+                            playMove(AImove.x, AImove.y, turn);
+                            myTurn = false;
+                        }
                     }
 
+                    currentGame.updateView();
                 } else {
 					movelist.add(move);
                     System.out.println("My move: " + move);
                     play(i, j, turn);
 					if(!reversiGame.getAllPossibleMoves(opp).isEmpty())
 						myTurn = false;
+
                 }
                 break;
             case "YOURTURN":
@@ -146,14 +179,16 @@ public class ClientController {
 
     // Registers view input, aka HUMAN input
     public void playMove(int i, int j, byte turn) {
-        validMove = currentGame.possibleMovev2(turn, i, j);
-        if(validMove) {
+        if(currentGame.possibleMovev2(turn, i, j)) {
             if (connected)
                 serverCommander.sendMoveCommand(8 * i + j);
             if(!connected)
                 currentGame.playMove(i, j, turn);
             currentGame.removeHighlightPossibleMoves();
         }
+        else
+            if(playingAsAI) System.out.println("AI: not possible move");
+            else System.out.println("Human: not possible move");
     }
 
     public Game getCurrentGame() {
@@ -168,6 +203,13 @@ public class ClientController {
         return opponentName;
     }
 
+    public boolean playingAsAI() {
+        return playingAsAI;
+    }
+
+    public String playingAs() {
+        return window.getGameSettingsPanel().getPlayAs();
+    }
 
     public byte getTurn() {
         return turn;

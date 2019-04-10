@@ -14,7 +14,7 @@ public class Window extends JFrame implements WindowState {
 	private JPanel sidePanel;
 	private GameSidebarPanel gameSidebarPanel;
 	private JPanel serverConnectionPanel;
-	private JPanel gameSettingsPanel;
+	private GameSettingsPanel gameSettingsPanel;
 	private JPanel serverDetailsPanel;
 	private ServerLoginPanel serverLoginPanel;
 
@@ -67,7 +67,6 @@ public class Window extends JFrame implements WindowState {
 	/******************************************** State logic *********************************************/
 	public void setWindowState(WindowState windowState) {
 		this.currentState = windowState;
-		System.out.println(currentState);
 	}
 
 	public WindowState getIntroState() {
@@ -100,7 +99,7 @@ public class Window extends JFrame implements WindowState {
 	//	return tictactoePanel;
 	//}
 
-	public JPanel getGameSettingsPanel() {
+	public GameSettingsPanel getGameSettingsPanel() {
 		return gameSettingsPanel;
 	}
 

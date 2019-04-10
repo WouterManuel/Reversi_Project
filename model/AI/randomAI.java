@@ -1,9 +1,17 @@
 package model.AI;
 
+import model.game.Game;
+
 import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class randomAI extends AI {
+
+	Game game;
+
+	public randomAI (Game game) {
+		this.game = game;
+	}
 
 	public Point findMove(byte player){
 		return random(player);

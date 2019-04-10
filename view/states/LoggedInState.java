@@ -31,7 +31,6 @@ public class LoggedInState implements WindowState {
 
     @Override
     public void gameStarted(String gameName) {
-        System.out.println("LOGGIN IN STATE: " + gameName);
         if(gameName.equals("Reversi")){
             window.setWindowState(new StartReversiGameState(window));
         }

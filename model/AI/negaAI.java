@@ -17,14 +17,16 @@ public class negaAI extends AI {
 	}
 
 	public Point findMove(byte player){
+		System.out.println("Entering findMove AI");
 		MoveScore moveScore = negascout(game.getBoard(), player, 0, -INF, INF);
+		System.out.println("FOUND MOVE: " + moveScore.getMove());
 		return moveScore.getMove();
 	}
 
 	public MoveScore negascout(byte[][] board, byte player, int depth, double alpha, double beta) {
 		byte opp = player== game.BLACK?game.WHITE:game.BLACK;
 		if(depth == maxDepth)
-			return new MoveScore(null, game.scoreH(player), possibleMoves.size());
+			return new MoveScore(null, game.scoreH(player, possibleMoves.size()));
 
 		double currentScore;
 		double bestScore = -INF;

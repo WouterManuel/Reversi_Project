@@ -40,7 +40,6 @@ public class ServerCommand {
             output.println("login " + username);
             Thread.sleep(100);
             if(checkIfValidCommand()) {
-                System.out.println("Send login command: valid command");
                 this.username = username;
                 return username;
             }
@@ -157,7 +156,7 @@ public class ServerCommand {
             System.out.println("\033[34;1m[SERVER ERROR MESSAGE][0m : " + error);
             return false;
         } else
-            System.out.println("\033[34;1m[SERVER MESSAGE][0m : OK");
+            System.out.println("\033[34;1m[SERVER MESSAGE][0m : CONFIRMED");
             return true;
     }
 

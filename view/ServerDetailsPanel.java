@@ -99,7 +99,7 @@ public class ServerDetailsPanel extends JPanel {
             acceptedInvite = new JLabel("");
             acceptedInvite.setForeground(Color.WHITE);
 
-            listBtn2.addActionListener(e -> {clientController.startGame("Reversi");});
+            listBtn2.addActionListener(e -> {clientController.startGame("Reversi", clientController.playingAs());});
 
             JScrollPane inviteListScroll = new JScrollPane(inviteList);
 

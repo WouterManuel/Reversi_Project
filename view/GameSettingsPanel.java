@@ -13,6 +13,7 @@ public class GameSettingsPanel extends JPanel{
     JButton randBtn;
     JButton interruptBtn;
     JButton playGame;
+    JComboBox<String> playAs;
 
     public GameSettingsPanel(ClientController clientController) {
 
@@ -37,8 +38,8 @@ public class GameSettingsPanel extends JPanel{
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        String[] playsAs = new String[] {"Myself","AI","Kiran"};
-        JComboBox<String> playAs = new JComboBox<>(playsAs);
+        String[] playsAs = new String[] {"Human","AI"};
+        playAs = new JComboBox<>(playsAs);
         add(playAs,gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -56,9 +57,13 @@ public class GameSettingsPanel extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 2;
         playGame = new JButton("<html><div style='padding: 0'>"+"Play now"+"</div></html>");
-        playGame.addActionListener(e -> {clientController.startGame(gameType.getSelectedItem().toString());});
+        playGame.addActionListener(e -> {clientController.startGame(gameType.getSelectedItem().toString(), playAs.getSelectedItem().toString());});
         add(playGame,gbc);
 
+    }
+
+    public String getPlayAs() {
+        return playAs.getSelectedItem().toString();
     }
 
     public void updateSidebarLabelScore(String s) {
