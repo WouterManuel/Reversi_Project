@@ -13,15 +13,16 @@ public class greedyAI extends AI {
 		this.game = (Reversi) game;
 	}
 
-	public Point findMove(byte[][] board, byte player){
-		return greedy(board, player);
+	public Point findMove(byte player){
+		return greedy(player);
 	}
 
-	public Point greedy(byte[][] board, byte turn) {
+	public Point greedy(byte player) {
+		possibleMoves = game.getAllPossibleMoves(player);
 		int max = 0, score = 0;
 		Point bestMove = new Point();
 		for(Point p : possibleMoves) {
-			if((score = game.flipScore(board, turn, p.x, p.y)) > max) {
+			if((score = game.flipScore(player, p.x, p.y)) > max) {
 				max = score;
 				bestMove = p;
 			}

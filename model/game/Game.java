@@ -42,8 +42,6 @@ public abstract class Game {
 
     public abstract void removeHighlightPossibleMoves();
 
-    public void update(String value) {
-
-    }
+    public abstract void updateView();
 
 }

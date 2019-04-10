@@ -16,8 +16,8 @@ public class negaAI extends AI {
 		this.game = (Reversi) game;
 	}
 
-	public Point findMove(byte[][] board, byte player){
-		MoveScore moveScore = negascout(board, player, 0, -INF, INF);
+	public Point findMove(byte player){
+		MoveScore moveScore = negascout(game.getBoard(), player, 0, -INF, INF);
 		return moveScore.getMove();
 	}
 
@@ -31,7 +31,7 @@ public class negaAI extends AI {
 		Point bestMove = null;
 		int adaptiveBeta = beta;
 
-		ArrayList<Point> possibleMoves = game.getAllPossibleMoves(board, player);
+		ArrayList<Point> possibleMoves = game.getAllPossibleMoves(player);
 		if(possibleMoves.isEmpty())
 			return new MoveScore(null, bestScore);
 		bestMove = possibleMoves.get(0);

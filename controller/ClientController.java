@@ -100,8 +100,11 @@ public class ClientController {
 					movelist.add(move);
                     System.out.println("Opponent move: " + move);
                     play(i, j, opp);
-					if(!reversiGame.getAllPossibleMoves(turn).isEmpty())
-						myTurn = true;
+					if(!reversiGame.getAllPossibleMoves(turn).isEmpty()){
+                        myTurn = true;
+                        reversiGame.updateView();
+                    }
+
                 } else {
 					movelist.add(move);
                     System.out.println("My move: " + move);
@@ -134,10 +137,12 @@ public class ClientController {
         turn = opp==(byte)1?(byte)2:(byte)1;
     }
 
+    // Registers the move an passes it to the current game model
     public void play(int i, int j, byte turn) {
         currentGame.playMove(i, j, turn);
     }
 
+    // Registers view input, aka HUMAN input
     public void playMove(int i, int j, byte turn) {
         validMove = currentGame.possibleMovev2(turn, i, j);
         if(validMove) {

@@ -100,7 +100,7 @@ public class Reversi extends Game {
             System.out.println(r);
     }
 
-    public int flipScore(byte[][] board, byte turn, int i, int j) {
+    public int flipScore(byte turn, int i, int j) {
         int moveI, moveJ, cells;
         int opponent = ((turn == 1) ? 2 : 1);
         int ret = 0;
@@ -489,7 +489,7 @@ public class Reversi extends Game {
         return false;
     }
 
-  public void playMovez(byte[][] board, Point move, byte turn) {
+    public void playMovez(byte[][] board, Point move, byte turn) {
 //        this.turn = turn;
 //        flip(board, this.turn, move.x, move.y);
 //        board[move.x][move.y] = this.turn;
@@ -556,7 +556,7 @@ public class Reversi extends Game {
 
     public void highlight(int i, int j, byte turn) {
       if(board[i][j] <= 0) {
-			highlightPossibleMoves(turn);
+			//highlightPossibleMoves(turn);
 			if(turn==1) {
                 board[i][j] = -1;
             }
@@ -612,6 +612,10 @@ public class Reversi extends Game {
         //updateSidebarLabel1(String.valueOf(turn));
         //updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(score(board, BLACK))+"<br/>"+"Wit: "+String.valueOf(score(board, WHITE))+"</html>");
         //repaint();
+    }
+
+    public void updateView() {
+        reversiPanel.repaint();
     }
 
     public byte[][] getBoard() {

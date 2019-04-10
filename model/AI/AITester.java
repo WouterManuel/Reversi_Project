@@ -25,18 +25,18 @@ public class AITester implements Runnable{
 
     public void run(){
         while(System.currentTimeMillis() < time){
-            AI.possibleMoves = game.getAllPossibleMoves(board, turn);
-            if(!AI.possibleMoves.isEmpty()){
+            ai1.possibleMoves = game.getAllPossibleMoves(turn);
+            if(!ai1.possibleMoves.isEmpty()){
                 if(turn == 1)
                     try{
-                        Point p = ai1.findMove(board, turn);
+                        Point p = ai1.findMove(turn);
                         game.playMovez(board, p, turn);
                     } catch(NullPointerException n){
                         // System.out.println("null");
                     }
                 else if(turn == 2)
                     try{
-                        Point p = ai2.findMove(board, turn);
+                        Point p = ai2.findMove(turn);
                         game.playMovez(board, p, turn);
                     } catch(NullPointerException n){
                         System.out.println("null");
