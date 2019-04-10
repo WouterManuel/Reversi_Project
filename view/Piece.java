@@ -56,7 +56,7 @@ public class Piece extends JLabel implements MouseListener{
     }
 
     @Override
-	public void mouseEntered(MouseEvent e) { if(parent.getController().isMyTurn()&&!parent.getController().playingAsAI()) game.highlight(i,j, parent.getController().getTurn()); }
+	public void mouseEntered(MouseEvent e) { if(parent.getController().isMyTurn()&&!parent.getController().playingAsAI()) {game.highlight(i,j, parent.getController().getTurn()); }}
 
     @Override
 	public void mouseExited(MouseEvent e) { game.highlightRemove(i,j, parent.getController().getTurn()); }
@@ -65,7 +65,7 @@ public class Piece extends JLabel implements MouseListener{
     public void mouseClicked(MouseEvent e) {}
 
     @Override
-    public void mousePressed(MouseEvent e) { if(parent.getController().isMyTurn()&&!parent.getController().playingAsAI()) parent.getController().playMove(i,j, parent.getController().getTurn()); }
+    public void mousePressed(MouseEvent e) { if(parent.getController().isMyTurn()&&!parent.getController().playingAsAI()) {parent.getController().playMove(i,j, parent.getController().getTurn());} }
 
     @Override
     public void mouseReleased(MouseEvent e) {}

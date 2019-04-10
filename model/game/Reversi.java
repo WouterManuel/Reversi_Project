@@ -614,7 +614,8 @@ public class Reversi extends Game {
 
     public void highlight(int i, int j, byte turn) {
       if(board[i][j] <= 0) {
-			//highlightPossibleMoves(turn);
+			//removeHighlightPossibleMoves();
+			highlightPossibleMoves(turn);
 			if(turn==1) {
                 board[i][j] = -1;
             }
@@ -647,8 +648,10 @@ public class Reversi extends Game {
     public void removeHighlightPossibleMoves() {
         for (int i = 0; i < 8; i++)
 			for (int j = 0; j < 8; j++)
-				if(board[i][j] == -3)
-					board[i][j] = 0;
+				if(board[i][j] == -3) {
+				    board[i][j] = 0;
+                }
+        updateView();
     }
 
     public void resetBoard() {
@@ -664,7 +667,7 @@ public class Reversi extends Game {
         setSquare(3,4,BLACK);
         setSquare(4,3,BLACK);
         setSquare(4,4,WHITE);
-        highlightPossibleMoves((byte)1);
+        //highlightPossibleMoves((byte)1);
 
         //resetBoard();
         //updateSidebarLabel1(String.valueOf(turn));

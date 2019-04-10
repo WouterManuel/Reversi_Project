@@ -68,8 +68,8 @@ public class ClientController {
             currentGame = reversiGame;
             currentGame.resetBoard();
             window.gameStarted(gameType);
-			if(!myTurn)
-				reversiGame.removeHighlightPossibleMoves();
+//			if(!myTurn)
+//				reversiGame.removeHighlightPossibleMoves();
         } else {
             //TODO
         }
@@ -108,7 +108,7 @@ public class ClientController {
                 if(!message.get(2).equals(username)) {
                     opponentColorSet(1);
                     myTurn = false;
-                }
+                } else currentGame.highlightPossibleMoves(turn);
                 updateSideBarReversiScore();
                 break;
             case "MOVE":
@@ -128,13 +128,13 @@ public class ClientController {
                 break;
             case "YOURTURN":
 				myTurn = true;
+				currentGame.highlightPossibleMoves(turn);
                 /** AI plays */
                 if(playingAsAI) {
                     System.out.println("AI turn");
                     Point AImove = currentAI.findMove(turn);
                     System.out.println("AI move: " + AImove);
                     playMove(AImove.x, AImove.y, turn);
-                    myTurn = false;
                 }
                 break;
             case "WIN":
@@ -168,7 +168,7 @@ public class ClientController {
         updateSideBarReversiScore();
     }
 
-    // Registers view input, aka HUMAN input
+    // Handles AI and Human moves
     public void playMove(int i, int j, byte turn) {
         if(currentGame.possibleMovev2(turn, i, j)) {
             if (connected)
@@ -176,6 +176,7 @@ public class ClientController {
             if(!connected)
                 currentGame.playMove(i, j, turn);
             currentGame.removeHighlightPossibleMoves();
+            myTurn = false;
         }
         else
             if(playingAsAI) System.out.println("AI: not possible move");
