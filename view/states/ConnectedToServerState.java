@@ -30,6 +30,11 @@ public class ConnectedToServerState implements WindowState {
         window.setWindowState(window.getLoggedInState());
     }
 
+    @Override
+    public void forfeited() {
+        //
+    }
+
     public void gameStarted(String gameName){
         //
     }

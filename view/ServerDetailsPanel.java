@@ -134,27 +134,6 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridy = 4;
 
         add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-
-        JButton subscribeBtn = new JButton("Subscribe reversi  ");
-        subscribeBtn.addActionListener(e -> {
-            clientController.getServerCommander().sendSubscribeCommand("Reversi");
-        });
-
-        add(subscribeBtn, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 5;
-
-        JButton subscribeBtnTTT = new JButton("Subscribe TicTacToe");
-        subscribeBtnTTT.addActionListener(e -> {
-            clientController.getServerCommander().sendSubscribeCommand("Tic-tac-toe");
-        });
-
-        add(subscribeBtnTTT, gbc);
-
     }
 
     public void seeAcceptedPlayer() {

@@ -20,11 +20,15 @@ public class IntroState implements WindowState {
     }
 
     public void disconnected() {
-        window.setWindowState(window.getLoggedInState());
+        //
     }
 
     public void loggedIn() {
-        window.setWindowState(window.getLoggedInState());
+       //
+    }
+
+    public void forfeited() {
+
     }
 
     @Override

@@ -55,8 +55,12 @@ public class GameSettingsPanel extends JPanel{
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 2;
-        playGame = new JButton("<html><div style='padding: 0'>"+"Play now"+"</div></html>");
-        playGame.addActionListener(e -> {clientController.startGame(gameType.getSelectedItem().toString());});
+        playGame = new JButton("<html><div style='padding: 0'>"+"Play local game"+"</div></html>");
+        playGame.addActionListener(e -> {
+            if(!clientController.getLoggedInStatus()) {
+                clientController.startGame(gameType.getSelectedItem().toString());
+            } else clientController.getServerCommander().sendSubscribeCommand(gameType.getSelectedItem().toString());
+        });
         add(playGame,gbc);
 
     }
@@ -67,5 +71,9 @@ public class GameSettingsPanel extends JPanel{
 
     public void updateSidebarLabelPlayerTurn(String s) {
         playerTurn.setText(s);
+    }
+
+    public void setPlayButton() {
+        playGame.setText("Subscribe");
     }
 }

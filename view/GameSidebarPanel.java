@@ -73,7 +73,7 @@ public class GameSidebarPanel extends JPanel{
         gbc.gridy = 6;
         forfeitBtn = new JButton("Forfeit");
         forfeitBtn.addActionListener(e -> {
-            clientController.getServerCommander().sendForfeitCommand();
+            if(clientController.getLoggedInStatus()) clientController.sendForfeit();
         });
 
         add(forfeitBtn,gbc);

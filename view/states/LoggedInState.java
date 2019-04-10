@@ -25,6 +25,11 @@ public class LoggedInState implements WindowState {
     }
 
     @Override
+    public void forfeited() {
+        //
+    }
+
+    @Override
     public void loggedIn() {
         //
     }

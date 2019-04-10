@@ -42,12 +42,18 @@ public class ClientController {
             this.username = username;
             window.loggedIn();
             isLoggedIn = true;
+            window.getGameSettingsPanel().setPlayButton();
             return true;
         } else {
             System.out.println("Logged in is false");
             isLoggedIn = false;
             return false;
         }
+    }
+
+    public void sendForfeit() {
+        serverCommander.sendForfeitCommand();
+        window.forfeited();
     }
 
     //TODO add playAs
@@ -73,13 +79,6 @@ public class ClientController {
 
     public boolean getConnectionStatus() {
         return connected;
-    }
-
-    public boolean isUsernameSet() {
-        if(username == null || username.isEmpty())
-            return false;
-        else
-            return true;
     }
 
     public void update(ArrayList<String> message){
@@ -121,11 +120,15 @@ public class ClientController {
                 break;
             case "WIN":
                 currentGame.setWinner(turn);
-                serverComment = message.get(6);
+                serverComment = message.get(1);
+                System.out.println("Game result " + serverComment);
+                window.setWindowState(window.getReturnFromGameState());
                 break;
             case "LOSS":
                 currentGame.setWinner(opp);
-                serverComment = message.get(6);
+                serverComment = message.get(1);
+                System.out.println("Game result " + serverComment);
+                window.setWindowState(window.getReturnFromGameState());
                 break;
             case "DRAW":
                 //TODO

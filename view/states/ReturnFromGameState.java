@@ -4,12 +4,13 @@ import view.ReversiPanel;
 import view.Window;
 import java.awt.*;
 
-public class ForfeitState implements WindowState {
+public class ReturnFromGameState implements WindowState {
     Window window;
 
-    public ForfeitState(Window window) {
+    public ReturnFromGameState(Window window) {
         this.window = window;
-
+        window.remove(window.getReversiPanel());
+        window.remove(window.getGameSidebarPanel());
         window.add(window.getGameSettingsPanel(), BorderLayout.WEST);
         window.add(window.getServerDetailsPanel(), BorderLayout.EAST);
         window.revalidate();

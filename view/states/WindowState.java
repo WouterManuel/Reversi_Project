@@ -5,5 +5,6 @@ public interface WindowState {
     void disconnected();
     void loggedIn();
 //    loggedOut();
+    void forfeited();
     void gameStarted(String gameName);
 }

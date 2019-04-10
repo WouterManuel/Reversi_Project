@@ -1,7 +1,6 @@
 package view;
 
 import controller.ClientController;
-import model.game.Reversi;
 import view.states.*;
 
 import javax.swing.*;
@@ -14,7 +13,7 @@ public class Window extends JFrame implements WindowState {
 	private JPanel sidePanel;
 	private GameSidebarPanel gameSidebarPanel;
 	private JPanel serverConnectionPanel;
-	private JPanel gameSettingsPanel;
+	private GameSettingsPanel gameSettingsPanel;
 	private JPanel serverDetailsPanel;
 	private ServerLoginPanel serverLoginPanel;
 
@@ -22,6 +21,7 @@ public class Window extends JFrame implements WindowState {
 	WindowState connectedToServer;
 	WindowState currentState;
 	WindowState startReversiGameState;
+	WindowState forfeitState;
 
 	public Window(ClientController clientController){
 		this.clientController = clientController;
@@ -59,6 +59,10 @@ public class Window extends JFrame implements WindowState {
 		currentState.loggedIn();
 	}
 
+	public void forfeited() {
+    	currentState.forfeited();
+	}
+
 	public void gameStarted(String gameName) {
 		currentState.gameStarted(gameName);
 	}
@@ -85,6 +89,8 @@ public class Window extends JFrame implements WindowState {
 		return startReversiGameState;
 	}
 
+	public WindowState getReturnFromGameState() { return new ReturnFromGameState(this);}
+
 	/******************************************** Panel getters *********************************************/
 
 	public GameSidebarPanel getGameSidebarPanel() {
@@ -99,7 +105,7 @@ public class Window extends JFrame implements WindowState {
 	//	return tictactoePanel;
 	//}
 
-	public JPanel getGameSettingsPanel() {
+	public GameSettingsPanel getGameSettingsPanel() {
 		return gameSettingsPanel;
 	}
 
