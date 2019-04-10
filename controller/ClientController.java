@@ -109,7 +109,11 @@ public class ClientController {
                 if(!message.get(2).equals(username)) {
                     opponentColorSet(1);
                     myTurn = false;
-                }
+                } else {
+					// account for rematches
+					opponentColorSet(2);
+					myTurn = true;
+				}
                 updateSideBarReversiScore();
                 break;
             case "MOVE":
