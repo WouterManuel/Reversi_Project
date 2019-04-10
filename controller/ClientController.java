@@ -102,17 +102,6 @@ public class ClientController {
                     opponentColorSet(1);
                     myTurn = false;
                 }
-                else {
-                    System.out.println("Playing as AI first move" + playingAsAI);
-                    /** AI plays */
-                    if(playingAsAI) {
-                        System.out.println("AI turn");
-                        Point AImove = currentAI.findMove(turn);
-                        System.out.println(AImove.toString());
-                        playMove(AImove.x, AImove.y, turn);
-                        myTurn = false;
-                    }
-                }
                 break;
             case "MOVE":
 				int move = Integer.valueOf(message.get(4).replaceAll("\"", ""));
@@ -122,33 +111,23 @@ public class ClientController {
 					movelist.add(move);
                     System.out.println("Opponent move: " + move);
                     play(i, j, opp);
-					if(!reversiGame.getAllPossibleMoves(turn).isEmpty()){
-                        myTurn = true;
-                        currentGame.updateView();
-
-                        System.out.println("Playing as AI after opponent move " + playingAsAI);
-                        /** AI plays */
-                        if(playingAsAI) {
-                            System.out.println("AI turn");
-                            Point AImove = currentAI.findMove(turn);
-                            System.out.println("AI move: " + AImove);
-                            playMove(AImove.x, AImove.y, turn);
-                            myTurn = false;
-                        }
-                    }
-
-                    currentGame.updateView();
                 } else {
 					movelist.add(move);
                     System.out.println("My move: " + move);
                     play(i, j, turn);
-					if(!reversiGame.getAllPossibleMoves(opp).isEmpty())
-						myTurn = false;
-
                 }
+                currentGame.updateView();
                 break;
             case "YOURTURN":
-				// blank on purpose
+				myTurn = true;
+                /** AI plays */
+                if(playingAsAI) {
+                    System.out.println("AI turn");
+                    Point AImove = currentAI.findMove(turn);
+                    System.out.println("AI move: " + AImove);
+                    playMove(AImove.x, AImove.y, turn);
+                    myTurn = false;
+                }
                 break;
             case "WIN":
                 currentGame.setWinner(turn);

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class negaAI extends AI {
 
 	final double INF = 1000000;
-	private int maxDepth = 9;
+	private int maxDepth = 3;
 
 	Reversi game;
 	public negaAI(Game game) {
