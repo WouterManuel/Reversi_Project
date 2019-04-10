@@ -5,11 +5,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class randomAI extends AI {
 
-	public Point findMove(byte[][] board, byte player){
-		return random(board, player);
+	public Point findMove(byte player){
+		return random(player);
 	}
 
-	public Point random(byte[][] board, byte turn) {
+	public Point random(byte player) {
+		possibleMoves = game.getAllPossibleMoves(player);
 		if(!possibleMoves.isEmpty()) {
 			int rnd = ThreadLocalRandom.current().nextInt(0, possibleMoves.size());
 			return(possibleMoves.get(rnd));

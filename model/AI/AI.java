@@ -6,7 +6,13 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class AI {
-    public static ArrayList<Point> possibleMoves = new ArrayList<>();
+    Game game;
+    ArrayList<Point> possibleMoves;
 
-    public abstract Point findMove(byte[][] board, byte player);
+    public void AI(Game game) {
+        this.game = game;
+        possibleMoves = new ArrayList<>();
+    }
+
+    public abstract Point findMove(byte player);
 }

@@ -23,7 +23,7 @@ public class ServerParser {
 			ArrayList<String> playerlist = new ArrayList<>();
 
             if (outputList.size() > 1) {
-                if(outputList.get(1).equals("ERR")){
+                if(outputList.get(0).equals("ERR")){
                     return outputList;
                 }
                 else {
@@ -52,9 +52,7 @@ public class ServerParser {
         ArrayList<String> temp = new ArrayList<>();
             switch(list.get(2)) {
                 case "MATCH":
-                    listIterator(list, temp, 2);
-                    String turn = listIterator(list, temp, 3).get(1);
-                    listener.notifyObservers(turn);
+                    listener.notifyObservers(listIterator(list, temp, 2));
 					break;
                 // TODO
                 // Check if the PLAYERTOMOVE name = the clients name.
@@ -63,8 +61,7 @@ public class ServerParser {
                 //Handles the move message from the controller.server to store the value in temp
                 // and then passing it on to the model to set the last move to the receiver value
                 case "MOVE":
-                    String move = listIterator(list, temp, 3).get(5);
-                    listener.notifyObservers(move);
+                    listener.notifyObservers(listIterator(list, temp, 2));
 					break;
 
                 case "CHALLENGE":
@@ -74,7 +71,7 @@ public class ServerParser {
 					break;
 
                 case "YOURTURN":
-                    listener.notifyObservers("YOURTURN");
+                    listener.notifyObservers(listIterator(list, temp, 2));
 					break;
 
                 case "WIN":

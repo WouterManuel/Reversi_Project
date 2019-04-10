@@ -1,14 +1,12 @@
 package view;
 
 import controller.ClientController;
-import controller.ServerCommand;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ServerLoginPanel extends JPanel {
     ClientController clientController;
-    ServerCommand serverCommander;
 
     public ServerLoginPanel(ClientController clientController) {
         this.clientController = clientController;
@@ -33,7 +31,17 @@ public class ServerLoginPanel extends JPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        JTextField username = new JTextField( "misha",15);
+
+        JTextField username = new JTextField( 15);
+		username.addActionListener(e -> {
+            String selectedUsername = username.getText();
+            if(!(selectedUsername == null || selectedUsername.isEmpty())) {
+                if(!clientController.isLoggedIn(selectedUsername)) {
+                    messageLabel.setText("<html><b>Error:</b> <font color='red'>" + clientController.getServerCommander().getErrorMessage() + "!</font></html>");
+                    messageLabel.setVisible(true);
+                }
+            } else messageLabel.setVisible(true);
+        });
         add(username, gbc);
 
         gbc.gridx = 0;
@@ -41,9 +49,13 @@ public class ServerLoginPanel extends JPanel {
         /* Connect btn */
         JButton loginBtn = new JButton("Login");
         loginBtn.addActionListener(e -> {
-            if(!(username.getText().equals("") || username.getText().isEmpty()))
-                {clientController.tryLogin(username.getText());}
-            else {messageLabel.setVisible(true);}
+            String selectedUsername = username.getText();
+            if(!(selectedUsername == null || selectedUsername.isEmpty())) {
+                if(!clientController.isLoggedIn(selectedUsername)) {
+                    messageLabel.setText("<html><b>Error:</b> <font color='red'>" + clientController.getServerCommander().getErrorMessage() + "...</font></html>");
+                    messageLabel.setVisible(true);
+                }
+            } else messageLabel.setVisible(true);
         });
         add(loginBtn,gbc);
 
@@ -52,11 +64,7 @@ public class ServerLoginPanel extends JPanel {
 
         /* Logout btn */
         JButton logoutBtn = new JButton("Disconnect");
-        logoutBtn.addActionListener(e -> serverCommander.sendLogoutCommand());
+        logoutBtn.addActionListener(e -> clientController.getServerCommander().sendLogoutCommand());
         add(logoutBtn,gbc);
-    }
-
-    public void setServerCommander(ServerCommand serverCommander) {
-        this.serverCommander = serverCommander;
     }
 }

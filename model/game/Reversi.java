@@ -1,36 +1,22 @@
 package model.game;
 
-import controller.ServerCommand;
-import controller.ServerListener;
+import controller.ClientController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Reversi extends Game {
-    byte player;
     JPanel reversiPanel;
     JPanel sidebar;
-    boolean turn;
-    ServerCommand serverCommander;
-    String username;
+	ClientController clientController;
 
     protected final int[] DX = { -1,  0,  1, -1, 1, -1, 0, 1 };
     protected final int[] DY = { -1, -1, -1,  0, 0,  1, 1, 1 };
 
-    public Reversi(ServerCommand serverCommander) {
+    public Reversi(ClientController clientController) {
+		this.clientController = clientController;
         board = new byte[8][8];
-        player = 1; // zwart eerst
-        this.serverCommander = serverCommander;
-        if(serverCommander.getConnectionStatus()) {
-            username = serverCommander.getUsername();
-            ServerListener.registerObserver(this);
-        }
-    }
-
-    public Reversi() {
-        board = new byte[8][8];
-        player = 1; // zwart eerst
     }
 
     @Override
@@ -40,22 +26,11 @@ public class Reversi extends Game {
 
     public void setSidebar(JPanel GameSidebarPanel) {this.sidebar = GameSidebarPanel;}
 
-    public void update(String value){
-            if(value.equals("YOURTURN") || value.equals(username))
-                turn = true;
-            else
-                try
-                { Integer.parseInt(value); }
-                catch (NumberFormatException ex)
-                { ex.printStackTrace(); }
-
-    }
-
-    public ArrayList<Point> getAllPossibleMoves(byte[][] board, byte player){
+    public ArrayList<Point> getAllPossibleMoves(byte turn){
         ArrayList<Point> result = new ArrayList<>();
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++)
-                if(board[i][j] <= 0 && possibleMovev2(board,player,i,j))
+                if(board[i][j] <= 0 && possibleMovev2(turn,i,j))
                     result.add(new Point(i,j));
         return result;
     }
@@ -119,19 +94,19 @@ public class Reversi extends Game {
         return ret;
     }
 
-    public void printPossibleMoves(byte[][] board, byte player) {
-        ArrayList<Point> res = getAllPossibleMoves(board, player);
+    public void printPossibleMoves(byte[][] board, byte turn) {
+        ArrayList<Point> res = getAllPossibleMoves(turn);
         for(Point r : res)
             System.out.println(r);
     }
 
-    public int flipScore(byte[][] board, byte player, int i, int j) {
+    public int flipScore(byte turn, int i, int j) {
         int moveI, moveJ, cells;
-        int opponent = ((player == 1) ? 2 : 1);
+        int opponent = ((turn == 1) ? 2 : 1);
         int ret = 0;
         for (int k = 0; k < 8; k++)
             for (int l = 0; l < 8; l++)
-                if(board[k][l]==player)
+                if(board[k][l]==turn)
                     ret++;
         ret+=1; // Add one for currently played piece
 
@@ -140,7 +115,7 @@ public class Reversi extends Game {
         moveJ = j;
         cells = 0;
         while(moveI>0 && board[moveI][moveJ] == opponent){moveI--; cells++;}
-        if(moveI>=0 && board[moveI][moveJ] == player){
+        if(moveI>=0 && board[moveI][moveJ] == turn){
             ret += cells;
         }
 
@@ -149,7 +124,7 @@ public class Reversi extends Game {
         moveJ = j;
         cells = 0;
         while(moveI<7 && board[moveI][moveJ] == opponent){moveI++; cells++;}
-        if(moveI<=7 && board[moveI][moveJ] == player){
+        if(moveI<=7 && board[moveI][moveJ] == turn){
             ret += cells;
         }
 
@@ -158,7 +133,7 @@ public class Reversi extends Game {
         moveJ = j - 1;
         cells = 0;
         while(moveJ>0 && board[moveI][moveJ] == opponent){moveJ--; cells++;}
-        if(moveJ>=0 && board[moveI][moveJ] == player){
+        if(moveJ>=0 && board[moveI][moveJ] == turn){
             ret += cells;
         }
 
@@ -167,7 +142,7 @@ public class Reversi extends Game {
         moveJ = j + 1;
         cells = 0;
         while(moveJ<7 && board[moveI][moveJ] == opponent){moveJ++; cells++;}
-        if(moveJ<=7 && board[moveI][moveJ] == player){
+        if(moveJ<=7 && board[moveI][moveJ] == turn){
             ret += cells;
         }
 
@@ -176,7 +151,7 @@ public class Reversi extends Game {
         moveJ = j - 1;
         cells = 0;
         while(moveI>0 && moveJ>0 && board[moveI][moveJ] == opponent){moveI--; moveJ--; cells++;}
-        if(moveI>=0 && moveJ>=0 && board[moveI][moveJ] == player){
+        if(moveI>=0 && moveJ>=0 && board[moveI][moveJ] == turn){
             ret += cells;
         }
 
@@ -185,7 +160,7 @@ public class Reversi extends Game {
         moveJ = j + 1;
         cells = 0;
         while(moveI>0 && moveJ<7 && board[moveI][moveJ] == opponent){moveI--; moveJ++; cells++;}
-        if(moveI>=0 && moveJ<=7 && board[moveI][moveJ] == player){
+        if(moveI>=0 && moveJ<=7 && board[moveI][moveJ] == turn){
             ret += cells;
         }
 
@@ -194,7 +169,7 @@ public class Reversi extends Game {
         moveJ = j - 1;
         cells = 0;
         while(moveI<7 && moveJ>0 && board[moveI][moveJ] == opponent){moveI++; moveJ--; cells++;}
-        if(moveI<=7 && moveJ>=0 && board[moveI][moveJ] == player){
+        if(moveI<=7 && moveJ>=0 && board[moveI][moveJ] == turn){
             ret += cells;
         }
 
@@ -203,26 +178,26 @@ public class Reversi extends Game {
         moveJ = j + 1;
         cells = 0;
         while(moveI<7 && moveJ<7 && board[moveI][moveJ] == opponent){moveI++; moveJ++; cells++;}
-        if(moveI<=7 && moveJ<=7 && board[moveI][moveJ] == player){
+        if(moveI<=7 && moveJ<=7 && board[moveI][moveJ] == turn){
             ret += cells;
         }
         return ret;
     }
 
-    public void flip(byte[][] board, byte player, int i, int j) {
+    public void flip(byte[][] board, byte turn, int i, int j) {
         int moveI, moveJ, cells;
-        int opponent = ((player == 1) ? 2 : 1);
+        int opponent = ((turn == 1) ? 2 : 1);
 
         //up
         moveI = i - 1;
         moveJ = j;
         cells = 0;
         while(moveI>0 && board[moveI][moveJ] == opponent){moveI--; cells++;}
-        if(moveI>=0 && board[moveI][moveJ] == player){
+        if(moveI>=0 && board[moveI][moveJ] == turn){
             moveI = i-1;
             moveJ = j;
             for (int k = 0; k < cells; k++) {
-                board[moveI--][moveJ] = player;
+                board[moveI--][moveJ] = turn;
             }
         }
 
@@ -231,11 +206,11 @@ public class Reversi extends Game {
         moveJ = j;
         cells = 0;
         while(moveI<7 && board[moveI][moveJ] == opponent){moveI++; cells++;}
-        if(moveI<=7 && board[moveI][moveJ] == player){
+        if(moveI<=7 && board[moveI][moveJ] == turn){
             moveI = i + 1;
             moveJ = j;
             for (int k = 0; k < cells; k++) {
-                board[moveI++][moveJ] = player;
+                board[moveI++][moveJ] = turn;
             }
         }
 
@@ -244,11 +219,11 @@ public class Reversi extends Game {
         moveJ = j - 1;
         cells = 0;
         while(moveJ>0 && board[moveI][moveJ] == opponent){moveJ--; cells++;}
-        if(moveJ>=0 && board[moveI][moveJ] == player){
+        if(moveJ>=0 && board[moveI][moveJ] == turn){
             moveI = i;
             moveJ = j - 1;
             for (int k = 0; k < cells; k++) {
-                board[moveI][moveJ--] = player;
+                board[moveI][moveJ--] = turn;
             }
         }
 
@@ -257,11 +232,11 @@ public class Reversi extends Game {
         moveJ = j + 1;
         cells = 0;
         while(moveJ<7 && board[moveI][moveJ] == opponent){moveJ++; cells++;}
-        if(moveJ<=7 && board[moveI][moveJ] == player){
+        if(moveJ<=7 && board[moveI][moveJ] == turn){
             moveI = i;
             moveJ = j + 1;
             for (int k = 0; k < cells; k++) {
-                board[moveI][moveJ++] = player;
+                board[moveI][moveJ++] = turn;
             }
         }
 
@@ -270,11 +245,11 @@ public class Reversi extends Game {
         moveJ = j - 1;
         cells = 0;
         while(moveI>0 && moveJ>0 && board[moveI][moveJ] == opponent){moveI--; moveJ--; cells++;}
-        if(moveI>=0 && moveJ>=0 && board[moveI][moveJ] == player){
+        if(moveI>=0 && moveJ>=0 && board[moveI][moveJ] == turn){
             moveI = i - 1;
             moveJ = j - 1;
             for (int k = 0; k < cells; k++) {
-                board[moveI--][moveJ--] = player;
+                board[moveI--][moveJ--] = turn;
             }
         }
 
@@ -283,11 +258,11 @@ public class Reversi extends Game {
         moveJ = j + 1;
         cells = 0;
         while(moveI>0 && moveJ<7 && board[moveI][moveJ] == opponent){moveI--; moveJ++; cells++;}
-        if(moveI>=0 && moveJ<=7 && board[moveI][moveJ] == player){
+        if(moveI>=0 && moveJ<=7 && board[moveI][moveJ] == turn){
             moveI = i - 1;
             moveJ = j + 1;
             for (int k = 0; k < cells; k++) {
-                board[moveI--][moveJ++] = player;
+                board[moveI--][moveJ++] = turn;
             }
         }
 
@@ -296,11 +271,11 @@ public class Reversi extends Game {
         moveJ = j - 1;
         cells = 0;
         while(moveI<7 && moveJ>0 && board[moveI][moveJ] == opponent){moveI++; moveJ--; cells++;}
-        if(moveI<=7 && moveJ>=0 && board[moveI][moveJ] == player){
+        if(moveI<=7 && moveJ>=0 && board[moveI][moveJ] == turn){
             moveI = i + 1;
             moveJ = j - 1;
             for (int k = 0; k < cells; k++) {
-                board[moveI++][moveJ--] = player;
+                board[moveI++][moveJ--] = turn;
             }
         }
 
@@ -309,29 +284,29 @@ public class Reversi extends Game {
         moveJ = j + 1;
         cells = 0;
         while(moveI<7 && moveJ<7 && board[moveI][moveJ] == opponent){moveI++; moveJ++; cells++;}
-        if(moveI<=7 && moveJ<=7 && board[moveI][moveJ] == player){
+        if(moveI<=7 && moveJ<=7 && board[moveI][moveJ] == turn){
             moveI = i + 1;
             moveJ = j + 1;
             for (int k = 0; k < cells; k++) {
-                board[moveI++][moveJ++] = player;
+                board[moveI++][moveJ++] = turn;
             }
         }
     }
 
-    public void flipv2(byte[][] board, byte player, int i, int j) {
+    public void flipv2(byte[][] board, byte turn, int i, int j) {
         int moveI, moveJ, cells;
-        int opponent = ((player == 1) ? 2 : 1);
+        int opponent = ((turn == 1) ? 2 : 1);
 
         //up
         moveI = i - 1;
         moveJ = j;
         cells = 0;
         while(moveI>0 && board[moveI][moveJ] == opponent){moveI--; cells++;}
-        if(moveI>=0 && board[moveI][moveJ] == player){
+        if(moveI>=0 && board[moveI][moveJ] == turn){
             moveI = i-1;
             moveJ = j;
             for (int k = 0; k < cells; k++) {
-                board[moveI--][moveJ] = player;
+                board[moveI--][moveJ] = turn;
             }
         }
 
@@ -340,11 +315,11 @@ public class Reversi extends Game {
         moveJ = j;
         cells = 0;
         while(moveI<7 && board[moveI][moveJ] == opponent){moveI++; cells++;}
-        if(moveI<=7 && board[moveI][moveJ] == player){
+        if(moveI<=7 && board[moveI][moveJ] == turn){
             moveI = i + 1;
             moveJ = j;
             for (int k = 0; k < cells; k++) {
-                board[moveI++][moveJ] = player;
+                board[moveI++][moveJ] = turn;
             }
         }
 
@@ -353,11 +328,11 @@ public class Reversi extends Game {
         moveJ = j - 1;
         cells = 0;
         while(moveJ>0 && board[moveI][moveJ] == opponent){moveJ--; cells++;}
-        if(moveJ>=0 && board[moveI][moveJ] == player){
+        if(moveJ>=0 && board[moveI][moveJ] == turn){
             moveI = i;
             moveJ = j - 1;
             for (int k = 0; k < cells; k++) {
-                board[moveI][moveJ--] = player;
+                board[moveI][moveJ--] = turn;
             }
         }
 
@@ -366,11 +341,11 @@ public class Reversi extends Game {
         moveJ = j + 1;
         cells = 0;
         while(moveJ<7 && board[moveI][moveJ] == opponent){moveJ++; cells++;}
-        if(moveJ<=7 && board[moveI][moveJ] == player){
+        if(moveJ<=7 && board[moveI][moveJ] == turn){
             moveI = i;
             moveJ = j + 1;
             for (int k = 0; k < cells; k++) {
-                board[moveI][moveJ++] = player;
+                board[moveI][moveJ++] = turn;
             }
         }
 
@@ -379,11 +354,11 @@ public class Reversi extends Game {
         moveJ = j - 1;
         cells = 0;
         while(moveI>0 && moveJ>0 && board[moveI][moveJ] == opponent){moveI--; moveJ--; cells++;}
-        if(moveI>=0 && moveJ>=0 && board[moveI][moveJ] == player){
+        if(moveI>=0 && moveJ>=0 && board[moveI][moveJ] == turn){
             moveI = i - 1;
             moveJ = j - 1;
             for (int k = 0; k < cells; k++) {
-                board[moveI--][moveJ--] = player;
+                board[moveI--][moveJ--] = turn;
             }
         }
 
@@ -392,11 +367,11 @@ public class Reversi extends Game {
         moveJ = j + 1;
         cells = 0;
         while(moveI>0 && moveJ<7 && board[moveI][moveJ] == opponent){moveI--; moveJ++; cells++;}
-        if(moveI>=0 && moveJ<=7 && board[moveI][moveJ] == player){
+        if(moveI>=0 && moveJ<=7 && board[moveI][moveJ] == turn){
             moveI = i - 1;
             moveJ = j + 1;
             for (int k = 0; k < cells; k++) {
-                board[moveI--][moveJ++] = player;
+                board[moveI--][moveJ++] = turn;
             }
         }
 
@@ -405,11 +380,11 @@ public class Reversi extends Game {
         moveJ = j - 1;
         cells = 0;
         while(moveI<7 && moveJ>0 && board[moveI][moveJ] == opponent){moveI++; moveJ--; cells++;}
-        if(moveI<=7 && moveJ>=0 && board[moveI][moveJ] == player){
+        if(moveI<=7 && moveJ>=0 && board[moveI][moveJ] == turn){
             moveI = i + 1;
             moveJ = j - 1;
             for (int k = 0; k < cells; k++) {
-                board[moveI++][moveJ--] = player;
+                board[moveI++][moveJ--] = turn;
             }
         }
 
@@ -418,19 +393,18 @@ public class Reversi extends Game {
         moveJ = j + 1;
         cells = 0;
         while(moveI<7 && moveJ<7 && board[moveI][moveJ] == opponent){moveI++; moveJ++; cells++;}
-        if(moveI<=7 && moveJ<=7 && board[moveI][moveJ] == player){
+        if(moveI<=7 && moveJ<=7 && board[moveI][moveJ] == turn){
             moveI = i + 1;
             moveJ = j + 1;
             for (int k = 0; k < cells; k++) {
-                board[moveI++][moveJ++] = player;
+                board[moveI++][moveJ++] = turn;
             }
         }
     }
 
-    public boolean possibleMovev2(byte[][] board, byte player, int i, int j) {
+    public boolean possibleMovev2(byte turn, int i, int j) {
         if(board[i][j] > 0) return false;
-        int opponent = ((player == BLACK) ? WHITE : BLACK);
-
+        int opponent = ((turn == BLACK) ? WHITE : BLACK);
         for (int ii = 0; ii < DX.length; ii++) {
             boolean sawOther = false;
             int x = i, y = j;
@@ -448,138 +422,142 @@ public class Reversi extends Game {
         return false;
     }
 
-    public boolean possibleMove(byte[][] board, byte player, int i, int j){
+    public boolean possibleMove(byte[][] board, byte turn, int i, int j){
 
         if(board[i][j] > 0) return false;
 
         int moveI, moveJ, cells;
-        int opponent = ((player == 1) ? 2 : 1);
+        int opponent = ((turn == 1) ? 2 : 1);
 
         //up
         moveI = i - 1;
         moveJ = j;
         cells = 0;
         while(moveI>0 && board[moveI][moveJ] == opponent){ moveI--; cells++; }
-        if(moveI>=0 && board[moveI][moveJ] == player && cells>0) return true;
+        if(moveI>=0 && board[moveI][moveJ] == turn && cells>0) return true;
 
         //down
         moveI = i + 1;
         moveJ = j;
         cells = 0;
         while(moveI<7 && board[moveI][moveJ] == opponent){ moveI++; cells++; }
-        if(moveI<=7 && board[moveI][moveJ] == player && cells>0) return true;
+        if(moveI<=7 && board[moveI][moveJ] == turn && cells>0) return true;
 
         //left
         moveI = i;
         moveJ = j - 1;
         cells = 0;
         while(moveJ>0 && board[moveI][moveJ] == opponent){ moveJ--; cells++; }
-        if(moveJ>=0 && board[moveI][moveJ] == player && cells>0) return true;
+        if(moveJ>=0 && board[moveI][moveJ] == turn && cells>0) return true;
 
         //right
         moveI = i;
         moveJ = j + 1;
         cells = 0;
         while(moveJ<7 && board[moveI][moveJ] == opponent){ moveJ++; cells++; }
-        if(moveJ<=7 && board[moveI][moveJ] == player && cells>0) return true;
+        if(moveJ<=7 && board[moveI][moveJ] == turn && cells>0) return true;
 
         //left up
         moveI = i - 1;
         moveJ = j - 1;
         cells = 0;
         while(moveI>0 && moveJ>0 && board[moveI][moveJ] == opponent){ moveI--; moveJ--; cells++; }
-        if(moveI>=0 && moveJ>=0 && board[moveI][moveJ] == player && cells>0) return true;
+        if(moveI>=0 && moveJ>=0 && board[moveI][moveJ] == turn && cells>0) return true;
 
         //right up
         moveI = i - 1;
         moveJ = j + 1;
         cells = 0;
         while(moveI>0 && moveJ<7 && board[moveI][moveJ] == opponent){ moveI--; moveJ++; cells++; }
-        if(moveI>=0 && moveJ<=7 && board[moveI][moveJ] == player && cells>0) return true;
+        if(moveI>=0 && moveJ<=7 && board[moveI][moveJ] == turn && cells>0) return true;
 
         //left down
         moveI = i + 1;
         moveJ = j - 1;
         cells = 0;
         while(moveI<7 && moveJ>0 && board[moveI][moveJ] == opponent){ moveI++; moveJ--; cells++; }
-        if(moveI<=7 && moveJ>=0 && board[moveI][moveJ] == player && cells>0) return true;
+        if(moveI<=7 && moveJ>=0 && board[moveI][moveJ] == turn && cells>0) return true;
 
         //right down
         moveI = i + 1;
         moveJ = j + 1;
         cells = 0;
         while(moveI<7 && moveJ<7 && board[moveI][moveJ] == opponent){ moveI++; moveJ++; cells++; }
-        if(moveI<=7 && moveJ<=7 && board[moveI][moveJ] == player && cells>0) return true;
+        if(moveI<=7 && moveJ<=7 && board[moveI][moveJ] == turn && cells>0) return true;
 
         //No moves possible
         return false;
     }
 
-    public void playMovez(byte[][] board, Point move, byte player) {
-        this.player = player;
-        flip(board, this.player, move.x, move.y);
-        board[move.x][move.y] = this.player;
-        if(!getAllPossibleMoves(board, this.player==BLACK?WHITE:BLACK).isEmpty())
-            this.player = this.player==BLACK?WHITE:BLACK;
+    public void playMovez(byte[][] board, Point move, byte turn) {
+//        this.turn = turn;
+//        flip(board, this.turn, move.x, move.y);
+//        board[move.x][move.y] = this.turn;
+//        if(!getAllPossibleMoves(board, this.turn==BLACK?WHITE:BLACK).isEmpty())
+//            this.turn = this.turn==BLACK?WHITE:BLACK;
+//
     }
 
     public byte getWinner() {
         return 0;
     }
 
+    public void setWinner(byte winner) {
+        //
+    }
+
 //    public void playMove(int i, int j) {
-//        if (possibleMove(board, player, i, j)) {
-//            flipv2(board, player, i, j);
-//            setSquare(i, j, player);
-//            if(!getAllPossibleMoves(board, player==BLACK?WHITE:BLACK).isEmpty())
-//                player = player==BLACK?WHITE:BLACK;
+//        if (possibleMove(board, turn, i, j)) {
+//            flipv2(board, turn, i, j);
+//            setSquare(i, j, turn);
+//            if(!getAllPossibleMoves(board, turn==BLACK?WHITE:BLACK).isEmpty())
+//                turn = turn==BLACK?WHITE:BLACK;
 //            removeHighlightPossibleMoves();
-//            highlightPossibleMoves(board, player);
-//            updateSidebarLabel1(String.valueOf(player));
+//            highlightPossibleMoves(board, turn);
+//            updateSidebarLabel1(String.valueOf(turn));
 //            updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(score(board, BLACK))+"<br/>"+"Wit: "+String.valueOf(score(board, WHITE))+"</html>");
 //        }
-//        if(getAllPossibleMoves(board, player==BLACK?WHITE:BLACK).isEmpty()&&getAllPossibleMoves(board, player).isEmpty())
+//        if(getAllPossibleMoves(board, turn==BLACK?WHITE:BLACK).isEmpty()&&getAllPossibleMoves(board, turn).isEmpty())
 //            test.setText("model.Board over");
 //        repaint();
-//        if(player==WHITE)
+//        if(turn==WHITE)
 //            do{
-//                Point p = negaAI.findMove(board, player);
-//                flipv2(board, player, p.x, p.y);
-//                setSquare(p.x, p.y, player);
-//                if(!getAllPossibleMoves(board, player==BLACK?WHITE:BLACK).isEmpty())
-//                    player = player==BLACK?WHITE:BLACK;
+//                Point p = negaAI.findMove(board, turn);
+//                flipv2(board, turn, p.x, p.y);
+//                setSquare(p.x, p.y, turn);
+//                if(!getAllPossibleMoves(board, turn==BLACK?WHITE:BLACK).isEmpty())
+//                    turn = turn==BLACK?WHITE:BLACK;
 //                removeHighlightPossibleMoves();
-//                highlightPossibleMoves(board, player);
-//                updateSidebarLabel1(String.valueOf(player));
+//                highlightPossibleMoves(board, turn);
+//                updateSidebarLabel1(String.valueOf(turn));
 //                updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(score(board, BLACK))+"<br/>"+"Wit: "+String.valueOf(score(board, WHITE))+"</html>");
-//            } while(getAllPossibleMoves(board, player==BLACK?WHITE:BLACK).isEmpty());
+//            } while(getAllPossibleMoves(board, turn==BLACK?WHITE:BLACK).isEmpty());
 //        // nega();
 //        // repaint();
 //        // random();
 //        // repaint();
 //    }
 
-    public void playMove(int i,int j) {
-        if (possibleMove(board, player, i, j)) {
-			flipv2(board, player, i, j);
-			setSquare(i, j, player);
-			if(!getAllPossibleMoves(board, player==BLACK?WHITE:BLACK).isEmpty())
-				player = player==BLACK?WHITE:BLACK;
+    public void playMove(int i,int j, byte turn) {
+        if (possibleMove(board, turn, i, j)) {
+			flipv2(board, turn, i, j);
+			setSquare(i, j, turn);
 			removeHighlightPossibleMoves();
-			highlightPossibleMoves(board, player);
+			if(clientController.isMyTurn())
+				highlightPossibleMoves(turn);
 			reversiPanel.repaint();
 
-			//updateSidebarLabel1(String.valueOf(player));
+			//updateSidebarLabel1(String.valueOf(turn));
 			//updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(score(board, BLACK))+"<br/>"+"Wit: "+String.valueOf(score(board, WHITE))+"</html>");
 		}
-		//if(getAllPossibleMoves(board, player==BLACK?WHITE:BLACK).isEmpty()&&getAllPossibleMoves(board, player).isEmpty())
+		//if(getAllPossibleMoves(board, turn==BLACK?WHITE:BLACK).isEmpty()&&getAllPossibleMoves(board, turn).isEmpty())
 			//test.setText("test.Game over");
     }
 
-    public void highlight(int i, int j) {
+    public void highlight(int i, int j, byte turn) {
       if(board[i][j] <= 0) {
-			highlightPossibleMoves(board, player);
-			if(player==1) {
+			//highlightPossibleMoves(turn);
+			if(turn==1) {
                 board[i][j] = -1;
             }
 			else {
@@ -589,10 +567,10 @@ public class Reversi extends Game {
       }
     }
 
-    public void highlightRemove(int i, int j) {
+    public void highlightRemove(int i, int j, byte turn) {
         if(board[i][j] < 0) {
 			board[i][j] = 0;
-			highlightPossibleMoves(board, player);
+			highlightPossibleMoves(turn);
             reversiPanel.repaint();
 		}
     }
@@ -602,8 +580,8 @@ public class Reversi extends Game {
 		reversiPanel.repaint();
     }
 
-    public void highlightPossibleMoves(byte[][] board, byte player) {
-		ArrayList<Point> res = getAllPossibleMoves(board, player);
+    public void highlightPossibleMoves(byte turn) {
+		ArrayList<Point> res = getAllPossibleMoves(turn);
 		for(Point r : res)
 			highlightPossible(r.x, r.y);
 	}
@@ -628,13 +606,16 @@ public class Reversi extends Game {
         setSquare(3,4,BLACK);
         setSquare(4,3,BLACK);
         setSquare(4,4,WHITE);
-        highlightPossibleMoves(board, player);
+        highlightPossibleMoves((byte)1);
 
-        player = 1;
         //resetBoard();
-        //updateSidebarLabel1(String.valueOf(player));
+        //updateSidebarLabel1(String.valueOf(turn));
         //updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(score(board, BLACK))+"<br/>"+"Wit: "+String.valueOf(score(board, WHITE))+"</html>");
         //repaint();
+    }
+
+    public void updateView() {
+        reversiPanel.repaint();
     }
 
     public byte[][] getBoard() {

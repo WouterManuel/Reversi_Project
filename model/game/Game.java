@@ -9,10 +9,10 @@ public abstract class Game {
     protected byte[][] board;
 
     /******************************************** Game logic *********************************************/
-    public abstract ArrayList<Point> getAllPossibleMoves(byte[][] board, byte player);
-    public abstract boolean possibleMovev2(byte[][] board, byte player, int i, int j);
+    public abstract ArrayList<Point> getAllPossibleMoves(byte turn);
+    public abstract boolean possibleMovev2(byte turn, int i, int j);
     public abstract int score(byte[][] board, byte color);
-    public abstract void playMovez(byte[][] board, Point move, byte player);
+    public abstract void playMovez(byte[][] board, Point move, byte turn);
     public abstract byte getWinner();
 
     /******************************************** Board logic *********************************************/
@@ -32,18 +32,16 @@ public abstract class Game {
         return board;
     }
 
-    public abstract void playMove(int i,int j);
+    public abstract void playMove(int i,int j, byte turn);
 
-    public abstract void highlight(int i, int j);
+    public abstract void highlight(int i, int j, byte turn);
 
-    public abstract void highlightRemove(int i, int j);
+    public abstract void highlightRemove(int i, int j, byte turn);
 
-    public abstract void highlightPossible(int i, int j);
+    public abstract void highlightPossibleMoves(byte turn);
 
     public abstract void removeHighlightPossibleMoves();
 
-    public void update(String value) {
-
-    }
+    public abstract void updateView();
 
 }

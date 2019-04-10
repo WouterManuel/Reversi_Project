@@ -11,6 +11,8 @@ public class ServerCommand {
     PrintStream output;
     InputStreamReader input;
     String username;
+    String error;
+    boolean connected;
 
     public ServerCommand(String host, int port) {
         try {
@@ -20,14 +22,16 @@ public class ServerCommand {
             this.input = new InputStreamReader(connection.getSocket().getInputStream());
             this.listener = new ServerListener(input);
 
-            // Start serverlistener
-            Thread serverThread = new Thread(listener);
-            serverThread.start();
-
+            this.connected = connection.getConnectionStatus();
+            if(connected) {
+                // Start serverlistener
+                Thread serverThread = new Thread(listener);
+                serverThread.start();
+            }
         } catch (IOException e) {
             System.out.println("\033[34;1m[SERVER]\033[0m : \033[31;1m[ERROR]\033[0m Not available.");
         } catch (NullPointerException ne) {
-            System.out.println("\033[34;1m[SERVERCOMMAND]\033[0m : Server not available");
+            System.out.println("\033[34;1m[SERVER CONNECTION ATTEMPT]\033[0m : Server not available");
         }
     }
 
@@ -36,11 +40,12 @@ public class ServerCommand {
             output.println("login " + username);
             Thread.sleep(100);
             if(checkIfValidCommand()) {
+                System.out.println("Send login command: valid command");
                 this.username = username;
                 return username;
             }
         } catch (NullPointerException ex) {
-            System.out.println("\033[34;1m[SERVERCOMMAND]\033[0m : Server not available.");
+            System.out.println("\033[34;1m[LOGIN ATTEMPT]\033[0m : No server data received.");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -143,19 +148,29 @@ public class ServerCommand {
     }
 
     public boolean checkIfValidCommand() {
-        ArrayList<String> list = listener.parsedMessageList;
-        if (list != null && list.get(1).equals("ERR")) {
-            String error = "";
-            for(String item : list) {
+        ArrayList<String> list = listener.getParsedMessage();
+        if (list != null && list.get(0).equals("ERR")) {
+            error = "";
+            for(String item : list.subList(1, list.size())) {
                 error += item + " ";
             }
-            System.out.println("\033[34;1m[SERVER MESSAGE][0m : " + error);
+            System.out.println("\033[34;1m[SERVER ERROR MESSAGE][0m : " + error);
             return false;
-        } else return true;
+        } else
+            System.out.println("\033[34;1m[SERVER MESSAGE][0m : OK");
+            return true;
     }
 
     public boolean getConnectionStatus(){
-       return connection.getConnectionStatus();
+       return connected;
+    }
+
+    public String getErrorMessage() {
+        return error;
+    }
+
+    public ServerListener getServerListener() {
+        return listener;
     }
 
     public String getUsername() {

@@ -13,11 +13,11 @@ public class Piece extends JLabel implements MouseListener{
 	int i,j;
     byte[][] board;
     Game game;
-    JPanel parent;
+    ReversiPanel parent;
 
     public int highlight = 0;
 
-    public Piece(Game game, JPanel parent, int i, int j) {
+    public Piece(Game game, ReversiPanel parent, int i, int j) {
         this.game = game;
         this.board = game.getBoard();
         this.parent = parent;
@@ -56,16 +56,16 @@ public class Piece extends JLabel implements MouseListener{
     }
 
     @Override
-	public void mouseEntered(MouseEvent e) { game.highlight(i,j); }
+	public void mouseEntered(MouseEvent e) { if(parent.getController().isMyTurn()) game.highlight(i,j, parent.getController().getTurn()); }
 
     @Override
-	public void mouseExited(MouseEvent e) { game.highlightRemove(i,j); }
+	public void mouseExited(MouseEvent e) { game.highlightRemove(i,j, parent.getController().getTurn()); }
 
     @Override
     public void mouseClicked(MouseEvent e) {}
 
     @Override
-    public void mousePressed(MouseEvent e) { game.playMove(i,j); }
+    public void mousePressed(MouseEvent e) { if(parent.getController().isMyTurn())parent.getController().playMove(i,j, parent.getController().getTurn()); }
 
     @Override
     public void mouseReleased(MouseEvent e) {}

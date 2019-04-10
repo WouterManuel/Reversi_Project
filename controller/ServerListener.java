@@ -9,13 +9,14 @@ public class ServerListener implements Runnable{
     BufferedReader input;
     ArrayList<String> parsedMessageList;
 	String serverLine;
-    static ArrayList<Game> observers;
+	ArrayList<ClientController> observers;
     ServerParser parser;
 
     public ServerListener(InputStreamReader input) {
         this.input = new BufferedReader(input);
         this.parsedMessageList = new ArrayList<>();
         this.parser = new ServerParser(this);
+        observers = new ArrayList<>();
     }
 
     public void run() {
@@ -25,7 +26,7 @@ public class ServerListener implements Runnable{
 					if(!serverLine.equals("OK")) {
                         parsedMessageList = parser.parseServerOutput(serverLine);
                     }
-                    Thread.sleep(50);
+					Thread.sleep(50);
                 } catch (NullPointerException e) {
                     System.out.println("\033[34;1m[ServerListener]\033[0m : \033[31;1m[ERROR]\033[0m No messages received.");
                 }
@@ -38,21 +39,30 @@ public class ServerListener implements Runnable{
     }
 
     public ArrayList<String> getParsedMessage() {
+        ArrayList<String> tempList = new ArrayList<>();
+        if(parsedMessageList != null) {
+            for(String s : parsedMessageList) {
+                tempList.add(s);
+            }
+            parsedMessageList = null;
+            return tempList;
+        }
+        System.out.println("Parsing message: " + tempList);
         return parsedMessageList;
     }
 
-    public static void notifyObservers(String value){
-        for(Game observer : observers) {
-            observer.update(value);
+    public void notifyObservers(ArrayList<String> message){
+        for(ClientController observer : observers) {
+            observer.update(message);
         }
     }
 
-    public static void registerObserver(Game object){
-        observers.add(object);
+    public void registerObserver(ClientController client){
+        observers.add(client);
     }
 
-    public static void unregisterObserver(Game object) {
-        observers.remove(object);
+    public void unregisterObserver(ClientController client) {
+        observers.remove(client);
     }
 
     @Override
