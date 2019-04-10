@@ -25,6 +25,7 @@ public class negaAI extends AI {
 
 	public MoveScore negascout(byte[][] board, byte player, int depth, double alpha, double beta) {
 		byte opp = player== game.BLACK?game.WHITE:game.BLACK;
+		ArrayList<Point> possibleMoves = game.getAllPossibleMoves(player);
 		if(depth == maxDepth)
 			return new MoveScore(null, game.scoreH(player, possibleMoves.size()));
 
@@ -33,7 +34,6 @@ public class negaAI extends AI {
 		Point bestMove = null;
 		double adaptiveBeta = beta;
 
-		ArrayList<Point> possibleMoves = game.getAllPossibleMoves(player);
 		if(possibleMoves.isEmpty())
 			return new MoveScore(null, bestScore);
 		bestMove = possibleMoves.get(0);
