@@ -35,9 +35,8 @@ public class ServerLoginPanel extends JPanel {
 		username.addActionListener(e -> {
             String selectedUsername = username.getText();
             if(!(selectedUsername == null || selectedUsername.isEmpty())) {
-                clientController.isLoggedIn(selectedUsername);
-                if(!clientController.isUsernameSet()) {
-                    messageLabel.setText("<html><b>Error:</b> <font color='red'>" + clientController.getServerCommander().getErrorMessage() + "</font></html>");
+                if(!clientController.isLoggedIn(selectedUsername)) {
+                    messageLabel.setText("<html><b>Error:</b> <font color='red'>" + clientController.getServerCommander().getErrorMessage() + "!</font></html>");
                     messageLabel.setVisible(true);
                 }
             } else messageLabel.setVisible(true);
@@ -51,9 +50,8 @@ public class ServerLoginPanel extends JPanel {
         loginBtn.addActionListener(e -> {
             String selectedUsername = username.getText();
             if(!(selectedUsername == null || selectedUsername.isEmpty())) {
-                clientController.isLoggedIn(selectedUsername);
-                if(!clientController.isUsernameSet()) {
-                    messageLabel.setText("<html><b>Error:</b> <font color='red'>" + clientController.getServerCommander().getErrorMessage() + "</font></html>");
+                if(!clientController.isLoggedIn(selectedUsername)) {
+                    messageLabel.setText("<html><b>Error:</b> <font color='red'>" + clientController.getServerCommander().getErrorMessage() + "...</font></html>");
                     messageLabel.setVisible(true);
                 }
             } else messageLabel.setVisible(true);

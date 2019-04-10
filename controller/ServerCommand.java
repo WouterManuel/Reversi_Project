@@ -23,14 +23,15 @@ public class ServerCommand {
             this.listener = new ServerListener(input);
 
             this.connected = connection.getConnectionStatus();
-            // Start serverlistener
-            Thread serverThread = new Thread(listener);
-            serverThread.start();
-
+            if(connected) {
+                // Start serverlistener
+                Thread serverThread = new Thread(listener);
+                serverThread.start();
+            }
         } catch (IOException e) {
             System.out.println("\033[34;1m[SERVER]\033[0m : \033[31;1m[ERROR]\033[0m Not available.");
         } catch (NullPointerException ne) {
-            System.out.println("\033[34;1m[SERVERCOMMAND]\033[0m : Server not available");
+            System.out.println("\033[34;1m[SERVER CONNECTION ATTEMPT]\033[0m : Server not available");
         }
     }
 
@@ -39,11 +40,12 @@ public class ServerCommand {
             output.println("login " + username);
             Thread.sleep(100);
             if(checkIfValidCommand()) {
+                System.out.println("Send login command: valid command");
                 this.username = username;
                 return username;
             }
         } catch (NullPointerException ex) {
-            System.out.println("\033[34;1m[SERVERCOMMAND]\033[0m : Server not available.");
+            System.out.println("\033[34;1m[LOGIN ATTEMPT]\033[0m : No server data received.");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -147,7 +149,7 @@ public class ServerCommand {
 
     public boolean checkIfValidCommand() {
         ArrayList<String> list = listener.getParsedMessage();
-        if (!list.isEmpty() && list.get(0).equals("ERR")) {
+        if (list != null && list.get(0).equals("ERR")) {
             error = "";
             for(String item : list.subList(1, list.size())) {
                 error += item + " ";
@@ -155,6 +157,7 @@ public class ServerCommand {
             System.out.println("\033[34;1m[SERVER ERROR MESSAGE][0m : " + error);
             return false;
         } else
+            System.out.println("\033[34;1m[SERVER MESSAGE][0m : OK");
             return true;
     }
 

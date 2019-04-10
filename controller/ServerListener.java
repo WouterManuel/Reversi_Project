@@ -26,6 +26,7 @@ public class ServerListener implements Runnable{
 					if(!serverLine.equals("OK")) {
                         parsedMessageList = parser.parseServerOutput(serverLine);
                     }
+					Thread.sleep(50);
                 } catch (NullPointerException e) {
                     System.out.println("\033[34;1m[ServerListener]\033[0m : \033[31;1m[ERROR]\033[0m No messages received.");
                 }
@@ -38,12 +39,16 @@ public class ServerListener implements Runnable{
     }
 
     public ArrayList<String> getParsedMessage() {
-        ArrayList<String> temp = new ArrayList<>();
-        for(String item : parsedMessageList){
-            temp.add(item);
+        ArrayList<String> tempList = new ArrayList<>();
+        if(parsedMessageList != null) {
+            for(String s : parsedMessageList) {
+                tempList.add(s);
+            }
+            parsedMessageList = null;
+            return tempList;
         }
-        parsedMessageList.clear();
-        return temp;
+        System.out.println("Parsing message: " + tempList);
+        return parsedMessageList;
     }
 
     public void notifyObservers(ArrayList<String> message){
