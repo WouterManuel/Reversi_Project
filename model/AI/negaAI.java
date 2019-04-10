@@ -24,7 +24,7 @@ public class negaAI extends AI {
 	public MoveScore negascout(byte[][] board, byte player, int depth, double alpha, double beta) {
 		byte opp = player== game.BLACK?game.WHITE:game.BLACK;
 		if(depth == maxDepth)
-			return new MoveScore(null, game.scoreH(player));
+			return new MoveScore(null, game.scoreH(player), possibleMoves.size());
 
 		double currentScore;
 		double bestScore = -INF;

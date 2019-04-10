@@ -35,7 +35,7 @@ public class Reversi extends Game {
         return result;
     }
 
-	public double scoreH(byte color) {
+	public double scoreH(byte color, int myMoves) {
 		int[][] V = {
 			{20, -3, 11, 8, 8, 11, -3, 20},
 			{-3, -7, -4, 1, 1, -4, -7, -3},
@@ -51,7 +51,6 @@ public class Reversi extends Game {
 		double ret = 0;
 		double m = 0, p = 0, d = 0, f = 0, c = 0, l = 0;
 		byte opp = color==BLACK?WHITE:BLACK;
-		int myMoves = getAllPossibleMoves(color).size();
 		int oppMoves = getAllPossibleMoves(opp).size();
 		int myFT = 0, oppFT = 0, x = 0, y = 0;
 
