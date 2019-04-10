@@ -98,8 +98,7 @@ public class ClientController {
     }
 
     public void update(ArrayList<String> message){
-        String tag = message.get(0);
-        switch(tag) {
+        switch(message.get(0)) {
             case "MATCH":
                 String gametype = message.get(4);
                 opponentName = message.get(6);
@@ -139,13 +138,13 @@ public class ClientController {
                 break;
             case "WIN":
                 currentGame.setWinner(turn);
-                serverComment = message.get(1);
+                serverComment = message.get(6);
                 System.out.println("Game result " + serverComment);
                 window.setWindowState(window.getReturnFromGameState());
                 break;
             case "LOSS":
                 currentGame.setWinner(opp);
-                serverComment = message.get(1);
+                serverComment = message.get(6);
                 System.out.println("Game result " + serverComment);
                 window.setWindowState(window.getReturnFromGameState());
                 break;

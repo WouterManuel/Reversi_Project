@@ -25,7 +25,8 @@ public class ServerListener implements Runnable{
                 try {
                     parsedMessageList = parser.parseServerOutput(serverLine);
                     System.out.println(serverLine);
-					Thread.sleep(50);
+                    System.out.println(parsedMessageList);
+                    Thread.sleep(50);
                 } catch (NullPointerException e) {
                     System.out.println("\033[34;1m[ServerListener]\033[0m : \033[31;1m[ERROR]\033[0m No messages received.");
                 }

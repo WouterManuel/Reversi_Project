@@ -35,8 +35,9 @@ public class ServerParser {
                             return listIterator(outputList, playerlist, 2);
 
                         case "GAME":
-                            ArrayList<String> gameInfo = parseGameOutput(outputList);
-                            return gameInfo;
+                            ArrayList<String> temp = new ArrayList<>();
+                            listener.notifyObservers(listIterator(outputList, temp, 2));
+                            break;
 
                         default:
                             return null;
@@ -46,61 +47,15 @@ public class ServerParser {
             return null;
         }
 
-    /**
-     * Method that handles handles all controller.server messages related to game information
-     * @param list
-     * @return
-     */
-    public ArrayList<String> parseGameOutput(ArrayList<String> list) {
-        ArrayList<String> temp = new ArrayList<>();
-            switch(list.get(2)) {
-                case "MATCH":
-                    listener.notifyObservers(listIterator(list, temp, 2));
-					break;
-                // TODO
-                // Check if the PLAYERTOMOVE name = the clients name.
-                // If so, the player on the client starts the game and is notified.
-
-                //Handles the move message from the controller.server to store the value in temp
-                // and then passing it on to the model to set the last move to the receiver value
-                case "MOVE":
-                    listener.notifyObservers(listIterator(list, temp, 2));
-					break;
-
-                case "CHALLENGE":
-                    if(list.get(3).equals("CANCELLED")) {
-                        listIterator(list, temp, 4);
-                    } else listIterator(list, temp, 3);
-					break;
-
-                case "YOURTURN":
-                    listener.notifyObservers(listIterator(list, temp, 2));
-					break;
-
-                case "WIN":
-                    listIterator(list, temp, 3);
-					break;
-
-                case "DRAW":
-                    listIterator(list, temp, 3);
-					break;
-
-                case "LOSS":
-                    listIterator(list, temp, 3);
-					break;
-            }
-            return null;
+    private static ArrayList<String> listIterator(ArrayList<String> list, ArrayList<String> temp, int index) {
+        for(String item : list.subList(index, list.size())) {
+            String player = regexStringClean(item);
+            temp.add(player);
         }
+        return temp;
+    }
 
-        private static ArrayList<String> listIterator(ArrayList<String> list, ArrayList<String> temp, int index) {
-            for(String item : list.subList(index, list.size())) {
-                String player = regexStringClean(item);
-                temp.add(player);
-            }
-            return temp;
-        }
-
-        private static String regexStringClean(String s) {
-            return s.replaceAll("\"|\\[|]|,|:|\\{|}", "");
-        }
+    private static String regexStringClean(String s) {
+        return s.replaceAll("\"|\\[|]|,|:|\\{|}", "");
+    }
 }

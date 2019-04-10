@@ -14,7 +14,6 @@ public class ServerLoginPanel extends JPanel {
         setPreferredSize(new Dimension(350,400));
         setLayout(new GridBagLayout());
         setBackground(Color.GRAY);
-        setBorder(BorderFactory.createLineBorder(Color.GRAY.brighter(), 5));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(2, 10, 2 ,10);
 
