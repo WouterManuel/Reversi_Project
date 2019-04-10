@@ -6,11 +6,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class AI {
-    Game game;
     ArrayList<Point> possibleMoves;
 
-    public void AI(Game game) {
-        this.game = game;
+    public AI() {
         possibleMoves = new ArrayList<>();
     }
 

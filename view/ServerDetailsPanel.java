@@ -42,7 +42,7 @@ public class ServerDetailsPanel extends JPanel {
 
         String players[]= { "player1", "john doe", "fyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy", "bar","oke", "1", "2", "3", "4", "5" };
         if (players.length>0){
-            playerList = new JList(players);
+            playerList = new JList<>(players);
 
             /* Challenge btn */
             listBtn = new JButton("Challenge");
@@ -89,7 +89,7 @@ public class ServerDetailsPanel extends JPanel {
 
         String invites[]= { player+" - "+gameType, "inv2", "inv3", "inv4", "inv5", "inv1", "inv2", "invrrrrrrrrrrrrrrrtyrtytrytrytrytrytrytrrrrrrrr3", "inv4", "inv5"};
         if (invites.length>0){
-            inviteList = new JList(invites);
+            inviteList = new JList<>(invites);
 
             /* Accept btn */
             listBtn2 = new JButton("Accept");
@@ -99,7 +99,7 @@ public class ServerDetailsPanel extends JPanel {
             acceptedInvite = new JLabel("");
             acceptedInvite.setForeground(Color.WHITE);
 
-            listBtn2.addActionListener(e -> {clientController.startGame("Reversi");});
+            listBtn2.addActionListener(e -> {clientController.startGame("Reversi", clientController.playingAs());});
 
             JScrollPane inviteListScroll = new JScrollPane(inviteList);
 

@@ -4,14 +4,14 @@ import java.awt.*;
 
 public class MoveScore {
     private Point move ;
-    private int score ;
+    private double score ;
 
-    public MoveScore(Point move, int score){
+    public MoveScore(Point move, double score){
         this.move = move;
         this.score = score;
     }
 
-    public int getScore(){
+    public double getScore(){
         return score ;
     }
 

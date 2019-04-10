@@ -23,9 +23,8 @@ public class ServerListener implements Runnable{
         try {
             while (!(serverLine = input.readLine()).isEmpty()) {
                 try {
-					if(!serverLine.equals("OK")) {
-                        parsedMessageList = parser.parseServerOutput(serverLine);
-                    }
+                    parsedMessageList = parser.parseServerOutput(serverLine);
+                    System.out.println(serverLine);
 					Thread.sleep(50);
                 } catch (NullPointerException e) {
                     System.out.println("\033[34;1m[ServerListener]\033[0m : \033[31;1m[ERROR]\033[0m No messages received.");
@@ -45,9 +44,10 @@ public class ServerListener implements Runnable{
                 tempList.add(s);
             }
             parsedMessageList = null;
+            System.out.println("Parsing message: " + tempList);
             return tempList;
         }
-        System.out.println("Parsing message: " + tempList);
+        System.out.println("Parsing message: " + parsedMessageList);
         return parsedMessageList;
     }
 

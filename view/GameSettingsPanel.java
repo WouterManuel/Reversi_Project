@@ -13,6 +13,7 @@ public class GameSettingsPanel extends JPanel{
     JButton randBtn;
     JButton interruptBtn;
     JButton playGame;
+    JComboBox<String> playAs;
 
     public GameSettingsPanel(ClientController clientController) {
 
@@ -37,8 +38,8 @@ public class GameSettingsPanel extends JPanel{
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        String[] playsAs = new String[] {"Myself","AI","Kiran"};
-        JComboBox<String> playAs = new JComboBox<>(playsAs);
+        String[] playsAs = new String[] {"Human","AI"};
+        playAs = new JComboBox<String>(playsAs);
         add(playAs,gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -46,7 +47,7 @@ public class GameSettingsPanel extends JPanel{
         gbc.gridy = 2;
         add(new JLabel("<html><br><div style='color: white;'>"+"Game:"+"</div></html>"),gbc);
         String[] gameTypes = new String[] {"Reversi","Tic-Tac-Toe"};
-        JComboBox<String> gameType = new JComboBox<>(gameTypes);
+        JComboBox<String> gameType = new JComboBox<String>(gameTypes);
         gbc.gridx = 1;
         gbc.gridy = 2;
         add(gameType,gbc);
@@ -55,14 +56,19 @@ public class GameSettingsPanel extends JPanel{
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 2;
+
         playGame = new JButton("<html><div style='padding: 0'>"+"Play local game"+"</div></html>");
         playGame.addActionListener(e -> {
             if(!clientController.getLoggedInStatus()) {
-                clientController.startGame(gameType.getSelectedItem().toString());
+                clientController.startGame(gameType.getSelectedItem().toString(), playAs.getSelectedItem().toString());
             } else clientController.getServerCommander().sendSubscribeCommand(gameType.getSelectedItem().toString());
         });
         add(playGame,gbc);
 
+    }
+
+    public String getPlayAs() {
+        return playAs.getSelectedItem().toString();
     }
 
     public void updateSidebarLabelScore(String s) {

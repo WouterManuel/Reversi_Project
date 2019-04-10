@@ -70,7 +70,6 @@ public class Window extends JFrame implements WindowState {
 	/******************************************** State logic *********************************************/
 	public void setWindowState(WindowState windowState) {
 		this.currentState = windowState;
-		System.out.println(currentState);
 	}
 
 	public WindowState getIntroState() {

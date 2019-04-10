@@ -22,8 +22,11 @@ public class ServerParser {
 			ArrayList<String> outputList = new ArrayList<>(Arrays.asList(s.split(" ")));
 			ArrayList<String> playerlist = new ArrayList<>();
 
-            if (outputList.size() > 1) {
+            if (outputList.size() >= 1) {
                 if(outputList.get(0).equals("ERR")){
+                    return outputList;
+                }
+                if(outputList.get(0).equals("OK")){
                     return outputList;
                 }
                 else {

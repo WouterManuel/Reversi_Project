@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class negaAI extends AI {
 
-	final int INF = 1000000;
-	private int maxDepth = 9;
+	final double INF = 1000000;
+	private int maxDepth = 3;
 
 	Reversi game;
 	public negaAI(Game game) {
@@ -17,21 +17,23 @@ public class negaAI extends AI {
 	}
 
 	public Point findMove(byte player){
+		System.out.println("Entering findMove AI");
 		MoveScore moveScore = negascout(game.getBoard(), player, 0, -INF, INF);
+		System.out.println("FOUND MOVE: " + moveScore.getMove());
 		return moveScore.getMove();
 	}
 
-	public MoveScore negascout(byte[][] board, byte player, int depth, int alpha, int beta) {
+	public MoveScore negascout(byte[][] board, byte player, int depth, double alpha, double beta) {
 		byte opp = player== game.BLACK?game.WHITE:game.BLACK;
-		if(depth == maxDepth)
-			return new MoveScore(null, game.scoreH(board, player));
-
-		int currentScore;
-		int bestScore = -INF;
-		Point bestMove = null;
-		int adaptiveBeta = beta;
-
 		ArrayList<Point> possibleMoves = game.getAllPossibleMoves(player);
+		if(depth == maxDepth)
+			return new MoveScore(null, game.scoreH(player, possibleMoves.size()));
+
+		double currentScore;
+		double bestScore = -INF;
+		Point bestMove = null;
+		double adaptiveBeta = beta;
+
 		if(possibleMoves.isEmpty())
 			return new MoveScore(null, bestScore);
 		bestMove = possibleMoves.get(0);
