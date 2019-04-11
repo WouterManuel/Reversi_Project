@@ -15,7 +15,7 @@ public class ServerDetailsPanel extends JPanel {
 	JLabel acceptedPlayer;
 	JLabel acceptedInvite;
 	JLabel listText;
-	JLabel listText2;
+	JLabel testLabel;
 	ClientController clientController;
 
 	public ServerDetailsPanel(ClientController clientController) {
@@ -38,6 +38,7 @@ public class ServerDetailsPanel extends JPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 1;
+
 
         // clientController.getServerCommander().getPlayerlist();
 
@@ -131,6 +132,30 @@ public class ServerDetailsPanel extends JPanel {
         logoutBtn.addActionListener(e -> {
             clientController.sendLogout();
         });
+
+
+        /* gbc.gridx = 1;
+        gbc.gridy = 5;
+
+        JButton subscribeBtnTTT = new JButton("Subscribe TicTacToe");
+        subscribeBtnTTT.addActionListener(e -> {
+            clientController.getServerCommander().sendSubscribeCommand("Tic-tac-toe");
+        });
+
+        add(subscribeBtnTTT, gbc); */
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+
+        JButton subscribeBtnTTTT = new JButton("Playalisttt");
+        subscribeBtnTTTT.addActionListener(e -> {
+            if (clientController.getServerCommander().getUsername() != null) {
+                System.out.println(clientController.getServerCommander().getPlayerlist());
+            }
+        });
+
+        add(subscribeBtnTTTT, gbc);
+
     }
 
 }

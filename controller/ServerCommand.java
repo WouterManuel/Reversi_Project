@@ -64,11 +64,12 @@ public class ServerCommand {
     }
 
     public synchronized ArrayList<String> getPlayerlist() {
-        ArrayList<String> temp = new ArrayList<String>();
         try {
             output.println("get playerlist");
             Thread.sleep(100);
-            if(checkIfValidCommand() && listener.getParsedMessage() != null) {
+
+            if(checkIfValidCommand()) {
+                System.out.println("In de valid playerlist ");
                 return listener.getParsedMessage();
             }
         } catch (NullPointerException ex) {
@@ -76,8 +77,7 @@ public class ServerCommand {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        return temp;
+        return null;
     }
 
     public synchronized void sendSubscribeCommand(String game) {
@@ -147,8 +147,11 @@ public class ServerCommand {
     }
 
     public boolean checkIfValidCommand() {
-        ArrayList<String> list = listener.getParsedMessage();
-        error = "No response from server";
+
+//        ArrayList<String> list = listener.getParsedMessage();
+//        error = "No response from server";
+
+        ArrayList<String> list = listener.parsedMessageList;
         if (list != null && list.get(0).equals("ERR")) {
             error = "";
             for(String item : list.subList(1, list.size())) {
