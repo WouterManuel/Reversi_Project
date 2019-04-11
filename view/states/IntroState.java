@@ -9,7 +9,6 @@ public class IntroState implements WindowState {
 
     public IntroState(Window window) {
         this.window = window;
-        window.removeAll();
         window.setGameSettingsPanel(new GameSettingsPanel(window.getClientController()));
         window.add(window.getGameSettingsPanel(), BorderLayout.WEST);
         window.add(window.getServerConnectionPanel(), BorderLayout.EAST);
