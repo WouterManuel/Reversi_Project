@@ -36,6 +36,10 @@ public class GameSettingsPanel extends JPanel{
         gbc.ipadx = 20;
         add(new JLabel("<html><br><div style='color: white;'>"+"Play as :"+"</div></html>"),gbc);
 
+        if (clientController.isLoggedIn()){
+            System.out.println("hiiii");
+        }
+
         gbc.gridx = 1;
         gbc.gridy = 1;
         String[] playsAs = new String[] {"AI","Human"};
