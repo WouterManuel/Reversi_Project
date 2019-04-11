@@ -1,6 +1,7 @@
 package view.states;
 
 import controller.ClientController;
+import view.ServerDetailsPanel;
 import view.Window;
 import java.awt.*;
 
@@ -10,7 +11,8 @@ public class LoggedInState implements WindowState {
     public LoggedInState(Window window) {
         this.window = window;
         window.getContentPane().remove(window.getServerLoginPanel());
-        window.getContentPane().add(window.getServerDetailsPanel(), BorderLayout.EAST);
+        window.setServerDetailsPanel(new ServerDetailsPanel(window.getClientController()));
+        window.getContentPane().add(window.getServerDetailsPanel(), BorderLayout.CENTER);
         window.invalidate();
         window.validate();
         window.repaint();

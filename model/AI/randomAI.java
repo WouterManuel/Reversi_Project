@@ -19,7 +19,7 @@ public class randomAI extends AI {
 	}
 
 	public Point random(byte player) {
-		possibleMoves = game.getAllPossibleMoves(player);
+		possibleMoves = game.getAllPossibleMoves(game.getBoard(), player);
 		if(!possibleMoves.isEmpty()) {
 			int rnd = ThreadLocalRandom.current().nextInt(0, possibleMoves.size());
 			return(possibleMoves.get(rnd));
