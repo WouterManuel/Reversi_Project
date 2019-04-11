@@ -44,7 +44,7 @@ public class ClientController {
         }
     }
 
-    public boolean isLoggedIn(String username){
+    public boolean setLoggedIn(String username){
         if(serverCommander.sendLoginCommand(username) != null) {
             this.username = username;
             window.loggedIn();
@@ -56,6 +56,10 @@ public class ClientController {
             isLoggedIn = false;
             return false;
         }
+    }
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
     }
 
     public void sendForfeit() {
@@ -98,7 +102,7 @@ public class ClientController {
         return serverCommander;
     }
 
-    public boolean getConnectionStatus() {
+    public boolean isConnected() {
         return connected;
     }
 
@@ -251,7 +255,7 @@ public class ClientController {
     }
 
     public void returnToMenu() {
-        window.setWindowState(window.getReturnFromGameState());
+        window.forfeited();
     }
 
     public static void main(String[] args) {

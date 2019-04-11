@@ -63,7 +63,7 @@ public class ServerConnectionPanel extends JPanel {
         gbc.gridwidth = 2;
         JButton connectBtn = new JButton("Connect");
         connectBtn.addActionListener(e -> {clientController.startServerCommand(hostname.getText(), Integer.valueOf(port.getText()));
-            if(!clientController.getConnectionStatus())
+            if(!clientController.isConnected())
                 messageLabel.setVisible(true);
         });
         add(connectBtn, gbc);

@@ -1,6 +1,5 @@
 package view.states;
 
-import view.ReversiPanel;
 import view.Window;
 import java.awt.*;
 
@@ -12,13 +11,16 @@ public class ReturnFromGameState implements WindowState {
         window.remove(window.getReversiPanel());
         window.remove(window.getGameSidebarPanel());
         window.add(window.getGameSettingsPanel(), BorderLayout.WEST);
-        window.add(window.getServerDetailsPanel(), BorderLayout.EAST);
+        if (window.getClientController().isLoggedIn()) {
+            window.add(window.getServerDetailsPanel(), BorderLayout.EAST);
+        } else window.add(window.getServerConnectionPanel(), BorderLayout.EAST);
+
         window.revalidate();
         window.repaint();
     }
 
     public void connected() {
-        //
+        window.setWindowState(window.getConnectedToServerState());
     }
 
     public void disconnected() {

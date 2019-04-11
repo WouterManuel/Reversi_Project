@@ -76,7 +76,10 @@ public class GameSidebarPanel extends JPanel{
 
         backAndForfeitBtn = new JButton("Forfeit");
         backAndForfeitBtn.addActionListener(e -> {
-            if(!clientController.isGameOver())  {
+            if(!clientController.isConnected()) { ;
+                clientController.returnToMenu();
+            }
+            else if(!clientController.isGameOver())  {
                 popup  = new JFrame();
                 Object[] options = {"Yes, forfeit now"};
                 response = JOptionPane.showOptionDialog(popup,

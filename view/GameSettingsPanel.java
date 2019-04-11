@@ -38,7 +38,7 @@ public class GameSettingsPanel extends JPanel{
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        String[] playsAs = new String[] {"Human","AI"};
+        String[] playsAs = new String[] {"AI","Human"};
         playAs = new JComboBox<String>(playsAs);
         add(playAs,gbc);
 
