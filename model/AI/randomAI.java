@@ -1,16 +1,17 @@
 package model.AI;
 
 import model.game.Game;
+import model.game.Reversi;
 
 import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class randomAI extends AI {
 
-	Game game;
+	Reversi game;
 
 	public randomAI (Game game) {
-		this.game = game;
+		this.game = (Reversi) game;
 	}
 
 	public Point findMove(byte player){

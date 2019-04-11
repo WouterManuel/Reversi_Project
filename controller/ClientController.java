@@ -76,7 +76,6 @@ public class ClientController {
         }
 
         if (playingAs.equals("AI")){
-            System.out.println("Playing assss: " + playingAs);
             currentAI = new negaAI(currentGame);
             playingAsAI = true;
         }
@@ -99,22 +98,31 @@ public class ClientController {
     }
 
     public void update(ArrayList<String> message){
+		System.out.println("controller update: "+message);
         switch(message.get(0)) {
             case "MATCH":
                 gameIsOver = false;
-                String gametype = message.get(4);
-                opponentName = message.get(6);
+                String gametype = message.get(5);
+                opponentName = message.get(8);
+				System.out.println("oppname: "+opponentName);
+
                 String playingAs = window.getGameSettingsPanel().getPlayAs();
                 System.out.println("Player to start: " + message.get(2));
                 startGame(gametype, playingAs);
                 if(!message.get(2).equals(username)) {
                     opponentColorSet(1);
                     myTurn = false;
-                } else currentGame.highlightPossibleMoves(turn);
+                } else {
+					// account for rematches
+					opponentColorSet(2);
+					myTurn = true;
+                    currentGame.highlightPossibleMoves(turn);
+				}
+
                 updateSideBarReversiScore();
                 break;
             case "MOVE":
-				int move = Integer.valueOf(message.get(4).replaceAll("\"", ""));
+				int move = Integer.valueOf(message.get(5).replaceAll("\"", ""));
 				int i = move/8;
 				int j = move%8;
                 if(!message.get(2).equals(username)) {
@@ -133,7 +141,7 @@ public class ClientController {
 				currentGame.highlightPossibleMoves(turn);
                 /** AI plays */
                 if(playingAsAI) {
-                    System.out.println("AI turn");
+                    System.out.println("AI turn: " + turn);
                     Point AImove = currentAI.findMove(turn);
                     System.out.println("AI move: " + AImove);
                     playMove(AImove.x, AImove.y, turn);

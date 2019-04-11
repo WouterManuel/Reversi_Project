@@ -1,7 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.regex.*;
 
 public class ServerParser {
 
@@ -19,7 +19,11 @@ public class ServerParser {
          * */
 
         public ArrayList<String> parseServerOutput(String s) {
-			ArrayList<String> outputList = new ArrayList<>(Arrays.asList(s.split(" ")));
+			Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(s);
+			ArrayList<String> outputList = new ArrayList<>();
+			while(m.find() && !m.group().contains(",,"))
+				outputList.add(m.group(1));
+			System.out.println("outputList: "+outputList);
 			ArrayList<String> playerlist = new ArrayList<>();
 
             if (outputList.size() >= 1) {
