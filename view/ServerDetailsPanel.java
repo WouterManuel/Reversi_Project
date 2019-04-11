@@ -5,35 +5,38 @@ import controller.ClientController;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ServerDetailsPanel extends JPanel {
-	JList playerList;
-	JList inviteList;
-	JList serverList;
-	JButton challengeBtn;
-	JButton acceptBtn;
-	JButton logoutBtn;
-	JLabel acceptedPlayer;
-	JLabel acceptedInvite;
-	JLabel listText;
-	JLabel testLabel;
-	ClientController clientController;
+    JList playerList;
+    JList inviteList;
+    JList serverList;
+    JButton challengeBtn;
+    JButton acceptBtn;
+    JButton logoutBtn;
+    JLabel acceptedPlayer;
+    JLabel acceptedInvite;
+    JLabel listText;
+    JLabel testLabel;
+    ClientController clientController;
 
-	public ServerDetailsPanel(ClientController clientController) {
-		this.clientController = clientController;
-		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-		setPreferredSize(new Dimension(350,400));
-		setBackground(Color.DARK_GRAY.darker());
+    public ServerDetailsPanel(ClientController clientController) {
+        this.clientController = clientController;
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setPreferredSize(new Dimension(350, 400));
+        setBackground(Color.DARK_GRAY.darker());
 
-		GridBagConstraints gbc = new GridBagConstraints();
-		setLayout(new GridBagLayout());
-        gbc.insets = new Insets(5, 5, 5 ,10);
+        GridBagConstraints gbc = new GridBagConstraints();
+        setLayout(new GridBagLayout());
+        gbc.insets = new Insets(5, 5, 5, 10);
 
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.gridx = 0;
-		gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
 
-        String testList= clientController.getServerCommander().getPlayerlist().toString();
+        String testList = clientController.getServerCommander().getPlayerlist().toString();
         System.out.println(testList);
 
         listText = new JLabel("Playerlist :");
@@ -43,12 +46,16 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 1;
 
-        String players[]= { "player1", "john doe", "fyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy", "bar","oke", "1", "2", "3", "4", "5" };
-        if (players.length>0){
-            playerList = new JList<>(clientController.getServerCommander().getPlayerlist().toArray());
 
-            /* Challenge btn */
-            challengeBtn = new JButton("Challenge");
+            // clientController.getServerCommander().getPlayerlist();
+
+            //String players[]= { "player1", "john doe", "bar","oke", "1", "2", "3", "4", "5" };
+            //String players[]= { "player1", "john doe", "bar","oke", "1", "2", "3", "4", "5" };
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            playerList = new JList<>(listModel);
+
+                    /* Challenge btn */
+                    challengeBtn = new JButton("Challenge");
 
             /* See challenged player */
             acceptedPlayer = new JLabel("");
@@ -65,86 +72,106 @@ public class ServerDetailsPanel extends JPanel {
             playerListScroll.setPreferredSize(new Dimension(125, 150));
             //playerListScroll.setMaximumSize(new Dimension(80, 200));
 
+
             add(playerListScroll, gbc);
 
             gbc.gridx = 0;
             gbc.gridy = 2;
             add(challengeBtn, gbc);
-        }
-        else {
             acceptedPlayer = new JLabel("No players found");
             acceptedPlayer.setForeground(Color.WHITE);
-        }
-
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-
-        listText = new JLabel("Invites :");
-        listText.setForeground(Color.WHITE);
-        add(listText, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-
-        // Server data here
-        String player = "PlayerOne";
-        String gameType = "TicTacToe";
-
-        String invites[]= { player+" - "+gameType, "inv2", "inv3", "inv4", "inv5", "inv1", "inv2", "invrrrrrrrrrrrrrrrtyrtytrytrytrytrytrytrrrrrrrr3", "inv4", "inv5"};
-        if (invites.length>0){
-            inviteList = new JList<>(clientController.getServerCommander().getPlayerlist().toArray());
-
-            /* Accept btn */
-            acceptBtn = new JButton("Accept");
-            add(acceptBtn);
-
-            /* See accepted challenge */
-            acceptedInvite = new JLabel("");
-            acceptedInvite.setForeground(Color.WHITE);
-
-            acceptBtn.addActionListener(e -> {clientController.getServerCommander().sendAcceptChallengeCommand(0);});
-
-            JScrollPane inviteListScroll = new JScrollPane(inviteList);
-
-            inviteListScroll.setMinimumSize(new Dimension(125, 130));
-            inviteListScroll.setPreferredSize(new Dimension(125, 150));
-
-            add(inviteListScroll, gbc);
 
             gbc.gridx = 1;
-            gbc.gridy = 2;
-            add(acceptBtn, gbc);
+            gbc.gridy = 0;
+
+            listText = new JLabel("Invites :");
+            listText.setForeground(Color.WHITE);
+            add(listText, gbc);
+
+            gbc.gridx = 1;
+            gbc.gridy = 1;
+
+            // Server data here
+            String player = "PlayerOne";
+            String gameType = "TicTacToe";
+
+
+            String invites[] = {player + " - " + gameType, "inv2", "inv3", "inv4", "inv5", "inv1", "inv2"};
+            if (invites.length > 0) {
+                inviteList = new JList<>(clientController.getServerCommander().getPlayerlist().toArray());
+
+                /* Accept btn */
+                acceptBtn = new JButton("Accept");
+                add(acceptBtn);
+
+                /* See accepted challenge */
+                acceptedInvite = new JLabel("");
+                acceptedInvite.setForeground(Color.WHITE);
+
+                acceptBtn.addActionListener(e -> {
+                    clientController.getServerCommander().sendAcceptChallengeCommand(0);
+                });
+
+                JScrollPane inviteListScroll = new JScrollPane(inviteList);
+
+                inviteListScroll.setMinimumSize(new Dimension(125, 130));
+                inviteListScroll.setPreferredSize(new Dimension(125, 150));
+
+                add(inviteListScroll, gbc);
+
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                add(acceptBtn, gbc);
+            } else {
+                acceptedInvite = new JLabel("No players found");
+                acceptedInvite.setForeground(Color.WHITE);
+            }
+
+            gbc.gridwidth = 2;
+            gbc.gridx = 0;
+            gbc.gridy = 3;
+
+            add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
+
+            logoutBtn = new JButton("Logout");
+            gbc.gridx = 1;
+            gbc.gridy = 4;
+            add(logoutBtn, gbc);
+            logoutBtn.addActionListener(e -> {
+                clientController.sendLogout();
+            });
+
+            gbc.gridx = 1;
+            gbc.gridy = 5;
+
+            new Thread(() -> {
+                try {
+                    Thread.sleep(3000);
+                    while (clientController.isLoggedIn()) {
+                        ArrayList<String> newPlayerList = clientController.getServerCommander().getPlayerlist();
+                        listModel.clear();
+
+                        for (String p : newPlayerList) {
+                            listModel.addElement(p);
+                        }
+                        Thread.sleep(5000);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+
+            JButton subscribeBtnTTTT = new JButton("Playerlist");
+            subscribeBtnTTTT.addActionListener(e -> {
+
+                if (clientController.getServerCommander().getUsername() != null) {
+                    System.out.println(clientController.getServerCommander().getPlayerlist());
+                }
+            });
+
+            add(subscribeBtnTTTT, gbc);
+
         }
-        else {
-            acceptedInvite = new JLabel("No players found");
-            acceptedInvite.setForeground(Color.WHITE);
-        }
-
-        gbc.gridwidth = 2;
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-
-        add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
-
-        logoutBtn = new JButton("Logout");
-        gbc.gridx = 1;
-        gbc.gridy = 4;
-        add(logoutBtn, gbc);
-        logoutBtn.addActionListener(e -> {
-            clientController.sendLogout();
-        });
-
-
-        /* gbc.gridx = 1;
-        gbc.gridy = 5;
-
-        JButton subscribeBtnTTT = new JButton("Subscribe TicTacToe");
-        subscribeBtnTTT.addActionListener(e -> {
-            clientController.getServerCommander().sendSubscribeCommand("Tic-tac-toe");
-        });
-
-        add(subscribeBtnTTT, gbc); */
 
     }
 
-}
