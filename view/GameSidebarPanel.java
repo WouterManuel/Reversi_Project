@@ -14,6 +14,8 @@ public class GameSidebarPanel extends JPanel{
     JButton interruptBtn;
     JButton playGame;
     JButton forfeitBtn;
+    JFrame popup;
+    int response;
     ClientController clientController;
 
     public GameSidebarPanel(ClientController clientController) {
@@ -73,7 +75,15 @@ public class GameSidebarPanel extends JPanel{
         gbc.gridy = 6;
         forfeitBtn = new JButton("Forfeit");
         forfeitBtn.addActionListener(e -> {
-            if(clientController.getLoggedInStatus()) clientController.sendForfeit();
+            if(clientController.getLoggedInStatus()) {
+                popup  = new JFrame();
+                Object[] options = {"Yes, forfeit now"};
+                response = JOptionPane.showOptionDialog(popup,
+                        "Do you really want to forfeit this match?\n<html><div style='color:red'>Your opponent will win.</div></html>", "Forfeit", JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,options,options[0]);
+                if (response == JOptionPane.YES_OPTION) {
+                    clientController.sendForfeit();
+                }
+            }
         });
 
         add(forfeitBtn,gbc);

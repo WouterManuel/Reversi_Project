@@ -9,8 +9,9 @@ import java.awt.*;
 public class ServerDetailsPanel extends JPanel {
 	JList playerList;
 	JList inviteList;
-	JButton listBtn;
-	JButton listBtn2;
+	JButton challengeBtn;
+	JButton acceptBtn;
+	JButton logoutBtn;
 	JLabel acceptedPlayer;
 	JLabel acceptedInvite;
 	JLabel listText;
@@ -21,7 +22,7 @@ public class ServerDetailsPanel extends JPanel {
 		this.clientController = clientController;
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		setPreferredSize(new Dimension(350,400));
-		setBackground(Color.GRAY);
+		setBackground(Color.DARK_GRAY.darker());
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		setLayout(new GridBagLayout());
@@ -45,13 +46,13 @@ public class ServerDetailsPanel extends JPanel {
             playerList = new JList<>(players);
 
             /* Challenge btn */
-            listBtn = new JButton("Challenge");
+            challengeBtn = new JButton("Challenge");
 
             /* See challenged player */
             acceptedPlayer = new JLabel("");
             acceptedPlayer.setForeground(Color.WHITE);
 
-            listBtn.addActionListener(e -> {
+            challengeBtn.addActionListener(e -> {
                 clientController.getServerCommander().sendChallengeCommand(playerList.getSelectedValue().toString(), "Tic-tac-toe");
             });
 
@@ -66,7 +67,7 @@ public class ServerDetailsPanel extends JPanel {
 
             gbc.gridx = 0;
             gbc.gridy = 2;
-            add(listBtn, gbc);
+            add(challengeBtn, gbc);
         }
         else {
             acceptedPlayer = new JLabel("No players found");
@@ -92,64 +93,44 @@ public class ServerDetailsPanel extends JPanel {
             inviteList = new JList<>(invites);
 
             /* Accept btn */
-            listBtn2 = new JButton("Accept");
-            add(listBtn2);
+            acceptBtn = new JButton("Accept");
+            add(acceptBtn);
 
             /* See accepted challenge */
             acceptedInvite = new JLabel("");
             acceptedInvite.setForeground(Color.WHITE);
 
-            listBtn2.addActionListener(e -> {clientController.startGame("Reversi", clientController.playingAs());});
+            acceptBtn.addActionListener(e -> {clientController.startGame("Reversi", clientController.playingAs());});
 
             JScrollPane inviteListScroll = new JScrollPane(inviteList);
 
             inviteListScroll.setMinimumSize(new Dimension(30, 130));
             inviteListScroll.setPreferredSize(new Dimension(50, 150));
-            //inviteListScroll.setMaximumSize(new Dimension(80, 200));
 
             add(inviteListScroll, gbc);
 
             gbc.gridx = 1;
             gbc.gridy = 2;
-            add(listBtn2, gbc);
+            add(acceptBtn, gbc);
         }
         else {
             acceptedInvite = new JLabel("No players found");
             acceptedInvite.setForeground(Color.WHITE);
         }
 
+        gbc.gridwidth = 2;
         gbc.gridx = 0;
         gbc.gridy = 3;
 
-        listText = new JLabel("Subscribe:");
-        listText.setForeground(Color.WHITE);
-        add(listText, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-
         add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
 
+        logoutBtn = new JButton("Logout");
         gbc.gridx = 1;
         gbc.gridy = 4;
-
-        add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
+        add(logoutBtn, gbc);
+        logoutBtn.addActionListener(e -> {
+            clientController.sendLogout();
+        });
     }
 
-    public void seeAcceptedPlayer() {
-        if (playerList.getSelectedValue() != null) {
-            String data = "";
-            data = "" + playerList.getSelectedValue();
-            acceptedPlayer.setText(data);
-            System.out.println(data);
-        }
-    }
-    public void seeAcceptedInvite() {
-        if (inviteList.getSelectedValue() != null) {
-            String data = "";
-            data = "" + inviteList.getSelectedValue();
-            acceptedInvite.setText(data);
-            System.out.println(data);
-        }
-    }
 }

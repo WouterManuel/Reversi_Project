@@ -1,5 +1,6 @@
 package view.states;
 
+import controller.ClientController;
 import view.Window;
 import java.awt.*;
 
@@ -12,6 +13,7 @@ public class LoggedInState implements WindowState {
         window.getContentPane().add(window.getServerDetailsPanel(), BorderLayout.CENTER);
         window.invalidate();
         window.validate();
+        window.repaint();
     }
 
     @Override
@@ -39,5 +41,12 @@ public class LoggedInState implements WindowState {
         if(gameName.equals("Reversi")){
             window.setWindowState(new StartReversiGameState(window));
         }
+    }
+
+    @Override
+    public void loggedOut(){
+        window.getContentPane().remove(window.getServerDetailsPanel());
+        window.getContentPane().add(window.getServerConnectionPanel(), BorderLayout.EAST);
+        window.setWindowState(new IntroState(window));
     }
 }

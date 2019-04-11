@@ -14,6 +14,7 @@ public class ConnectedToServerState implements WindowState {
         window.getContentPane().add(window.getServerLoginPanel(), BorderLayout.EAST);
         window.invalidate();
         window.validate();
+        window.repaint();
     }
 
     @Override
@@ -35,7 +36,12 @@ public class ConnectedToServerState implements WindowState {
         //
     }
 
+    @Override
     public void gameStarted(String gameName){
+        //
+    }
+    @Override
+    public void loggedOut() {
         //
     }
 }
