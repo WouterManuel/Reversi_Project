@@ -105,20 +105,20 @@ public class ClientController {
                 String gametype = message.get(5);
                 opponentName = message.get(8);
 				System.out.println("oppname: "+opponentName);
-
                 String playingAs = window.getGameSettingsPanel().getPlayAs();
-                System.out.println("Player to start: " + message.get(2));
                 startGame(gametype, playingAs);
+                System.out.println("Player to start: " + message.get(2));
+
                 if(!message.get(2).equals(username)) {
-                    opponentColorSet(1);
                     myTurn = false;
+                    opponentColorSet(1);
                 } else {
 					// account for rematches
+                    myTurn = true;
 					opponentColorSet(2);
-					myTurn = true;
                     currentGame.highlightPossibleMoves(turn);
 				}
-
+                currentGame.updateView();
                 updateSideBarReversiScore();
                 break;
             case "MOVE":
