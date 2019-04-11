@@ -67,6 +67,10 @@ public class Window extends JFrame implements WindowState {
 		currentState.gameStarted(gameName);
 	}
 
+	public void loggedOut() {
+		currentState.loggedOut();
+	}
+
 	/******************************************** State logic *********************************************/
 	public void setWindowState(WindowState windowState) {
 		this.currentState = windowState;

@@ -15,7 +15,6 @@ public class ReturnFromGameState implements WindowState {
         window.add(window.getServerDetailsPanel(), BorderLayout.EAST);
         window.revalidate();
         window.repaint();
-        System.out.println("Dit is forfeitState");
     }
 
     public void connected() {
@@ -39,5 +38,12 @@ public class ReturnFromGameState implements WindowState {
         if(gameName.equals("Reversi")){
             window.setWindowState(new StartReversiGameState(window));
         }
+    }
+
+    @Override
+    public void loggedOut() {
+        window.getContentPane().remove(window.getServerDetailsPanel());
+        window.getContentPane().add(window.getServerConnectionPanel(), BorderLayout.EAST);
+        window.setWindowState(new IntroState(window));
     }
 }

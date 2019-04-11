@@ -63,6 +63,11 @@ public class ClientController {
         window.forfeited();
     }
 
+    public void sendLogout() {
+        serverCommander.sendLogoutCommand();
+        window.loggedOut();
+    }
+
     //TODO add playAs
     public void startGame(String gameType, String playingAs) {
         if(gameType.equals("Reversi")) {

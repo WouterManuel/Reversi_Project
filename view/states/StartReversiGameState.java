@@ -16,6 +16,7 @@ public class StartReversiGameState implements WindowState {
         window.getContentPane().add(window.getGameSidebarPanel(), BorderLayout.CENTER);
         window.invalidate();
         window.validate();
+        window.revalidate();
     }
 
     @Override
@@ -35,6 +36,11 @@ public class StartReversiGameState implements WindowState {
 
     @Override
     public void loggedIn() {
+        //
+    }
+
+    @Override
+    public void loggedOut() {
         //
     }
 
