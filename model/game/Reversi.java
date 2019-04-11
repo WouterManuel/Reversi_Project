@@ -26,7 +26,7 @@ public class Reversi extends Game {
 
     public void setSidebar(JPanel GameSidebarPanel) {this.sidebar = GameSidebarPanel;}
 
-    public ArrayList<Point> getAllPossibleMoves(byte turn){
+    public ArrayList<Point> getAllPossibleMoves(byte[][] board, byte turn){
         ArrayList<Point> result = new ArrayList<>();
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++)
@@ -51,7 +51,7 @@ public class Reversi extends Game {
 		double ret = 0;
 		double m = 0, p = 0, d = 0, f = 0, c = 0, l = 0;
 		byte opp = color==BLACK?WHITE:BLACK;
-		int oppMoves = getAllPossibleMoves(opp).size();
+		int oppMoves = getAllPossibleMoves(board, opp).size();
 		int myFT = 0, oppFT = 0, x = 0, y = 0;
 
 		for(int i=0; i<8; i++)
@@ -152,12 +152,12 @@ public class Reversi extends Game {
         return ret;
     }
 
-    public void printPossibleMoves(byte[][] board, byte turn) {
-        ArrayList<Point> res = getAllPossibleMoves(turn);
-        for(Point r : res)
-            System.out.println(r);
-    }
-
+    // public void printPossibleMoves(byte[][] board, byte turn) {
+    //     ArrayList<Point> res = getAllPossibleMoves(turn);
+    //     for(Point r : res)
+    //         System.out.println(r);
+    // }
+    //
     public int flipScore(byte turn, int i, int j) {
         int moveI, moveJ, cells;
         int opponent = ((turn == 1) ? 2 : 1);
@@ -640,7 +640,7 @@ public class Reversi extends Game {
     }
 
     public void highlightPossibleMoves(byte turn) {
-		ArrayList<Point> res = getAllPossibleMoves(turn);
+		ArrayList<Point> res = getAllPossibleMoves(this.board, turn);
 		for(Point r : res)
 			highlightPossible(r.x, r.y);
 	}
