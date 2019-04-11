@@ -198,7 +198,7 @@ public class ClientController {
 
     // Handles AI and Human moves
     public void playMove(int i, int j, byte turn) {
-        if(currentGame.possibleMovev2(turn, i, j)) {
+        if(currentGame.possibleMovev2(currentGame.getBoard(), turn, i, j)) {
             if (connected)
                 serverCommander.sendMoveCommand(8 * i + j);
             if(!connected)

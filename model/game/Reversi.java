@@ -30,7 +30,7 @@ public class Reversi extends Game {
         ArrayList<Point> result = new ArrayList<>();
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++)
-                if(board[i][j] <= 0 && possibleMovev2(turn,i,j))
+                if(board[i][j] <= 0 && possibleMovev2(board, turn,i,j))
                     result.add(new Point(i,j));
         return result;
     }
@@ -139,7 +139,21 @@ public class Reversi extends Game {
 		}
 		l = -12.5 * (myMoves - oppMoves);
 
-		ret = (78.922*m) + (10*p) + (74.396*f) + (10*d) + (801.724*c) + (382.026*l);
+		ret = (70*m) + (10*p) + (80*f) + (10*d) + (1200*c) + (800*l);
+
+		// ret = 0;
+		// for (int i = 0; i < 8; i++)
+        //     for (int j = 0; j < 8; j++)
+		// 		//hoeken
+		// 		if(i == 0 && j == 0 && board[i][j]==color)
+		// 			ret+=15;
+		// 		else if(i == 0 && j == 7 && board[i][j]==color)
+		// 			ret+=15;
+		// 		else if(i == 7 && j == 0 && board[i][j]==color)
+		// 			ret+=15;
+		// 		else if(i == 7 && j == 7 && board[i][j]==color)
+		// 			ret+=15;
+		// 		else ret++;
 		return ret;
 	}
 
@@ -460,7 +474,7 @@ public class Reversi extends Game {
         }
     }
 
-    public boolean possibleMovev2(byte turn, int i, int j) {
+    public boolean possibleMovev2(byte[][] board, byte turn, int i, int j) {
         if(board[i][j] > 0) return false;
         int opponent = ((turn == BLACK) ? WHITE : BLACK);
         for (int ii = 0; ii < DX.length; ii++) {

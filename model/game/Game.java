@@ -10,7 +10,7 @@ public abstract class Game {
 
     /******************************************** Game logic *********************************************/
     public abstract ArrayList<Point> getAllPossibleMoves(byte[][] board, byte turn);
-    public abstract boolean possibleMovev2(byte turn, int i, int j);
+    public abstract boolean possibleMovev2(byte[][] board, byte turn, int i, int j);
     public abstract int score(byte color);
     public abstract void playMovez(byte[][] board, Point move, byte turn);
     public abstract byte getWinner();
