@@ -38,7 +38,6 @@ public class ServerParser {
                             ArrayList<String> temp = new ArrayList<>();
                             listener.notifyObservers(listIterator(outputList, temp, 2));
                             break;
-
                         default:
                             return null;
                     }

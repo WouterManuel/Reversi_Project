@@ -20,6 +20,7 @@ public class ClientController {
 
     boolean connected;
     boolean isLoggedIn;
+    boolean gameIsOver;
     String username;
     String opponentName;
     String serverComment;
@@ -100,6 +101,7 @@ public class ClientController {
     public void update(ArrayList<String> message){
         switch(message.get(0)) {
             case "MATCH":
+                gameIsOver = false;
                 String gametype = message.get(4);
                 opponentName = message.get(6);
                 String playingAs = window.getGameSettingsPanel().getPlayAs();
@@ -138,19 +140,25 @@ public class ClientController {
                 }
                 break;
             case "WIN":
-                currentGame.setWinner(turn);
+                gameIsOver = true;
+                //currentGame.setWinner(turn);
                 serverComment = message.get(6);
-                System.out.println("Game result " + serverComment);
-                window.setWindowState(window.getReturnFromGameState());
+                window.getGameSidebarPanel().setGameResult("You won!");
+                //window.setWindowState(window.getReturnFromGameState());
                 break;
             case "LOSS":
-                currentGame.setWinner(opp);
+                gameIsOver = true;
+                //currentGame.setWinner(opp);
                 serverComment = message.get(6);
-                System.out.println("Game result " + serverComment);
-                window.setWindowState(window.getReturnFromGameState());
+                window.getGameSidebarPanel().setGameResult("You lost!");
+                //window.setWindowState(window.getReturnFromGameState());
                 break;
             case "DRAW":
-                //TODO
+                gameIsOver = true;
+                //currentGame.setWinner(opp);
+                serverComment = message.get(6);
+                window.getGameSidebarPanel().setGameResult("There was a draw!");
+                //window.setWindowState(window.getReturnFromGameState());
                 break;
             default:
                 System.err.println("Iets klopt niet helemaal.");
@@ -218,8 +226,16 @@ public class ClientController {
         return myTurn;
     }
 
+    public boolean isGameOver() {
+        return gameIsOver;
+    }
+
     public boolean getLoggedInStatus() {
         return isLoggedIn;
+    }
+
+    public void returnToMenu() {
+        window.setWindowState(window.getReturnFromGameState());
     }
 
     public static void main(String[] args) {

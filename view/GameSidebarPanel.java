@@ -9,6 +9,7 @@ public class GameSidebarPanel extends JPanel{
     JLabel playerTurn;
     JLabel scoreLabelWhite;
     JLabel scoreLabelBlack;
+    JLabel playOnline;
     JButton resetBtn;
     JButton randBtn;
     JButton interruptBtn;
@@ -72,7 +73,8 @@ public class GameSidebarPanel extends JPanel{
         gbc.gridy = 6;
         forfeitBtn = new JButton("Forfeit");
         forfeitBtn.addActionListener(e -> {
-            if(clientController.getLoggedInStatus()) clientController.sendForfeit();
+            if(clientController.getLoggedInStatus()) {clientController.sendForfeit();}
+            else if(clientController.isGameOver()) clientController.returnToMenu();
         });
 
         add(forfeitBtn,gbc);
@@ -81,6 +83,14 @@ public class GameSidebarPanel extends JPanel{
     public void updateSidebarLabelScore(String player1, int score1, String player2, int score2) {
         scoreLabelBlack.setText("<html><div style='margin-top:20px; color: black; font-size: 15px;'>" + player1 + ": " + score1 + "</div></html>");
         scoreLabelWhite.setText("<html><div style='margin-bottom:20px; color: white; font-size: 15px;'>" + player2 + ": " + score2 + "</div></html>");
+    }
+
+    public void setGameResult(String result) {
+        if(clientController.isGameOver()) {
+            playOnline.setText("<html><div style='color: white;font-size: 20px;'>You "+result+"!</div></html>");
+            forfeitBtn.setText("Back to menu");
+            repaint();
+        }
     }
 
     public void updateSidebarLabelPlayerTurn(String s) {
