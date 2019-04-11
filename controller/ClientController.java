@@ -56,6 +56,7 @@ public class ClientController {
             window.loggedIn();
             isLoggedIn = true;
             window.getGameSettingsPanel().setPlayButton();
+            window.getGameSettingsPanel().setConnectionLabel();
             return true;
         } else {
             System.out.println("Logged in is false");
