@@ -18,7 +18,7 @@ public class greedyAI extends AI {
 	}
 
 	public Point greedy(byte player) {
-		possibleMoves = game.getAllPossibleMoves(player);
+		possibleMoves = game.getAllPossibleMoves(game.getBoard(), player);
 		int max = 0, score = 0;
 		Point bestMove = new Point();
 		for(Point p : possibleMoves) {

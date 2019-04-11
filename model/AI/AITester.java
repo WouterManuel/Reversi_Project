@@ -25,7 +25,7 @@ public class AITester implements Runnable{
 
     public void run(){
         while(System.currentTimeMillis() < time){
-            ai1.possibleMoves = game.getAllPossibleMoves(turn);
+            ai1.possibleMoves = game.getAllPossibleMoves(game.getBoard(), turn);
             if(!ai1.possibleMoves.isEmpty()){
                 if(turn == 1)
                     try{

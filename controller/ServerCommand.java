@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
@@ -14,6 +15,8 @@ public class ServerCommand {
     String error;
     boolean connected;
 
+    Thread serverThread;
+
     public ServerCommand(String host, int port) {
         try {
             // TODO Handle server connection in its own thread
@@ -25,7 +28,7 @@ public class ServerCommand {
             this.connected = connection.getConnectionStatus();
             if(connected) {
                 // Start serverlistener
-                Thread serverThread = new Thread(listener);
+                serverThread = new Thread(listener);
                 serverThread.start();
             }
         } catch (IOException e) {
@@ -54,11 +57,16 @@ public class ServerCommand {
     public synchronized void sendLogoutCommand() {
         try {
             output.println("logout");
-            Thread.sleep(100);
-            checkIfValidCommand();
+            serverThread.stop();
+            input.close();
+            output.close();
+            System.out.println("Thread stopped");
+            connected = false;
+//            if(checkIfValidCommand()){
+//            }
         } catch (NullPointerException ex) {
             System.out.println("\033[34;1m[SERVERCOMMAND]\033[0m : Server not available.");
-        } catch (InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

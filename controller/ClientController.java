@@ -5,9 +5,9 @@ import model.AI.negaAI;
 import model.game.Game;
 import model.game.Reversi;
 import view.Window;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
+
+import java.awt.Point;
+import java.util.*;
 
 public class ClientController {
 
@@ -16,19 +16,25 @@ public class ClientController {
     Reversi reversiGame;
     Game currentGame;
     AI currentAI;
-    boolean playingAsAI;
 
+    boolean myTurn = true;
+    boolean validMove = false;
+    boolean playingAsAI;
     boolean connected;
     boolean isLoggedIn;
     boolean gameIsOver;
+
     String username;
     String opponentName;
     String serverComment;
-	LinkedList<Integer> movelist = new LinkedList<Integer>();
+
     byte opp = 2;
     byte turn = 1;
-    boolean myTurn = true;
-    boolean validMove = false;
+
+	LinkedList<Integer> movelist = new LinkedList<Integer>();
+	Hashtable<Integer, List> inviteTable = new Hashtable<>();
+
+
 
     public ClientController() {
         reversiGame = new Reversi(this);
@@ -69,7 +75,9 @@ public class ClientController {
 
     public void sendLogout() {
         serverCommander.sendLogoutCommand();
+        System.out.println("Changing windows");
         window.loggedOut();
+        connected = serverCommander.getConnectionStatus();
     }
 
     //TODO add playAs
@@ -78,10 +86,12 @@ public class ClientController {
             currentGame = reversiGame;
             currentGame.resetBoard();
             window.gameStarted(gameType);
+            currentGame.updateView();
 //			if(!myTurn)
 //				reversiGame.removeHighlightPossibleMoves();
         } else {
             //TODO
+            currentGame.updateView();
         }
 
         if (playingAs.equals("AI")){
@@ -127,7 +137,6 @@ public class ClientController {
 					opponentColorSet(2);
                     currentGame.highlightPossibleMoves(turn);
 				}
-                currentGame.updateView();
                 updateSideBarReversiScore();
                 break;
             case "MOVE":
@@ -180,6 +189,18 @@ public class ClientController {
                 window.getGameSidebarPanel().setGameResult("There was a draw!");
                 //window.setWindowState(window.getReturnFromGameState());
                 break;
+            case "CHALLENGE":
+                if(message.get(1).equals("CANCELLED")) {
+                    // Challengenumber to remove from table;
+                    inviteTable.remove(Integer.valueOf(message.get(3)));
+                } else {
+                    String challenger = message.get(2);
+                    String gameType = message.get(4);
+                    Integer challengeNumber = Integer.valueOf(message.get(6));
+
+                    List<String> invite = new ArrayList<>(Arrays.asList(challenger, gameType));
+                    inviteTable.put(challengeNumber, invite);
+                }
             default:
                 System.err.println("Iets klopt niet helemaal.");
         }
@@ -218,6 +239,14 @@ public class ClientController {
             window.getGameSidebarPanel().updateSidebarLabelScore("You", currentGame.score((byte) 1), opponentName, currentGame.score((byte) 2));
     }
 
+    public void returnToMenu() {
+        window.forfeited();
+    }
+
+    public Hashtable getInvites() {
+        return inviteTable;
+    }
+
     public Game getCurrentGame() {
         return currentGame;
     }
@@ -252,10 +281,6 @@ public class ClientController {
 
     public boolean getLoggedInStatus() {
         return isLoggedIn;
-    }
-
-    public void returnToMenu() {
-        window.forfeited();
     }
 
     public static void main(String[] args) {

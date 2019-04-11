@@ -1,6 +1,7 @@
 package view.states;
 
 import controller.ClientController;
+import view.ServerDetailsPanel;
 import view.Window;
 import java.awt.*;
 
@@ -10,6 +11,7 @@ public class LoggedInState implements WindowState {
     public LoggedInState(Window window) {
         this.window = window;
         window.getContentPane().remove(window.getServerLoginPanel());
+        window.setServerDetailsPanel(new ServerDetailsPanel(window.getClientController()));
         window.getContentPane().add(window.getServerDetailsPanel(), BorderLayout.CENTER);
         window.invalidate();
         window.validate();
@@ -45,8 +47,7 @@ public class LoggedInState implements WindowState {
 
     @Override
     public void loggedOut(){
-        window.getContentPane().remove(window.getServerDetailsPanel());
-        window.getContentPane().add(window.getServerConnectionPanel(), BorderLayout.EAST);
-        window.setWindowState(new IntroState(window));
+        System.out.println("In state loggedOut");
+       window.setWindowState(new IntroState(window));
     }
 }
