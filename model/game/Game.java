@@ -22,6 +22,7 @@ public abstract class Game {
         board[i][j] = value;
     }
 
+	public abstract int pieces();
     public abstract void setPanel(JPanel panel);
 
     public abstract void setSidebar(JPanel sidebar);

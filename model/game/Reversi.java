@@ -24,6 +24,15 @@ public class Reversi extends Game {
         this.reversiPanel = reversiPanel;
     }
 
+	public int pieces() {
+		int ret = 0;
+		for (int i = 0; i < 8; i++)
+			for (int j = 0; j < 8; j++)
+				if(board[i][j] >0)
+					ret++;
+			return ret;
+		}
+
     public void setSidebar(JPanel GameSidebarPanel) {this.sidebar = GameSidebarPanel;}
 
     public ArrayList<Point> getAllPossibleMoves(byte[][] board, byte turn){

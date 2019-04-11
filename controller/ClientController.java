@@ -35,6 +35,136 @@ public class ClientController {
 	Hashtable<Integer, List> inviteTable = new Hashtable<>();
 
 
+	char[][] openings = {
+		{'c','4','c','3'},
+		{'c','4','c','3','d','3','c','5','b','2'},
+		{'c','4','c','3','d','3','c','5','b','3'},
+		{'c','4','c','3','d','3','c','5','b','3','f','3'},
+		{'c','4','c','3','d','3','c','5','b','3','f','4','b','5','b','4','c','6','d','6','f','5'},
+		{'c','4','c','3','d','3','c','5','b','4'},
+		{'c','4','c','3','d','3','c','5','b','4','d','2','c','2','f','4','d','6','c','6','f','5','e','6','f','7'},
+		{'c','4','c','3','d','3','c','5','b','4','d','2','d','6'},
+		{'c','4','c','3','d','3','c','5','b','4','d','2','e','2'},
+		{'c','4','c','3','d','3','c','5','b','4','e','3'},
+		{'c','4','c','3','d','3','c','5','b','5'},
+		{'c','4','c','3','d','3','c','5','b','6'},
+		{'c','4','c','3','d','3','c','5','b','6','c','6','b','5'},
+		{'c','4','c','3','d','3','c','5','b','6','e','3'},
+		{'c','4','c','3','d','3','c','5','d','6'},
+		{'c','4','c','3','d','3','c','5','d','6','e','3'},
+		{'c','4','c','3','d','3','c','5','d','6','f','4','b','4'},
+		{'c','4','c','3','d','3','c','5','d','6','f','4','b','4','b','6','b','5','c','6','b','3'},
+		{'c','4','c','3','d','3','c','5','d','6','f','4','b','4','b','6','b','5','c','6','f','5'},
+		{'c','4','c','3','d','3','c','5','d','6','f','4','b','4','c','6','b','5','b','3','b','6','e','3','c','2','a','4','a','5','a','6','d','2'},
+		{'c','4','c','3','d','3','c','5','d','6','f','4','b','4','e','3','b','3'},
+		{'c','4','c','3','d','3','c','5','d','6','f','4','f','5'},
+		{'c','4','c','3','d','3','c','5','d','6','f','4','f','5','d','2'},
+		{'c','4','c','3','d','3','c','5','d','6','f','4','f','5','d','2','b','5'},
+		{'c','4','c','3','d','3','c','5','d','6','f','4','f','5','d','2','g','4','d','7'},
+		{'c','4','c','3','d','3','c','5','d','6','f','4','f','5','e','6','c','6','d','7'},
+		{'c','4','c','3','d','3','c','5','d','6','f','4','f','5','e','6','f','6'},
+		{'c','4','c','3','d','3','c','5','f','6'},
+		{'c','4','c','3','d','3','c','5','f','6','e','2','c','6'},
+		{'c','4','c','3','d','3','c','5','f','6','e','3','c','6','f','5','f','4','g','5'},
+		{'c','4','c','3','d','3','c','5','f','6','f','5'},
+		{'c','4','c','3','e','6','c','5'},
+		{'c','4','c','3','f','5','c','5'},
+		{'c','4','c','5'},
+		{'c','4','e','3'},
+		{'c','4','e','3','f','4','c','5','d','6','e','6'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','c','6'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','d','3'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','d','3','c','3'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','e','2'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','e','6','c','3','d','3','e','2'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','e','6','c','3','d','3','e','2','b','5'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','e','6','c','3','d','3','e','2','b','5','f','5'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','e','6','c','3','d','3','e','2','b','5','f','5','b','3'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','e','6','c','3','d','3','e','2','b','5','f','5','b','4','f','6','c','2','e','7','d','2','c','7'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','e','6','c','3','d','3','e','2','b','6','f','5'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','e','6','c','3','d','3','e','2','b','6','f','5','b','4','f','6','g','5','d','7'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','e','6','c','3','d','3','e','2','b','6','f','5','g','5'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','e','6','c','3','d','3','e','2','b','6','f','5','g','5','f','6'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','e','6','c','3','d','3','e','2','d','2'},
+		{'c','4','e','3','f','4','c','5','d','6','f','3','e','6','c','6'},
+		{'c','4','e','3','f','4','c','5','e','6'},
+		{'c','4','e','3','f','5','b','4'},
+		{'c','4','e','3','f','5','b','4','f','3'},
+		{'c','4','e','3','f','5','b','4','f','3','f','4','e','2','e','6','g','5','f','6','d','6','c','6'},
+		{'c','4','e','3','f','5','e','6','d','3'},
+		{'c','4','e','3','f','5','e','6','f','4'},
+		{'c','4','e','3','f','5','e','6','f','4','c','5','d','6','c','6','f','7','f','3'},
+		{'c','4','e','3','f','5','e','6','f','4','c','5','d','6','c','6','f','7','g','5','g','6'},
+		{'c','4','e','3','f','6','b','4'},
+		{'c','4','e','3','f','6','e','6','f','5'},
+		{'c','4','e','3','f','6','e','6','f','5','c','5','c','3'},
+		{'c','4','e','3','f','6','e','6','f','5','c','5','c','3','b','4'},
+		{'c','4','e','3','f','6','e','6','f','5','c','5','c','3','b','4','d','6','c','6','b','5','a','6','b','6','c','7'},
+		{'c','4','e','3','f','6','e','6','f','5','c','5','c','3','c','6'},
+		{'c','4','e','3','f','6','e','6','f','5','c','5','c','3','c','6','d','3','d','2','e','2','b','3','c','1','c','2','b','4','a','3','a','5','b','5','a','6','a','4','a','2'},
+		{'c','4','e','3','f','6','e','6','f','5','c','5','c','3','c','6','d','6'},
+		{'c','4','e','3','f','6','e','6','f','5','c','5','c','3','g','5'},
+		{'c','4','e','3','f','6','e','6','f','5','c','5','d','3'},
+		{'c','4','e','3','f','6','e','6','f','5','c','5','d','6'},
+		{'c','4','e','3','f','6','e','6','f','5','c','5','f','4','g','5','g','4','f','3','c','6','d','3','d','6'},
+		{'c','4','e','3','f','6','e','6','f','5','c','5','f','4','g','5','g','4','f','3','c','6','d','3','d','6','b','3','c','3','b','4','e','2','b','6'},
+		{'c','4','e','3','f','6','e','6','f','5','c','5','f','4','g','6','f','7'},
+		{'c','4','e','3','f','6','e','6','f','5','c','5','f','4','g','6','f','7','d','3'},
+		{'c','4','e','3','f','6','e','6','f','5','c','5','f','4','g','6','f','7','g','5'},
+		{'c','4','e','3','f','6','e','6','f','5','g','6'},
+		{'c','4','e','3','f','6','e','6','f','5','g','6','e','7','c','5'}
+	};
+
+	private Point playOpening(int progress, byte color) {
+		System.out.println("--------------------opening uitvoeren");
+		// flip: i = j, j = i en 8-i, 8-j, 8-j, 8-i
+		progress = (progress-4)*2;
+		int x = 0, y = 0;
+		int variantStep = 0;
+		byte col;
+		byte[][] openingB = new byte[8][8];
+		byte[][] mBoard = new byte[8][8];
+		for (int i = 0; i < 8; i++)
+			mBoard[i] = currentGame.getBoard()[i].clone();
+
+		for (int i = 0; i < 8; i++)
+			for (int j = 0; j < 8; j++)
+				if(mBoard[i][j]<0)
+					mBoard[i][j]=0;
+
+		for (int variant = 0; variant < openings.length; variant++) { // voor elke opening sequence
+			// reset het bord en de kleur
+			for (int i = 0; i < 8; i++)
+				for (int j = 0; j < 8; j++)
+					openingB[i][j]=0;
+			openingB[3][3]= currentGame.WHITE;
+			openingB[3][4]= currentGame.BLACK;
+			openingB[4][3]= currentGame.BLACK;
+			openingB[4][4]= currentGame.WHITE;
+			col = color==currentGame.BLACK?currentGame.WHITE:currentGame.BLACK;
+
+			for(variantStep=0; variantStep < progress; variantStep++){ // elk teken in de sequence
+				if(variantStep%2==0 && openings[variant].length/2>=progress){
+					y = openings[variant][variantStep]-96; // letter deel van de zet
+				}
+				else if(openings[variant].length/2>=progress){
+					// System.out.println(y);
+					x = openings[variant][variantStep]-48; // cijfer deel van de zet
+					// System.out.println(x);
+					openingB[y-1][x-1] = col; // zet op bord
+					// System.out.println("----------------- col: "+(x-1)+" row: "+(y-1)+" --------------");
+					col = col==currentGame.BLACK?currentGame.WHITE:currentGame.BLACK; // draai kleur om
+				}
+			}
+			// TODO als er een match is, return volgende stap
+			System.out.println("--------------gew gameb: "+mBoard[3][2]+" -------------------openingB: "+openingB[3][2]+" -----------------orig gameB: "+currentGame.getBoard()[3][2]);
+			if(Arrays.deepEquals(mBoard, openingB)){
+				System.out.println("--------------------------------------------------EEN MATCH-----------------------------------------------------------------");
+				System.out.println(openings[variant][variantStep]+""+openings[variant][variantStep+1]);
+			}
+		}
+		return null;
+	}
 
     public ClientController() {
         reversiGame = new Reversi(this);
@@ -118,7 +248,7 @@ public class ClientController {
     }
 
     public void update(ArrayList<String> message){
-		System.out.println("controller update: "+message);
+		// System.out.println("controller update: "+message);
         switch(message.get(0)) {
             case "MATCH":
                 gameIsOver = false;
@@ -146,6 +276,7 @@ public class ClientController {
 				int j = move%8;
                 if(!message.get(2).equals(username)) {
 					movelist.add(move);
+					int oppmove = move;
                     System.out.println("Opponent move: " + move);
                     play(i, j, opp);
                 } else {
@@ -161,7 +292,11 @@ public class ClientController {
                 /** AI plays */
                 if(playingAsAI) {
                     System.out.println("AI turn: " + turn);
-                    Point AImove = currentAI.findMove(turn);
+					Point AImove = playOpening(currentGame.pieces(), turn);
+					if(AImove==null){
+						// System.out.println("---------------------------------------------AImove was null");
+						AImove = currentAI.findMove(turn);
+					}
                     System.out.println("AI move: " + AImove);
                     playMove(AImove.x, AImove.y, turn);
                 }
