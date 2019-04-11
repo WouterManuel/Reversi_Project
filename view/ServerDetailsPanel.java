@@ -146,7 +146,7 @@ public class ServerDetailsPanel extends JPanel {
 
             new Thread(() -> {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(10);
                     while (clientController.isLoggedIn()) {
                         ArrayList<String> newPlayerList = clientController.getServerCommander().getPlayerlist();
                         listModel.clear();
