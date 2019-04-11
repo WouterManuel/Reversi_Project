@@ -149,6 +149,7 @@ public class ClientController {
                 break;
             case "WIN":
                 gameIsOver = true;
+                System.out.println("Its a win");
                 //currentGame.setWinner(turn);
                 serverComment = message.get(6);
                 window.getGameSidebarPanel().setGameResult("You won!");
@@ -156,6 +157,7 @@ public class ClientController {
                 break;
             case "LOSS":
                 gameIsOver = true;
+                System.out.println("Its a loss");
                 //currentGame.setWinner(opp);
                 serverComment = message.get(6);
                 window.getGameSidebarPanel().setGameResult("You lost!");
@@ -163,6 +165,7 @@ public class ClientController {
                 break;
             case "DRAW":
                 gameIsOver = true;
+                System.out.println("Its a draw");
                 //currentGame.setWinner(opp);
                 serverComment = message.get(6);
                 window.getGameSidebarPanel().setGameResult("There was a draw!");
@@ -201,9 +204,9 @@ public class ClientController {
 
     public void updateSideBarReversiScore() {
         if(opp == (byte) 1) {
-            window.getGameSidebarPanel().updateSidebarLabelScore(opponentName, currentGame.score((byte) 1) ,username, currentGame.score((byte) 2));
+            window.getGameSidebarPanel().updateSidebarLabelScore(opponentName, currentGame.score((byte) 1) ,"You", currentGame.score((byte) 2));
         } else
-            window.getGameSidebarPanel().updateSidebarLabelScore(username, currentGame.score((byte) 1), opponentName, currentGame.score((byte) 2));
+            window.getGameSidebarPanel().updateSidebarLabelScore("You", currentGame.score((byte) 1), opponentName, currentGame.score((byte) 2));
     }
 
     public Game getCurrentGame() {

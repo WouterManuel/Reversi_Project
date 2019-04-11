@@ -9,12 +9,12 @@ public class GameSidebarPanel extends JPanel{
     JLabel playerTurn;
     JLabel scoreLabelWhite;
     JLabel scoreLabelBlack;
-    JLabel playOnline;
+    JLabel gameStats;
     JButton resetBtn;
     JButton randBtn;
     JButton interruptBtn;
     JButton playGame;
-    JButton forfeitBtn;
+    JButton backAndForfeitBtn;
     ClientController clientController;
 
     public GameSidebarPanel(ClientController clientController) {
@@ -29,8 +29,8 @@ public class GameSidebarPanel extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        JLabel playOnline = new JLabel("<html><div style='color: white;font-size: 20px;'>Game Stats:</div></html>");
-        add(playOnline, gbc);
+        gameStats = new JLabel("<html><div style='color: white;font-size: 20px;'>Game Stats:</div></html>");
+        add(gameStats, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -71,13 +71,13 @@ public class GameSidebarPanel extends JPanel{
 
         gbc.gridx = 0;
         gbc.gridy = 6;
-        forfeitBtn = new JButton("Forfeit");
-        forfeitBtn.addActionListener(e -> {
-            if(clientController.getLoggedInStatus()) {clientController.sendForfeit();}
+        backAndForfeitBtn = new JButton("Forfeit");
+        backAndForfeitBtn.addActionListener(e -> {
+            if(!clientController.isGameOver()) {clientController.sendForfeit();}
             else if(clientController.isGameOver()) clientController.returnToMenu();
         });
 
-        add(forfeitBtn,gbc);
+        add(backAndForfeitBtn,gbc);
     }
 
     public void updateSidebarLabelScore(String player1, int score1, String player2, int score2) {
@@ -86,11 +86,9 @@ public class GameSidebarPanel extends JPanel{
     }
 
     public void setGameResult(String result) {
-        if(clientController.isGameOver()) {
-            playOnline.setText("<html><div style='color: white;font-size: 20px;'>You "+result+"!</div></html>");
-            forfeitBtn.setText("Back to menu");
-            repaint();
-        }
+        gameStats.setText("<html><div style='color: white;font-size: 20px;'>"+result+"</div></html>");
+        backAndForfeitBtn.setText("Back to menu");
+        this.repaint();
     }
 
     public void updateSidebarLabelPlayerTurn(String s) {
