@@ -48,7 +48,6 @@ public class ServerListener implements Runnable{
             System.out.println("Parsing message: " + tempList);
             return tempList;
         }
-        System.out.println("Parsing message: " + parsedMessageList);
         return parsedMessageList;
     }
 
