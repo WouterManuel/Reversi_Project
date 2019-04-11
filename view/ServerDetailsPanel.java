@@ -19,7 +19,6 @@ public class ServerDetailsPanel extends JPanel {
     JLabel acceptedPlayer;
     JLabel acceptedInvite;
     JLabel listText;
-    JLabel testLabel;
     ClientController clientController;
 
     public ServerDetailsPanel(ClientController clientController) {
@@ -46,11 +45,6 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 1;
 
-
-            // clientController.getServerCommander().getPlayerlist();
-
-            //String players[]= { "player1", "john doe", "bar","oke", "1", "2", "3", "4", "5" };
-            //String players[]= { "player1", "john doe", "bar","oke", "1", "2", "3", "4", "5" };
             DefaultListModel<String> listModel = new DefaultListModel<>();
             playerList = new JList<>(listModel);
 
@@ -146,7 +140,7 @@ public class ServerDetailsPanel extends JPanel {
 
             new Thread(() -> {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(100);
                     while (clientController.isLoggedIn()) {
                         ArrayList<String> newPlayerList = clientController.getServerCommander().getPlayerlist();
                         listModel.clear();
@@ -160,16 +154,6 @@ public class ServerDetailsPanel extends JPanel {
                     e.printStackTrace();
                 }
             }).start();
-
-            JButton subscribeBtnTTTT = new JButton("Playerlist");
-            subscribeBtnTTTT.addActionListener(e -> {
-
-                if (clientController.getServerCommander().getUsername() != null) {
-                    System.out.println(clientController.getServerCommander().getPlayerlist());
-                }
-            });
-
-            add(subscribeBtnTTTT, gbc);
 
         }
 
