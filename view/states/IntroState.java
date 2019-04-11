@@ -9,7 +9,6 @@ public class IntroState implements WindowState {
 
     public IntroState(Window window) {
         this.window = window;
-
         window.add(window.getGameSettingsPanel(), BorderLayout.WEST);
         window.add(window.getServerConnectionPanel(), BorderLayout.EAST);
         window.repaint();
@@ -36,5 +35,10 @@ public class IntroState implements WindowState {
         if(gameName.equals("Reversi")){
             window.setWindowState(new StartReversiGameState(window));
         }
+    }
+
+    @Override
+    public void loggedOut() {
+        //
     }
 }

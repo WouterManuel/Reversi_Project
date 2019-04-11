@@ -13,25 +13,28 @@ public class ServerLoginPanel extends JPanel {
 
         setPreferredSize(new Dimension(350,400));
         setLayout(new GridBagLayout());
-        setBackground(Color.GRAY);
+        setBackground(Color.DARK_GRAY.darker());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(2, 10, 2 ,10);
 
+        gbc.gridwidth = 2;
         gbc.gridx = 0;
         gbc.gridy = 0;
         JLabel messageLabel = new JLabel("<html><b>Error:</b> <font color='red'>Try different username</font></html>");
         messageLabel.setVisible(false);
         add(messageLabel, gbc);
 
+        gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 1;
         JLabel usernameLabel = new JLabel("Type a username: ");
+        usernameLabel.setForeground(Color.WHITE);
         add(usernameLabel, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
 
-        JTextField username = new JTextField( 15);
+        JTextField username = new JTextField("GroepE5", 15);
 		username.addActionListener(e -> {
             String selectedUsername = username.getText();
             if(!(selectedUsername == null || selectedUsername.isEmpty())) {
@@ -43,8 +46,10 @@ public class ServerLoginPanel extends JPanel {
         });
         add(username, gbc);
 
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridwidth = 2;
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 2;
         /* Connect btn */
         JButton loginBtn = new JButton("Login");
         loginBtn.addActionListener(e -> {
@@ -56,14 +61,6 @@ public class ServerLoginPanel extends JPanel {
                 }
             } else messageLabel.setVisible(true);
         });
-        add(loginBtn,gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-
-        /* Logout btn */
-        JButton logoutBtn = new JButton("Disconnect");
-        logoutBtn.addActionListener(e -> clientController.getServerCommander().sendLogoutCommand());
-        add(logoutBtn,gbc);
+        add(loginBtn, gbc);
     }
 }

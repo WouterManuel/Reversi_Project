@@ -4,7 +4,7 @@ public interface WindowState {
     void connected();
     void disconnected();
     void loggedIn();
-//    loggedOut();
+    void loggedOut();
     void forfeited();
     void gameStarted(String gameName);
 }
