@@ -5,6 +5,9 @@ import controller.ClientController;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ServerDetailsPanel extends JPanel {
 	JList playerList;
@@ -42,38 +45,36 @@ public class ServerDetailsPanel extends JPanel {
 
         // clientController.getServerCommander().getPlayerlist();
 
-        String players[]= { "player1", "john doe", "fyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy", "bar","oke", "1", "2", "3", "4", "5" };
-        if (players.length>0){
-            playerList = new JList<>(players);
+        //String players[]= { "player1", "john doe", "bar","oke", "1", "2", "3", "4", "5" };
+        //String players[]= { "player1", "john doe", "bar","oke", "1", "2", "3", "4", "5" };
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        playerList = new JList<>(listModel);
 
-            /* Challenge btn */
-            challengeBtn = new JButton("Challenge");
+        /* Challenge btn */
+        challengeBtn = new JButton("Challenge");
 
-            /* See challenged player */
-            acceptedPlayer = new JLabel("");
-            acceptedPlayer.setForeground(Color.WHITE);
+        /* See challenged player */
+        acceptedPlayer = new JLabel("");
+        acceptedPlayer.setForeground(Color.WHITE);
 
-            challengeBtn.addActionListener(e -> {
-                clientController.getServerCommander().sendChallengeCommand(playerList.getSelectedValue().toString(), "Tic-tac-toe");
-            });
+        challengeBtn.addActionListener(e -> {
+            clientController.getServerCommander().sendChallengeCommand(playerList.getSelectedValue().toString(), "Tic-tac-toe");
+        });
 
 
-            JScrollPane playerListScroll = new JScrollPane(playerList);
+        JScrollPane playerListScroll = new JScrollPane(playerList);
 
-            playerListScroll.setMinimumSize(new Dimension(30, 130));
-            playerListScroll.setPreferredSize(new Dimension(50, 150));
-            //playerListScroll.setMaximumSize(new Dimension(80, 200));
+        playerListScroll.setMinimumSize(new Dimension(30, 130));
+        playerListScroll.setPreferredSize(new Dimension(50, 150));
+        //playerListScroll.setMaximumSize(new Dimension(80, 200));
 
-            add(playerListScroll, gbc);
+        add(playerListScroll, gbc);
 
-            gbc.gridx = 0;
-            gbc.gridy = 2;
-            add(challengeBtn, gbc);
-        }
-        else {
-            acceptedPlayer = new JLabel("No players found");
-            acceptedPlayer.setForeground(Color.WHITE);
-        }
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        add(challengeBtn, gbc);
+        acceptedPlayer = new JLabel("No players found");
+        acceptedPlayer.setForeground(Color.WHITE);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -89,7 +90,8 @@ public class ServerDetailsPanel extends JPanel {
         String player = "PlayerOne";
         String gameType = "TicTacToe";
 
-        String invites[]= { player+" - "+gameType, "inv2", "inv3", "inv4", "inv5", "inv1", "inv2", "invrrrrrrrrrrrrrrrtyrtytrytrytrytrytrytrrrrrrrr3", "inv4", "inv5"};
+
+        String invites[]= { player+" - "+gameType, "inv2", "inv3", "inv4", "inv5", "inv1", "inv2"};
         if (invites.length>0){
             inviteList = new JList<>(invites);
 
@@ -133,28 +135,43 @@ public class ServerDetailsPanel extends JPanel {
             clientController.sendLogout();
         });
 
-
-        /* gbc.gridx = 1;
-        gbc.gridy = 5;
-
-        JButton subscribeBtnTTT = new JButton("Subscribe TicTacToe");
-        subscribeBtnTTT.addActionListener(e -> {
-            clientController.getServerCommander().sendSubscribeCommand("Tic-tac-toe");
-        });
-
-        add(subscribeBtnTTT, gbc); */
-
         gbc.gridx = 1;
         gbc.gridy = 5;
 
-        JButton subscribeBtnTTTT = new JButton("Playalisttt");
+        new Thread(() -> {
+            try {
+                    System.out.println("THREAD READY");
+                Thread.sleep(5000);
+                while(clientController.isLoggedIn()) {
+                    System.out.println("THREAD STARTED");
+                    ArrayList<String> newPlayerList = clientController.getServerCommander().getPlayerlist();
+                    listModel.clear();
+
+                    for (String p : newPlayerList) {
+                        listModel.addElement(p);
+                        System.out.println("Player get");
+                    }
+                    Thread.sleep(2000);
+               }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        JButton subscribeBtnTTTT = new JButton("Playerlist");
         subscribeBtnTTTT.addActionListener(e -> {
+
+
             if (clientController.getServerCommander().getUsername() != null) {
                 System.out.println(clientController.getServerCommander().getPlayerlist());
             }
         });
 
         add(subscribeBtnTTTT, gbc);
+
+    }
+
+    public void updatePlayerlist() {
 
     }
 
