@@ -9,6 +9,7 @@ import java.awt.*;
 public class ServerDetailsPanel extends JPanel {
 	JList playerList;
 	JList inviteList;
+	JList serverList;
 	JButton challengeBtn;
 	JButton acceptBtn;
 	JButton logoutBtn;
@@ -32,6 +33,9 @@ public class ServerDetailsPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
+        String testList= clientController.getServerCommander().getPlayerlist().toString();
+        System.out.println(testList);
+
         listText = new JLabel("Playerlist :");
         listText.setForeground(Color.WHITE);
         add(listText, gbc);
@@ -39,12 +43,9 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 1;
 
-
-        // clientController.getServerCommander().getPlayerlist();
-
         String players[]= { "player1", "john doe", "fyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy", "bar","oke", "1", "2", "3", "4", "5" };
         if (players.length>0){
-            playerList = new JList<>(players);
+            playerList = new JList<>(clientController.getServerCommander().getPlayerlist().toArray());
 
             /* Challenge btn */
             challengeBtn = new JButton("Challenge");
@@ -60,8 +61,8 @@ public class ServerDetailsPanel extends JPanel {
 
             JScrollPane playerListScroll = new JScrollPane(playerList);
 
-            playerListScroll.setMinimumSize(new Dimension(30, 130));
-            playerListScroll.setPreferredSize(new Dimension(50, 150));
+            playerListScroll.setMinimumSize(new Dimension(125, 130));
+            playerListScroll.setPreferredSize(new Dimension(125, 150));
             //playerListScroll.setMaximumSize(new Dimension(80, 200));
 
             add(playerListScroll, gbc);
@@ -91,7 +92,7 @@ public class ServerDetailsPanel extends JPanel {
 
         String invites[]= { player+" - "+gameType, "inv2", "inv3", "inv4", "inv5", "inv1", "inv2", "invrrrrrrrrrrrrrrrtyrtytrytrytrytrytrytrrrrrrrr3", "inv4", "inv5"};
         if (invites.length>0){
-            inviteList = new JList<>(invites);
+            inviteList = new JList<>(clientController.getServerCommander().getPlayerlist().toArray());
 
             /* Accept btn */
             acceptBtn = new JButton("Accept");
@@ -101,12 +102,12 @@ public class ServerDetailsPanel extends JPanel {
             acceptedInvite = new JLabel("");
             acceptedInvite.setForeground(Color.WHITE);
 
-            acceptBtn.addActionListener(e -> {clientController.startGame("Reversi", clientController.playingAs());});
+            acceptBtn.addActionListener(e -> {clientController.getServerCommander().sendAcceptChallengeCommand(0);});
 
             JScrollPane inviteListScroll = new JScrollPane(inviteList);
 
-            inviteListScroll.setMinimumSize(new Dimension(30, 130));
-            inviteListScroll.setPreferredSize(new Dimension(50, 150));
+            inviteListScroll.setMinimumSize(new Dimension(125, 130));
+            inviteListScroll.setPreferredSize(new Dimension(125, 150));
 
             add(inviteListScroll, gbc);
 
@@ -143,18 +144,6 @@ public class ServerDetailsPanel extends JPanel {
         });
 
         add(subscribeBtnTTT, gbc); */
-
-        gbc.gridx = 1;
-        gbc.gridy = 5;
-
-        JButton subscribeBtnTTTT = new JButton("Playalisttt");
-        subscribeBtnTTTT.addActionListener(e -> {
-            if (clientController.getServerCommander().getUsername() != null) {
-                System.out.println(clientController.getServerCommander().getPlayerlist());
-            }
-        });
-
-        add(subscribeBtnTTTT, gbc);
 
     }
 
