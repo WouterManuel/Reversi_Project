@@ -1,6 +1,6 @@
 package view.states;
 
-import view.ReversiPanel;
+import view.GameSettingsPanel;
 import view.Window;
 import java.awt.*;
 
@@ -9,9 +9,11 @@ public class IntroState implements WindowState {
 
     public IntroState(Window window) {
         this.window = window;
+        window.removeAll();
+        window.setGameSettingsPanel(new GameSettingsPanel(window.getClientController()));
         window.add(window.getGameSettingsPanel(), BorderLayout.WEST);
         window.add(window.getServerConnectionPanel(), BorderLayout.EAST);
-        window.repaint();
+        window.revalidate();
     }
 
     public void connected() {

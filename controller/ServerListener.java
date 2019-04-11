@@ -21,7 +21,7 @@ public class ServerListener implements Runnable{
 
     public void run() {
         try {
-            while (!(serverLine = input.readLine()).isEmpty()) {
+            while (!(serverLine = input.readLine()).isEmpty() && observers.get(0).isConnected()) {
                 try {
                     parsedMessageList = parser.parseServerOutput(serverLine);
                     System.out.println("listener serverline: "+serverLine);

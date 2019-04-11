@@ -13,10 +13,10 @@ public class StartReversiGameState implements WindowState {
         window.getContentPane().removeAll();
         window.getContentPane().add(window.getReversiPanel(), BorderLayout.WEST);
         window.setGameSidebarPanel(new GameSidebarPanel(window.getClientController()));
-        window.getContentPane().add(window.getGameSidebarPanel(), BorderLayout.CENTER);
-        window.invalidate();
-        window.validate();
+        window.getContentPane().add(window.getGameSidebarPanel(), BorderLayout.EAST);
         window.revalidate();
+
+
     }
 
     @Override

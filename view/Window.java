@@ -4,13 +4,13 @@ import controller.ClientController;
 import view.states.*;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Window extends JFrame implements WindowState {
 	static final long serialVersionUID = 1L;
 	protected ClientController clientController;
 	private JPanel reversiPanel;
 	private JPanel tictactoePanel;
-	private JPanel sidePanel;
 	private GameSidebarPanel gameSidebarPanel;
 	private JPanel serverConnectionPanel;
 	private GameSettingsPanel gameSettingsPanel;
@@ -25,21 +25,18 @@ public class Window extends JFrame implements WindowState {
 
 	public Window(ClientController clientController){
 		this.clientController = clientController;
-
-		// Define all panels
 		//tictactoePanel = new TictactoePanel(clientController.getOfflineReversiGame());
 		reversiPanel = new ReversiPanel(clientController.getReversiGame(), clientController);
 		serverConnectionPanel = new ServerConnectionPanel(clientController);
-		gameSettingsPanel = new GameSettingsPanel(clientController);
 		serverDetailsPanel = new ServerDetailsPanel(clientController);
 		serverLoginPanel = new ServerLoginPanel(clientController);
 
-		introState = new IntroState(this);
-
-		currentState = introState;
+		currentState = new IntroState(this);
 
 		setTitle("GamerTool");
         setLocationByPlatform(true);
+        setPreferredSize(new Dimension(750, 400));
+        setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		pack();
         setVisible(true);
@@ -88,9 +85,9 @@ public class Window extends JFrame implements WindowState {
 	    return new LoggedInState(this);
     }
 
-	public WindowState getStartReversiGameState() {
-		return startReversiGameState;
-	}
+//	public WindowState getStartReversiGameState() {
+//		return startReversiGameState;
+//	}
 
 	public WindowState getReturnFromGameState() { return new ReturnFromGameState(this);}
 
@@ -122,6 +119,10 @@ public class Window extends JFrame implements WindowState {
 
 	public ServerLoginPanel getServerLoginPanel() {
 		return serverLoginPanel;
+	}
+
+	public void setGameSettingsPanel(GameSettingsPanel gameSettingsPanel) {
+		this.gameSettingsPanel = gameSettingsPanel;
 	}
 
 	public void setGameSidebarPanel(GameSidebarPanel gameSidebarPanel) {
