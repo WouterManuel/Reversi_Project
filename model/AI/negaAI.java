@@ -26,7 +26,7 @@ public class negaAI extends AI {
 		byte opp = player== game.BLACK?game.WHITE:game.BLACK;
 		ArrayList<Point> possibleMoves = game.getAllPossibleMoves(player);
 		if(depth == maxDepth)
-			return new MoveScore(null, game.scoreH(player, possibleMoves.size()));
+			return new MoveScore(null, game.scoreH(board, player, possibleMoves.size()));
 
 		double currentScore;
 		double bestScore = -INF;

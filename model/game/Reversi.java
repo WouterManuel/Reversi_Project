@@ -35,7 +35,7 @@ public class Reversi extends Game {
         return result;
     }
 
-	public double scoreH(byte color, int myMoves) {
+	public double scoreH(byte[][] board, byte color, int myMoves) {
 		int[][] V = {
 			{20, -3, 11, 8, 8, 11, -3, 20},
 			{-3, -7, -4, 1, 1, -4, -7, -3},
