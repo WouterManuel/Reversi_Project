@@ -6,7 +6,7 @@ import model.game.Game;
 import javax.swing.*;
 import java.awt.*;
 
-public class ReversiPanel extends JPanel {
+public class ReversiPanel extends JPanel implements GamePanel {
     JLabel playerTurn;
     JLabel scoreLabel;
     JButton resetBtn;
@@ -31,15 +31,7 @@ public class ReversiPanel extends JPanel {
             }
         }
     }
-
     public ClientController getController(){
         return clientController;
-    }
-    public void updateSidebarLabelScore(String s) {
-        scoreLabel.setText(s);
-    }
-
-    public void updateSidebarLabelPlayerTurn(String s) {
-        playerTurn.setText(s);
     }
 }

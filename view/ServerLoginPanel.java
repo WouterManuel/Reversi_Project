@@ -38,7 +38,8 @@ public class ServerLoginPanel extends JPanel {
 		username.addActionListener(e -> {
             String selectedUsername = username.getText();
             if(!(selectedUsername == null || selectedUsername.isEmpty())) {
-                if(!clientController.setLoggedIn(selectedUsername)) {
+                clientController.setLoggedIn(selectedUsername);
+                if(!clientController.isLoggedIn()) {
                     messageLabel.setText("<html><b>Error:</b> <font color='red'>" + clientController.getServerCommander().getErrorMessage() + "</font></html>");
                     messageLabel.setVisible(true);
                 }
@@ -55,7 +56,8 @@ public class ServerLoginPanel extends JPanel {
         loginBtn.addActionListener(e -> {
             String selectedUsername = username.getText();
             if(!(selectedUsername == null || selectedUsername.isEmpty())) {
-                if(!clientController.setLoggedIn(selectedUsername)) {
+                clientController.setLoggedIn(selectedUsername);
+                if(!clientController.isLoggedIn()) {
                     messageLabel.setText("<html><b>Error:</b> <font color='red'>" + clientController.getServerCommander().getErrorMessage() + "</font></html>");
                     messageLabel.setVisible(true);
                 }

@@ -36,6 +36,9 @@ public class IntroState implements WindowState {
         if(gameName.equals("Reversi")){
             window.setWindowState(new StartReversiGameState(window));
         }
+        else if(gameName.equals("Tic-Tac-Toe")){
+            window.setWindowState(new StartTicTacToeGameState(window));
+        }
     }
 
     @Override

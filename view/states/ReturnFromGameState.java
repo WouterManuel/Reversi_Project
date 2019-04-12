@@ -1,6 +1,8 @@
 package view.states;
 
 import view.Window;
+
+import javax.swing.*;
 import java.awt.*;
 
 public class ReturnFromGameState implements WindowState {
@@ -8,7 +10,7 @@ public class ReturnFromGameState implements WindowState {
 
     public ReturnFromGameState(Window window) {
         this.window = window;
-        window.remove(window.getReversiPanel());
+        window.remove((JPanel) window.getCurrentGamePanel());
         window.remove(window.getGameSidebarPanel());
         window.add(window.getGameSettingsPanel(), BorderLayout.WEST);
         if (window.getClientController().isLoggedIn()) {
@@ -39,6 +41,9 @@ public class ReturnFromGameState implements WindowState {
     public void gameStarted(String gameName) {
         if(gameName.equals("Reversi")){
             window.setWindowState(new StartReversiGameState(window));
+        }
+        else if(gameName.equals("Tic-Tac-Toe") || gameName.equals("Tic-tac-toe")) {
+            window.setWindowState(new StartTicTacToeGameState(window));
         }
     }
 

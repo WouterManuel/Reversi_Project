@@ -12,14 +12,12 @@ import java.util.Arrays;
 public class ServerDetailsPanel extends JPanel {
     JList playerList;
     JList inviteList;
-    JList serverList;
     JButton challengeBtn;
     JButton acceptBtn;
     JButton logoutBtn;
     JLabel acceptedPlayer;
     JLabel acceptedInvite;
     JLabel listText;
-    JLabel testLabel;
     ClientController clientController;
 
     public ServerDetailsPanel(ClientController clientController) {
@@ -161,15 +159,15 @@ public class ServerDetailsPanel extends JPanel {
                 }
             }).start();
 
-            JButton subscribeBtnTTTT = new JButton("Playerlist");
-            subscribeBtnTTTT.addActionListener(e -> {
+            JButton subscribeBtn = new JButton("Playerlist");
+            subscribeBtn.addActionListener(e -> {
 
                 if (clientController.getServerCommander().getUsername() != null) {
                     System.out.println(clientController.getServerCommander().getPlayerlist());
                 }
             });
 
-            add(subscribeBtnTTTT, gbc);
+            add(subscribeBtn, gbc);
 
         }
 

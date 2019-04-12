@@ -23,8 +23,7 @@ public class GameSidebarPanel extends JPanel{
         this.clientController = clientController;
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(350,400));
-        setBackground(Color.DARK_GRAY.darker());
-
+        setBackground(Color.GRAY);
         GridBagConstraints gbc = new GridBagConstraints();
         setLayout(new GridBagLayout());
 
@@ -34,46 +33,28 @@ public class GameSidebarPanel extends JPanel{
         gameStats = new JLabel("<html><div style='color: white;font-size: 20px;'>Game Stats:</div></html>");
         add(gameStats, gbc);
 
+
         gbc.gridx = 0;
         gbc.gridy = 1;
+        playerTurn = new JLabel();
+        playerTurn.setForeground(Color.WHITE);
+        add(playerTurn,gbc);
+
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
         scoreLabelBlack = new JLabel();
         scoreLabelBlack.setForeground(Color.WHITE);
         add(scoreLabelBlack,gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         scoreLabelWhite = new JLabel();
         scoreLabelWhite.setForeground(Color.WHITE);
         add(scoreLabelWhite,gbc);
 
-        /* score = new JLabel("<html>"+"Zwart: "+String.valueOf(Rules.score(board, Rules.BLACK))+"<br/>"+"Wit: "+String.valueOf(Rules.score(board, Rules.WHITE))+"</html>");
-		score.setForeground(Color.WHITE);
-        sidebar.add(score); */
-
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridwidth = 2;
-        resetBtn = new JButton("Reset");
-        //resetBtn.addActionListener(e -> resetAll());
-        add(resetBtn,gbc);
-
-
         gbc.gridx = 0;
         gbc.gridy = 4;
-        interruptBtn = new JButton("Interrupt");
-        //interruptBtn.addActionListener(e -> interrupted = true);
-        add(interruptBtn,gbc);
-
-
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        randBtn = new JButton("Random 10");
-        //randBtn.addActionListener(e -> greedy());
-        add(randBtn,gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 6;
-
         backAndForfeitBtn = new JButton("Forfeit");
         backAndForfeitBtn.addActionListener(e -> {
             if(!clientController.isConnected()) { ;
@@ -98,13 +79,14 @@ public class GameSidebarPanel extends JPanel{
         scoreLabelWhite.setText("<html><div style='margin-bottom:20px; color: white; font-size: 15px;'>" + player2 + ": " + score2 + "</div></html>");
     }
 
-    public void setGameResult(String result) {
-        gameStats.setText("<html><div style='color: white;font-size: 20px;'>"+result+"</div></html>");
-        backAndForfeitBtn.setText("Back to menu");
-        this.repaint();
+    public void updateSidebarLabelPlayerTurn(String player) {
+        playerTurn.setText("<html><div style='color: white;font-size: 15px;'>Player to move "+ player +"</div></html>");
     }
 
-    public void updateSidebarLabelPlayerTurn(String s) {
-        playerTurn.setText(s);
+    public void setGameResult(String result, String serverComment) {
+        gameStats.setText("<html><div style='color: white;font-size: 20px;'>" + result + "</div></html>");
+        playerTurn.setText("<html><div style='color: white;font-size: 15px;'>" + serverComment +"</div></html>");
+        backAndForfeitBtn.setText("Back to menu");
+        this.repaint();
     }
 }
