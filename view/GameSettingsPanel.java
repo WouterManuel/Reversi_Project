@@ -53,7 +53,10 @@ public class GameSettingsPanel extends JPanel{
         gbc.gridx = 0;
         gbc.gridy = 2;
         add(new JLabel("<html><br><div style='color: white;'>"+"Game:"+"</div></html>"),gbc);
+
+        // TODO DIT MOET NIET HIER
         String[] gameTypes = new String[] {"Reversi","Tic-Tac-Toe"};
+
         JComboBox<String> gameType = new JComboBox<String>(gameTypes);
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -64,7 +67,7 @@ public class GameSettingsPanel extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 2;
 
-        playGame = new JButton("<html><div style='padding: 0'>"+"Play local game"+"</div></html>");
+        playGame = new JButton("<html><div style='padding: 0'>"+"Start game"+"</div></html>");
         playGame.addActionListener(e -> {
             if(!clientController.getLoggedInStatus()) {
                 clientController.startGame(gameType.getSelectedItem().toString(), playAs.getSelectedItem().toString());

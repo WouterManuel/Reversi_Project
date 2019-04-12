@@ -9,8 +9,9 @@ import java.awt.*;
 public class Window extends JFrame implements WindowState {
 	static final long serialVersionUID = 1L;
 	protected ClientController clientController;
-	private JPanel reversiPanel;
-	private JPanel tictactoePanel;
+	private GamePanel reversiPanel;
+	private GamePanel ticTacToePanel;
+	private GamePanel currentGamePanel;
 	private GameSidebarPanel gameSidebarPanel;
 	private ServerDetailsPanel serverDetailsPanel;
 	private JPanel serverConnectionPanel;
@@ -26,13 +27,11 @@ public class Window extends JFrame implements WindowState {
 
 	public Window(ClientController clientController){
 		this.clientController = clientController;
-		//tictactoePanel = new TictactoePanel(clientController.getOfflineReversiGame());
 		reversiPanel = new ReversiPanel(clientController.getReversiGame(), clientController);
+		ticTacToePanel = new TicTacToePanel(clientController.getTicTacToeGame(), clientController);
 		serverConnectionPanel = new ServerConnectionPanel(clientController);
 		gameSettingsPanel = new GameSettingsPanel(clientController);
-		//serverDetailsPanel = new ServerDetailsPanel(clientController);
 		serverLoginPanel = new ServerLoginPanel(clientController);
-
 		currentState = new IntroState(this);
 
 		setTitle("GamerTool");
@@ -99,13 +98,21 @@ public class Window extends JFrame implements WindowState {
 		return gameSidebarPanel;
 	}
 
-	public JPanel getReversiPanel() {
+	public void setCurrentGamePanel(GamePanel currentGamePanel) {
+		this.currentGamePanel = currentGamePanel;
+	}
+
+	public GamePanel getCurrentGamePanel() {
+		return currentGamePanel;
+	}
+
+	public GamePanel getReversiPanel() {
 		return reversiPanel;
 	}
 
-	//public JPanel getTictactoePanel() {
-	//	return tictactoePanel;
-	//}
+	public GamePanel getTicTacToePanel() {
+		return ticTacToePanel;
+	}
 
 	public GameSettingsPanel getGameSettingsPanel() {
 		return gameSettingsPanel;

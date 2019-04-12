@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class Reversi extends Game {
     JPanel reversiPanel;
-    JPanel sidebar;
 	ClientController clientController;
 
     protected final int[] DX = { -1,  0,  1, -1, 1, -1, 0, 1 };
@@ -34,6 +33,7 @@ public class Reversi extends Game {
 		}
 
     public void setSidebar(JPanel GameSidebarPanel) {this.sidebar = GameSidebarPanel;}
+    /******************************************** Game logic *********************************************/
 
     public ArrayList<Point> getAllPossibleMoves(byte[][] board, byte turn){
         ArrayList<Point> result = new ArrayList<>();
@@ -620,61 +620,14 @@ public class Reversi extends Game {
 //    }
 
     public void playMove(int i,int j, byte turn) {
-        if (possibleMove(board, turn, i, j)) {
+        if (possibleMovev2(board, turn, i, j)) {
 			flipv2(board, turn, i, j);
 			setSquare(i, j, turn);
 			removeHighlightPossibleMoves();
 			if(clientController.isMyTurn())
 				highlightPossibleMoves(turn);
-			reversiPanel.repaint();
-
-			//updateSidebarLabel1(String.valueOf(turn));
-			//updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(score(board, BLACK))+"<br/>"+"Wit: "+String.valueOf(score(board, WHITE))+"</html>");
+			updateView();
 		}
-		//if(getAllPossibleMoves(board, turn==BLACK?WHITE:BLACK).isEmpty()&&getAllPossibleMoves(board, turn).isEmpty())
-			//test.setText("test.Game over");
-    }
-
-    public void highlight(int i, int j, byte turn) {
-      if(board[i][j] <= 0) {
-			//removeHighlightPossibleMoves();
-			highlightPossibleMoves(turn);
-			if(turn==1) {
-                board[i][j] = -1;
-            }
-			else {
-                board[i][j] = -2;
-            }
-          reversiPanel.repaint();
-      }
-    }
-
-    public void highlightRemove(int i, int j, byte turn) {
-        if(board[i][j] < 0) {
-			board[i][j] = 0;
-			highlightPossibleMoves(turn);
-            reversiPanel.repaint();
-		}
-    }
-
-    public void highlightPossible(int i, int j) {
-        board[i][j] = -3;
-		reversiPanel.repaint();
-    }
-
-    public void highlightPossibleMoves(byte turn) {
-		ArrayList<Point> res = getAllPossibleMoves(this.board, turn);
-		for(Point r : res)
-			highlightPossible(r.x, r.y);
-	}
-
-    public void removeHighlightPossibleMoves() {
-        for (int i = 0; i < 8; i++)
-			for (int j = 0; j < 8; j++)
-				if(board[i][j] == -3) {
-				    board[i][j] = 0;
-                }
-        updateView();
     }
 
     public void resetBoard() {
@@ -690,20 +643,27 @@ public class Reversi extends Game {
         setSquare(3,4,BLACK);
         setSquare(4,3,BLACK);
         setSquare(4,4,WHITE);
-        //highlightPossibleMoves((byte)1);
 
+        if(!clientController.isConnected()){
+            highlightPossibleMoves(clientController.getOfflineTurn());
+        }
         //resetBoard();
         //updateSidebarLabel1(String.valueOf(turn));
         //updateSidebarLabel2("<html>"+"Zwart: "+String.valueOf(score(board, BLACK))+"<br/>"+"Wit: "+String.valueOf(score(board, WHITE))+"</html>");
         //repaint();
     }
 
-    public void updateView() {
-        reversiPanel.repaint();
+    public void setWinner() {
+        //
     }
 
-    public void setWinner() {
+    @Override
+    public void setPanel(JPanel reversiPanel) {
+        this.reversiPanel = reversiPanel;
+    }
 
+    public void updateView() {
+        reversiPanel.repaint();
     }
 
     public byte[][] getBoard() {

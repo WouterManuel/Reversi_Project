@@ -6,14 +6,14 @@ import view.Window;
 import javax.swing.*;
 import java.awt.*;
 
-public class StartReversiGameState implements WindowState {
+public class StartTicTacToeGameState implements WindowState {
     Window window;
 
-    public StartReversiGameState(Window window) {
+    public StartTicTacToeGameState(Window window) {
         this.window = window;
-        window.setCurrentGamePanel(window.getReversiPanel());
+        window.setCurrentGamePanel(window.getTicTacToePanel());
         window.getContentPane().removeAll();
-        window.getContentPane().add((JPanel) window.getReversiPanel(), BorderLayout.WEST);
+        window.getContentPane().add((JPanel) window.getTicTacToePanel(), BorderLayout.WEST);
         window.setGameSidebarPanel(new GameSidebarPanel(window.getClientController()));
         window.getContentPane().add(window.getGameSidebarPanel(), BorderLayout.EAST);
         window.revalidate();

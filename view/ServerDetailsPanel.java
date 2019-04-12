@@ -12,14 +12,12 @@ import java.util.Arrays;
 public class ServerDetailsPanel extends JPanel {
     JList playerList;
     JList inviteList;
-    JList serverList;
     JButton challengeBtn;
     JButton acceptBtn;
     JButton logoutBtn;
     JLabel acceptedPlayer;
     JLabel acceptedInvite;
     JLabel listText;
-    JLabel testLabel;
     ClientController clientController;
 
     public ServerDetailsPanel(ClientController clientController) {
@@ -162,7 +160,6 @@ public class ServerDetailsPanel extends JPanel {
                     e.printStackTrace();
                 }
             }).start();
-
         }
 
     }

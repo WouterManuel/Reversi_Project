@@ -38,7 +38,11 @@ public class ConnectedToServerState implements WindowState {
 
     @Override
     public void gameStarted(String gameName){
-        //
+        if(gameName.equals("Reversi")){
+            window.setWindowState(new StartReversiGameState(window));
+        } else if(gameName.equals("Tic-Tac-Toe")){
+            window.setWindowState(new StartTicTacToeGameState(window));
+        }
     }
     @Override
     public void loggedOut() {

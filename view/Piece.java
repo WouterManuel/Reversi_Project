@@ -13,11 +13,11 @@ public class Piece extends JLabel implements MouseListener{
 	int i,j;
     byte[][] board;
     Game game;
-    ReversiPanel parent;
+    GamePanel parent;
 
     public int highlight = 0;
 
-    public Piece(Game game, ReversiPanel parent, int i, int j) {
+    public Piece(Game game, GamePanel parent, int i, int j) {
         this.game = game;
         this.board = game.getBoard();
         this.parent = parent;
@@ -56,16 +56,47 @@ public class Piece extends JLabel implements MouseListener{
     }
 
     @Override
-	public void mouseEntered(MouseEvent e) { if(parent.getController().isMyTurn()&&!parent.getController().playingAsAI()) {game.highlight(i,j, parent.getController().getTurn()); }}
+	public void mouseEntered(MouseEvent e) {
+        if(parent.getController().isLoggedIn()) {
+            if(parent.getController().isMyTurn()&&!parent.getController().isPlayingAsAI()) {
+                game.highlight(i,j, parent.getController().getTurn());
+            }
+        } else {
+            if(parent.getController().isMyTurn()&&!parent.getController().isPlayingAsAI()) {
+                game.highlight(i,j, parent.getController().getOfflineTurn());
+            }
+        }
+    }
 
     @Override
-	public void mouseExited(MouseEvent e) { game.highlightRemove(i,j, parent.getController().getTurn()); }
+	public void mouseExited(MouseEvent e) {
+        if(parent.getController().isLoggedIn()) {
+            if(parent.getController().isMyTurn()&&!parent.getController().isPlayingAsAI()) {
+                game.highlightRemove(i,j, parent.getController().getTurn());
+                }
+        } else {
+                if (parent.getController().isMyTurn() && !parent.getController().isPlayingAsAI()) {
+                    game.highlightRemove(i, j, parent.getController().getOfflineTurn());
+                }
+            }
+        }
 
     @Override
     public void mouseClicked(MouseEvent e) {}
 
     @Override
-    public void mousePressed(MouseEvent e) { if(parent.getController().isMyTurn()&&!parent.getController().playingAsAI()) {parent.getController().playMove(i,j, parent.getController().getTurn());} }
+    public void mousePressed(MouseEvent e) {
+        if(parent.getController().isLoggedIn()) {
+            if(parent.getController().isMyTurn()&&!parent.getController().isPlayingAsAI()) {
+                parent.getController().playMove(i,j, parent.getController().getTurn());
+            }
+        } else {
+            if(parent.getController().isMyTurn()&&!parent.getController().isPlayingAsAI()) {
+                parent.getController().playMove(i,j, parent.getController().getOfflineTurn());
+            }
+        }
+
+    }
 
     @Override
     public void mouseReleased(MouseEvent e) {}
