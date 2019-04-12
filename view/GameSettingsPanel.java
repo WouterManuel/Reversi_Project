@@ -9,11 +9,13 @@ public class GameSettingsPanel extends JPanel{
 
     JLabel playerTurn;
     JLabel scoreLabel;
+    JLabel connectionLabel;
     JButton resetBtn;
     JButton randBtn;
     JButton interruptBtn;
     JButton playGame;
     JComboBox<String> playAs;
+    ClientController clientController;
 
     public GameSettingsPanel(ClientController clientController) {
 
@@ -30,7 +32,8 @@ public class GameSettingsPanel extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        add(new JLabel("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>"+"Play offline"+"</div></html>"),gbc);
+        connectionLabel = new JLabel("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>"+"Play offline"+"</div></html>");
+        add(connectionLabel, gbc);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.ipadx = 20;
@@ -88,5 +91,8 @@ public class GameSettingsPanel extends JPanel{
 
     public void setPlayButton() {
         playGame.setText("Subscribe");
+    }
+    public void setConnectionLabel() {
+        connectionLabel.setText("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>"+"Play online"+ "</div></html>");
     }
 }

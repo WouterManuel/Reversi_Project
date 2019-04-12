@@ -60,7 +60,7 @@ public class ServerDetailsPanel extends JPanel {
             acceptedPlayer.setForeground(Color.WHITE);
 
             challengeBtn.addActionListener(e -> {
-                clientController.getServerCommander().sendChallengeCommand(playerList.getSelectedValue().toString(), "Tic-tac-toe");
+                clientController.getServerCommander().sendChallengeCommand(playerList.getSelectedValue().toString(), "Reversi");
             });
 
 
@@ -139,12 +139,14 @@ public class ServerDetailsPanel extends JPanel {
                 clientController.sendLogout();
             });
 
-            gbc.gridx = 1;
-            gbc.gridy = 5;
+            gbc.gridx = 0;
+            gbc.gridy = 4;
+
+            add(new JLabel("<html><br><div style='color: white;'>"+"Welcome, "+ clientController.getUsername() + "</div></html>"),gbc);
 
             new Thread(() -> {
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(100);
                     while (clientController.isLoggedIn()) {
                         ArrayList<String> newPlayerList = clientController.getServerCommander().getPlayerlist();
                         listModel.clear();
@@ -158,17 +160,6 @@ public class ServerDetailsPanel extends JPanel {
                     e.printStackTrace();
                 }
             }).start();
-
-            JButton subscribeBtn = new JButton("Playerlist");
-            subscribeBtn.addActionListener(e -> {
-
-                if (clientController.getServerCommander().getUsername() != null) {
-                    System.out.println(clientController.getServerCommander().getPlayerlist());
-                }
-            });
-
-            add(subscribeBtn, gbc);
-
         }
 
     }

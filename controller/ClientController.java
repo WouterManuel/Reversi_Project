@@ -42,7 +42,7 @@ public class ClientController {
         ticTacToeGame = new TicTacToe(this);
         window = new Window(this);
     }
-
+    
     public void update(ArrayList<String> message){
 		System.out.println("controller update: "+message);
         switch(message.get(0)) {
