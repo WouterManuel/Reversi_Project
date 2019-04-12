@@ -18,11 +18,6 @@ public class Reversi extends Game {
         board = new byte[8][8];
     }
 
-    @Override
-    public void setPanel(JPanel reversiPanel) {
-        this.reversiPanel = reversiPanel;
-    }
-
 	public int pieces() {
 		int ret = 0;
 		for (int i = 0; i < 8; i++)
@@ -32,7 +27,6 @@ public class Reversi extends Game {
 			return ret;
 		}
 
-    public void setSidebar(JPanel GameSidebarPanel) {this.sidebar = GameSidebarPanel;}
     /******************************************** Game logic *********************************************/
 
     public ArrayList<Point> getAllPossibleMoves(byte[][] board, byte turn){
