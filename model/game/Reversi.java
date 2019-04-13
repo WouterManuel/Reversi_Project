@@ -142,7 +142,10 @@ public class Reversi extends Game {
 		}
 		l = -12.5 * (myMoves - oppMoves);
 
-		ret = (70*m) + (10*p) + (80*f) + (10*d) + (1200*c) + (800*l);
+		if(pieces()<40)
+			ret = (70*m) + (10*p) + (200*f) + (-10*d) + (1200*c) + (800*l);
+		else
+			ret = (70*m) + (10*p) + (80*f) + (10*d) + (1200*c) + (800*l);
 
 		// ret = 0;
 		// for (int i = 0; i < 8; i++)
