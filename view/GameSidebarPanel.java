@@ -64,7 +64,9 @@ public class GameSidebarPanel extends JPanel{
                 popup  = new JFrame();
                 Object[] options = {"Yes, forfeit now"};
                 response = JOptionPane.showOptionDialog(popup,
-                        "Do you really want to forfeit this match?\n<html><div style='color:red'>Your opponent will win.</div></html>", "Forfeit", JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,options,options[0]);
+                        "Do you really want to forfeit this match?\n<html><div style='color:red'>Your opponent will win.</div></html>",
+                        "Forfeit", JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,
+                        null,options,options[0]);
                 if (response == JOptionPane.YES_OPTION) {
                     clientController.sendForfeit();
                 }
