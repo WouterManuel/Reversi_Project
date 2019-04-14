@@ -25,7 +25,8 @@ public class negaMax extends AI {
 				mBoard[i] = game.getBoard()[i].clone();
 			mBoard[p.x][p.y] = player;
 			game.flipv2(mBoard, player, p.x, p.y);
-			double val = negamax(mBoard, player, 6, -INF, INF, 1);
+			// System.out.println(p);
+			double val = negamax(mBoard, player, 0, -INF, INF, 1);
 			if(val>maxVal) {
 				maxVal = val;
 				bestMove = p;
@@ -36,8 +37,11 @@ public class negaMax extends AI {
 
 	public double negamax(byte[][] board, byte player, int depth, double alpha, double beta, int color) {
 		ArrayList<Point> possibleMoves = game.getAllPossibleMoves(board, player);
-		if(depth == 0 || possibleMoves.isEmpty())
-			return color*game.scoreH(board, player, possibleMoves.size());
+		if(depth == 0 || possibleMoves.isEmpty()){
+			// System.out.println(color*game.scoreH(board, player, possibleMoves.size()));
+			// return color*game.scoreH(board, player, possibleMoves.size());
+			return color*game.evaluateBoard(board, player, player==game.BLACK?game.WHITE:game.BLACK);
+		}
 
 		double bestVal = -INF;
 		for(Point p : possibleMoves) {
@@ -47,6 +51,7 @@ public class negaMax extends AI {
 				mBoard[i] = board[i].clone();
 			mBoard[p.x][p.y] = player;
 			game.flipv2(mBoard, player, p.x, p.y);
+			// System.out.println(p);
 			double val = -negamax(mBoard, player, depth-1, -beta, -alpha, -color);
 			bestVal = Math.max(bestVal, val);
 			alpha = Math.max(alpha, val);

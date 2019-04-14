@@ -159,7 +159,8 @@ public class Reversi extends Game {
 		// 			ret+=15;
 		// 		else if(i == 7 && j == 7 && board[i][j]==color)
 		// 			ret+=15;
-		// 		else ret++;
+		// 		else if(board[i][j]==color)
+		// 			ret++;
 		return ret;
 	}
 

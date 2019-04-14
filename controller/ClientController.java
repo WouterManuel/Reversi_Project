@@ -490,6 +490,7 @@ public class ClientController {
         window = new Window(this);
     }
 
+	boolean turnSkip = false;
     public void update(ArrayList<String> message){
 		// System.out.println("controller update: "+message);
         switch(message.get(0)) {
@@ -525,10 +526,16 @@ public class ClientController {
                 }
                 if(!message.get(2).equals(username)) {
 					movelist.add(move);
+					if(turnSkip)
+						updateResultLabel("Skipppppppppppppppp");
                     System.out.println("Opponent move: " + move);
+					turnSkip = true;
                     play(i, j, opp);
                 } else {
 					movelist.add(move);
+					turnSkip = false;
+					updateResultLabel("Game stats:");
+					updateSidebarTurnLabel("is you");
                     System.out.println("My move: " + move);
                     play(i, j, turn);
                 }
@@ -536,7 +543,6 @@ public class ClientController {
                 break;
             case "YOURTURN":
 				myTurn = true;
-                updateSidebarTurnLabel("is you");
 				currentGame.highlightPossibleMoves(turn);
                 /** AI plays */
                 if(playingAsAI) {
