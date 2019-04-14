@@ -47,7 +47,7 @@ public class LoggedInState implements WindowState {
 
     @Override
     public void loggedOut(){
-        System.out.println("In state loggedOut");
        window.setWindowState(new IntroState(window));
+       window.repaint();
     }
 }

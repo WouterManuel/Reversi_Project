@@ -39,7 +39,7 @@ public class AITester implements Runnable{
                         Point p = ai2.findMove(turn);
                         game.playMovez(board, p, turn);
                     } catch(NullPointerException n){
-                        System.out.println("null");
+                        //System.out.println("null");
                     }
                 }
 //            else {
