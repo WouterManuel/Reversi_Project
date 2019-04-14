@@ -9,11 +9,13 @@ import java.util.ArrayList;
 public class negaAI extends AI {
 
 	final double INF = 1000000;
-	private int maxDepth = 3;
+	private int maxDepth;
 
 	Reversi game;
-	public negaAI(Game game) {
+	public negaAI(Game game, int maxDepth) {
 		this.game = (Reversi) game;
+		this.maxDepth = maxDepth;
+
 	}
 
 	public Point findMove(byte player){
@@ -66,44 +68,4 @@ public class negaAI extends AI {
 		}
 		return new MoveScore(bestMove, bestScore);
 	}
-
-	// public static int negamax(byte[][] board, byte player, int depth, int color) {
-	// 	ArrayList<Point> possibleMoves = Rules.getAllPossibleMoves(board, player);
-	// 	if(depth == 0 || possibleMoves.isEmpty())
-	// 		return color * Rules.score(board, player);
-	// 	int best = -1000000;
-	// 	for(Point p : possibleMoves) {
-	// 		byte[][] mBoard = new byte[8][8];
-	// 		for (int b = 0; b < 8; b++)
-	// 			mBoard[b] = board[b].clone();
-	// 		mBoard[p.x][p.y] = player;
-	// 		Rules.flipv2(mBoard, player, p.x, p.y);
-	// 		int v = -negamax(mBoard, player, depth-1, color==1?-1:1);
-	// 		best = Math.max(best, v);
-	// 	}
-	// 	return best;
-	// }
-
-	// 	static int score = 0;
-	// 	static Point bestMove = new Point();
-	// 	static byte[][] mBoard = new byte[8][8];
-	// public static Point negamax(byte[][] board, byte player, int depth) {
-	// 	int max = -1;
-	// 	ArrayList<Point> possibleMoves = Rules.getAllPossibleMoves(board, player);
-	// 	for(Point p : possibleMoves) {
-	// 		if (depth == 0 || possibleMoves.isEmpty()) {
-	// 			if((score = Rules.flipScore(board, player, p.x, p.y)) > max) {
-	// 				max = score;
-	// 				bestMove = p;
-	// 			}
-	// 		} else {
-	// 			for (int b = 0; b < 8; b++)
-	// 				mBoard[b] = board[b].clone();
-	// 			Rules.flipv2(mBoard, player, p.x, p.y);
-	// 			negamax(mBoard, player==Rules.BLACK?Rules.WHITE:Rules.BLACK, depth-1);
-	// 			score = Math.max(max, score);
-	// 		}
-	// 	}
-	// 	return bestMove;
-	// }
 }

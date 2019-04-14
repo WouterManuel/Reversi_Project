@@ -645,8 +645,16 @@ public class ClientController {
             currentGame.resetBoard();
             window.gameStarted(gameType);
             currentGame.updateView();
-            if (playingAs.equals("AI")){
-                currentAI = new negaAI(currentGame);
+            if (playingAs.equals("AI lv. 1")){
+                currentAI = new negaAI(currentGame, 1);
+                playingAsAI = true;
+            }
+            else if (playingAs.equals("AI lv. 2")){
+                currentAI = new negaAI(currentGame, 3);
+                playingAsAI = true;
+            }
+            else if (playingAs.equals("Random")){
+                currentAI = new randomAI(currentGame);
                 playingAsAI = true;
             }
 //			if(!myTurn)
