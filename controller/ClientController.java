@@ -2,6 +2,7 @@ package controller;
 
 import model.AI.AI;
 import model.AI.negaAI;
+import model.AI.negaMax;
 import model.AI.randomAI;
 import model.game.Game;
 import model.game.Reversi;
@@ -529,6 +530,7 @@ public class ClientController {
 					if(turnSkip)
 						updateResultLabel("Skipppppppppppppppp");
                     System.out.println("Opponent move: " + move);
+                    updateSidebarTurnLabel(opponentName);
 					turnSkip = true;
                     play(i, j, opp);
                 } else {
