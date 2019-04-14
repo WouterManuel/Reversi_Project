@@ -204,13 +204,21 @@ public class ClientController {
                 playingAsAI = true;
             }
         }
-        else if (playingAs.equals("Human")) {
+        if (playingAs.equals("Human")) {
             currentAI = null;
             playingAsAI = false;
         }
     }
     /******************************************** View update methods *********************************************/
 
+    /**
+     * Updates the view sidebar to show the user a the board score for a Reversi game,
+     * if currentgame is a Reversi game.
+     *
+     * @return void
+     *
+     * @author Groep 5 ITV2E
+     */
     public void updateSideBarReversiScore() {
         if(currentGame.equals(reversiGame)) {
             if(getLoggedInStatus()){
@@ -222,25 +230,62 @@ public class ClientController {
         }
     }
 
+    /**
+     * Updates the turn label in de game sidebar to inform user of whose turn it is.
+     *
+     * @return void
+     *
+     * @author Groep 5 ITV2E
+     */
     public void updateSidebarTurnLabel(String player) {
         window.getGameSidebarPanel().updateSidebarLabelPlayerTurn(player);
     }
 
+    /**
+     * Updates the game results in the sidebar.
+     *
+     * @return void
+     *
+     * @author Groep 5 ITV2E
+     */
     public void updateResultLabel(String result) {
         window.getGameSidebarPanel().setGameResult(result, serverComment);
     }
 
+    /**
+     *
+     *
+     * @return void
+     *
+     * @author Groep 5 ITV2E
+     */
     public void returnToMenu() {
         window.forfeited();
     }
 
     /******************************************** Send command to server methods *********************************************/
 
+    /**
+     * Calls forfeit method in ServerCommand and informs the window that the game was forfeited.
+     * The window will invoke the forfeited() function for its currentState to handle the right transition.
+     *
+     * @return void
+     *
+     * @author Groep 5 ITV2E
+     */
     public void sendForfeit() {
         serverCommander.sendForfeitCommand();
         window.forfeited();
     }
 
+    /**
+     * Calls forfeit method in ServerCommand and informs the window that the game was forfeited.
+     * The window will invoke the forfeited() function for its currentState to handle the right transition.
+     *
+     * @return void
+     *
+     * @author Groep 5 ITV2E
+     */
     public void sendLogout() {
         serverCommander.sendLogoutCommand();
         connected = serverCommander.getConnectionStatus();
@@ -249,6 +294,14 @@ public class ClientController {
 
     /******************************************** Setter and Getter methods *********************************************/
 
+    /**
+     * Informs the window that the game was forfeited. The window will invoke the forfeited()
+     * function for its currentState to handle the right transition.
+     *
+     * @return void
+     *
+     * @author Groep 5 ITV2E
+     */
     public void setLoggedIn(String username){
         if(serverCommander.sendLoginCommand(username) != null) {
             this.username = username;

@@ -166,6 +166,7 @@ public class Reversi extends Game {
     //         System.out.println(r);
     // }
     //
+
     public int flipScore(byte turn, int i, int j) {
         int moveI, moveJ, cells;
         int opponent = ((turn == 1) ? 2 : 1);
