@@ -629,8 +629,8 @@ public class ClientController {
             else System.out.println("Human: not possible move");
     }
 
-    public void startServerCommand(String hostname, int port) {
-        serverCommander = new ServerCommand(hostname, port);
+    public void startServerCommand(String hostname, int port, int timeout) {
+        serverCommander = new ServerCommand(hostname, port, timeout);
         connected = serverCommander.getConnectionStatus();
         if (connected) {
             serverCommander.getServerListener().registerObserver(this);

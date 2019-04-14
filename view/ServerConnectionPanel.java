@@ -46,6 +46,17 @@ public class ServerConnectionPanel extends JPanel {
         JTextField port = new JTextField("7789",10);
         add(port, gbc);
 
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        JLabel timeoutLabel = new JLabel("Timeout:");
+        timeoutLabel.setForeground(Color.WHITE);
+        add(timeoutLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        JTextField timeout = new JTextField("10000",10);
+        add(timeout, gbc);
+
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 2;
         gbc.gridx = 0;
@@ -58,11 +69,11 @@ public class ServerConnectionPanel extends JPanel {
 
         /* Connect btn */
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 2;
         JButton connectBtn = new JButton("Connect");
-        connectBtn.addActionListener(e -> {clientController.startServerCommand(hostname.getText(), Integer.valueOf(port.getText()));
+        connectBtn.addActionListener(e -> {clientController.startServerCommand(hostname.getText(), Integer.valueOf(port.getText()), Integer.valueOf(timeout.getText()));
             if(!clientController.isConnected())
                 messageLabel.setVisible(true);
         });
