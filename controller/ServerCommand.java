@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
@@ -24,10 +23,10 @@ public class ServerCommand {
             this.output = new PrintStream(connection.getSocket().getOutputStream());
             this.input = new InputStreamReader(connection.getSocket().getInputStream());
             this.listener = new ServerListener(input);
-
-            this.connected = connection.getConnectionStatus();
+			connected = input.ready();
             if(connected) {
                 // Start serverlistener
+                System.out.println("Server connection established");
                 serverThread = new Thread(listener);
                 serverThread.start();
             }
