@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
@@ -17,17 +16,17 @@ public class ServerCommand {
 
     Thread serverThread;
 
-    public ServerCommand(String host, int port) {
+    public ServerCommand(String host, int port, int timeout) {
         try {
             // TODO Handle server connection in its own thread
-            this.connection = new ServerConnection(host, port);
+            this.connection = new ServerConnection(host, port, timeout);
             this.output = new PrintStream(connection.getSocket().getOutputStream());
             this.input = new InputStreamReader(connection.getSocket().getInputStream());
             this.listener = new ServerListener(input);
-
-            this.connected = connection.getConnectionStatus();
+			connected = input.ready();
             if(connected) {
                 // Start serverlistener
+                System.out.println("Server connection established");
                 serverThread = new Thread(listener);
                 serverThread.start();
             }

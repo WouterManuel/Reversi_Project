@@ -144,4 +144,9 @@ public class TicTacToe extends Game{
     public void updateView() {
         ticTacToePanel.repaint();
     }
+
+	@Override
+	public int pieces() {
+		return 0;
+	}
 }
