@@ -5,6 +5,8 @@ import controller.ClientController;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 
@@ -12,6 +14,7 @@ public class ServerDetailsPanel extends JPanel {
     JList playerList;
 
     JTable inviteList;
+    Thread inviteThread;
     DefaultTableModel tableModel;
     JButton challengeBtn;
     JButton acceptBtn;
@@ -98,12 +101,14 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 4;
         logoutBtn = new JButton("Logout");
+        inviteThreadStop click = new inviteThreadStop();
+        logoutBtn.addActionListener(click);
         add(logoutBtn, gbc);
         logoutBtn.addActionListener(e -> {
             clientController.sendLogout();
         });
 
-        new Thread(() -> {
+        inviteThread = new Thread(() -> {
             try {
                 Thread.sleep(200);
                 while (clientController.isLoggedIn()) {
@@ -134,17 +139,21 @@ public class ServerDetailsPanel extends JPanel {
                         inviteNumber = (Integer) it.next();
                         challenger = newInviteList.get(inviteNumber).get(0);
                         game = newInviteList.get(inviteNumber).get(1);
-
                         tableModel.addRow(new Object[]{inviteNumber, game, challenger});
-
                     }
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }).start();
-
+        });
+        inviteThread.start();
     }
 
+    private class inviteThreadStop implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == logoutBtn) {
+                inviteThread.stop();
+            }
+        }
+    }
 }
-

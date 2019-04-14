@@ -722,6 +722,7 @@ public class ClientController {
             window.loggedIn();
             isLoggedIn = true;
             window.getGameSettingsPanel().setPlayButton();
+			window.getGameSettingsPanel().setConnectionLabel();
         } else {
             isLoggedIn = false;
         }
@@ -730,6 +731,10 @@ public class ClientController {
     public String setPlayingAs() {
         return window.getGameSettingsPanel().getPlayAs();
     }
+
+	public String setPlayingAgainst() {
+		return window.getGameSettingsPanel().getPlayAgainst();
+	}
 
     private void setOpponentColor(int color) {
         opp = (byte) color;

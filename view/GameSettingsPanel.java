@@ -5,7 +5,7 @@ import controller.ClientController;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameSettingsPanel extends JPanel{
+public class GameSettingsPanel extends JPanel {
 
     JLabel playerTurn;
     JLabel scoreLabel;
@@ -15,15 +15,16 @@ public class GameSettingsPanel extends JPanel{
     JButton interruptBtn;
     JButton playGame;
     JComboBox<String> playAs;
+    JComboBox<String> playAgainst;
     ClientController clientController;
 
     public GameSettingsPanel(ClientController clientController) {
 
-        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        setPreferredSize(new Dimension(400,400));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setPreferredSize(new Dimension(400, 400));
         setBackground(Color.DARK_GRAY);
 
-        GridLayout experimentLayout = new GridLayout(3,2);
+        GridLayout experimentLayout = new GridLayout(3, 2);
         GridBagConstraints gbc = new GridBagConstraints();
         setLayout(experimentLayout);
         GridBagLayout layout = new GridBagLayout();
@@ -32,49 +33,65 @@ public class GameSettingsPanel extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        connectionLabel = new JLabel("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>"+"Play offline"+"</div></html>");
+        connectionLabel = new JLabel("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>" + "Play offline" + "</div></html>");
         add(connectionLabel, gbc);
+
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.ipadx = 20;
-        add(new JLabel("<html><br><div style='color: white;'>"+"Play as :"+"</div></html>"),gbc);
+        add(new JLabel("<html><br><div style='color: white;'>" + "You:" + "</div></html>"), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        String[] playsAs = new String[] {"AI lv. 1", "AI lv. 2" ,"Human"};
+        String[] playsAs = new String[]{"AI lv. 1", "AI lv. 2", "Human"};
         playAs = new JComboBox<String>(playsAs);
-        add(playAs,gbc);
+        add(playAs, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.ipadx = 20;
+        add(new JLabel("<html><br><div style='color: white;'>" + "Opponent:" + "</div></html>"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        String[] playsAgainst = new String[]{"AI lv. 1", "AI lv. 2", "Human"};
+        playAgainst = new JComboBox<String>(playsAgainst);
+        add(playAgainst, gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
-        gbc.gridy = 2;
-        add(new JLabel("<html><br><div style='color: white;'>"+"Game:"+"</div></html>"),gbc);
+        gbc.gridy = 3;
+        add(new JLabel("<html><br><div style='color: white;'>" + "Game:" + "</div></html>"), gbc);
 
         // TODO DIT MOET NIET HIER
-        String[] gameTypes = new String[] {"Reversi","Tic-Tac-Toe"};
+        String[] gameTypes = new String[]{"Reversi", "Tic-Tac-Toe"};
 
         JComboBox<String> gameType = new JComboBox<String>(gameTypes);
         gbc.gridx = 1;
-        gbc.gridy = 2;
-        add(gameType,gbc);
+        gbc.gridy = 3;
+        add(gameType, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 2;
 
-        playGame = new JButton("<html><div style='padding: 0'>"+"Start game"+"</div></html>");
+        playGame = new JButton("<html><div style='padding: 0'>" + "Start game" + "</div></html>");
         playGame.addActionListener(e -> {
-            if(!clientController.getLoggedInStatus()) {
+            if (!clientController.getLoggedInStatus()) {
                 clientController.startGame(gameType.getSelectedItem().toString(), playAs.getSelectedItem().toString());
             } else clientController.getServerCommander().sendSubscribeCommand(gameType.getSelectedItem().toString());
         });
-        add(playGame,gbc);
+        add(playGame, gbc);
 
     }
 
     public String getPlayAs() {
         return playAs.getSelectedItem().toString();
+    }
+
+    public String getPlayAgainst() {
+        return playAgainst.getSelectedItem().toString();
     }
 
     public void updateSidebarLabelScore(String s) {
@@ -88,7 +105,8 @@ public class GameSettingsPanel extends JPanel{
     public void setPlayButton() {
         playGame.setText("Subscribe");
     }
+
     public void setConnectionLabel() {
-        connectionLabel.setText("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>"+"Play online"+ "</div></html>");
+        connectionLabel.setText("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>" + "Play Online" + "</div></html>");
     }
 }
