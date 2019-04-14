@@ -76,7 +76,6 @@ public class ServerCommand {
             Thread.sleep(100);
 
             if(checkIfValidCommand()) {
-                System.out.println("In de valid playerlist ");
                 return listener.getParsedMessage();
             }
         } catch (NullPointerException ex) {
@@ -117,7 +116,7 @@ public class ServerCommand {
 
     public synchronized void sendAcceptChallengeCommand(int challengerNumber) {
         try {
-            output.println("challenge accept " + "\"challengeNumber\"");
+            output.println("challenge accept " + challengerNumber);
             Thread.sleep(100);
             checkIfValidCommand();
         } catch (NullPointerException ex) {

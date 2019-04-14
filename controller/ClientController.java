@@ -585,8 +585,8 @@ public class ClientController {
                     inviteTable.remove(Integer.valueOf(message.get(3)));
                 } else {
                     String challenger = message.get(2);
-                    String gameType = message.get(4);
-                    Integer challengeNumber = Integer.valueOf(message.get(6));
+                    String gameType = message.get(8);
+                    Integer challengeNumber = Integer.valueOf(message.get(5));
 
                     List<String> invite = new ArrayList<>(Arrays.asList(challenger, gameType));
                     inviteTable.put(challengeNumber, invite);

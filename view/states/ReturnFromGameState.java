@@ -52,5 +52,6 @@ public class ReturnFromGameState implements WindowState {
         window.getContentPane().remove(window.getServerDetailsPanel());
         window.getContentPane().add(window.getServerConnectionPanel(), BorderLayout.EAST);
         window.setWindowState(new IntroState(window));
+        window.repaint();
     }
 }
