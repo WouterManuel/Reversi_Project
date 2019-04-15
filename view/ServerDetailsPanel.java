@@ -12,7 +12,6 @@ import java.util.List;
 
 public class ServerDetailsPanel extends JPanel {
     JList playerList;
-
     JTable inviteList;
     Thread inviteThread;
     DefaultTableModel tableModel;
@@ -50,6 +49,7 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridy = 2;
         DefaultListModel<String> listModel = new DefaultListModel<>();
         playerList = new JList<>(listModel);
+
         challengeBtn = new JButton("Challenge");
         challengeBtn.addActionListener(e -> {
             clientController.getServerCommander().sendChallengeCommand(playerList.getSelectedValue().toString(), "Reversi");
@@ -73,7 +73,7 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 2;
         inviteList = new JTable();
-        tableModel = new DefaultTableModel(new Object[]{"ID", "Game", "From"}, 0);
+        tableModel = new DefaultTableModel(new Object[]{"ID", "Game", "From"},0);
         inviteList.setModel(tableModel);
         inviteList.getColumnModel().getColumn(0).setPreferredWidth(20);
         inviteList.getColumnModel().getColumn(1).setPreferredWidth(68);
@@ -122,10 +122,11 @@ public class ServerDetailsPanel extends JPanel {
                     Hashtable<Integer, List<String>> newInviteList = new Hashtable<>();
                     ArrayList<String> newPlayerList = clientController.getServerCommander().getPlayerlist();
 
-                    listModel.clear();
+                    listModel.removeAllElements();
+                    listModel.add(0,"");
                     try {
                         for (String p : newPlayerList) {
-                            if (!p.equals(clientController.getUsername()))
+                            if (!p.equals(clientController.getUsername()) && (!p.equals("OK")))
                                 listModel.addElement(p);
                         }
                     } catch (Exception e) {
