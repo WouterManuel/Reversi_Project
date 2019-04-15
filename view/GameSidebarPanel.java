@@ -10,6 +10,7 @@ public class GameSidebarPanel extends JPanel{
     JLabel scoreLabelWhite;
     JLabel scoreLabelBlack;
     JLabel gameStats;
+    JLabel fillLabel;
     JButton resetBtn;
     JButton randBtn;
     JButton interruptBtn;
@@ -72,7 +73,6 @@ public class GameSidebarPanel extends JPanel{
                 }
             } else if(clientController.isGameOver()) clientController.returnToMenu();
         });
-
         add(backAndForfeitBtn,gbc);
     }
 

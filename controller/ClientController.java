@@ -9,8 +9,9 @@ import model.game.Reversi;
 import model.game.TicTacToe;
 import view.Window;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class ClientController {
 
@@ -538,7 +539,7 @@ public class ClientController {
                 } else {
 					movelist.add(move);
 					turnSkip = false;
-					updateResultLabel("Game stats:");
+					updateResultLabel("<html><div style='color: white;font-size: 20px;'>Game Stats:</div></html>");
 					System.out.println("My move: " + move);
                     play(i, j, turn);
                 }
@@ -567,6 +568,7 @@ public class ClientController {
                 //currentGame.setWinner(turn);
                 serverComment = message.get(8);
                 updateResultLabel("You won!");
+                window.getGameSidebarPanel().setBackground(Color.green);
                 break;
             case "LOSS":
                 gameIsOver = true;
@@ -574,6 +576,7 @@ public class ClientController {
                 //currentGame.setWinner(opp);
                 serverComment = message.get(8);
                 updateResultLabel("You lost!");
+				window.getGameSidebarPanel().setBackground(Color.orange);
                 break;
             case "DRAW":
                 gameIsOver = true;
@@ -581,6 +584,7 @@ public class ClientController {
                 //currentGame.setWinner(opp);
                 serverComment = message.get(8);
                 updateResultLabel("There was a draw!");
+				window.getGameSidebarPanel().setBackground(Color.yellow.darker());
                 break;
             case "CHALLENGE":
                 if(message.get(1).equals("CANCELLED")) {
@@ -618,7 +622,7 @@ public class ClientController {
                     serverCommander.sendMoveCommand(3 * i + j);
                 }
                 currentGame.removeHighlightPossibleMoves();
-                updateSidebarTurnLabel("Player " + opponentName + " to move");
+                updateSidebarTurnLabel("Player to move<br>" + opponentName);
                 myTurn = false;
 
             }
@@ -627,7 +631,7 @@ public class ClientController {
                 // Only updates the sidebar if the currentGame is a Reversi game
                 updateSideBarReversiScore();
                 currentGame.removeHighlightPossibleMoves();
-				updateSidebarTurnLabel("Player " + playerTurn + " to move");
+				updateSidebarTurnLabel("Player to move<br>" + playerTurn);
                 if(currentGame.equals(ticTacToeGame)) {
                     if((ticTacToeGame.checkForWinner() == (byte) 1 ) || (ticTacToeGame.checkForWinner() == (byte) 2 )) {
                         gameIsOver = true;
@@ -704,7 +708,7 @@ public class ClientController {
             currentGame.resetBoard();
             window.gameStarted(gameType);
             currentGame.updateView();
-			updateSidebarTurnLabel("Player " + playerTurn + " to move");
+			updateSidebarTurnLabel("Player to move<br>" + playerTurn);
         }
         if (playingAs.equals("Human")) {
             currentAI = null;
@@ -761,7 +765,7 @@ public class ClientController {
 			currentGame.resetBoard();
 			window.gameStarted(gameType);
 			currentGame.updateView();
-			updateSidebarTurnLabel("Player " + playerTurn + " to move");
+			updateSidebarTurnLabel("Player to move<br>" + playerTurn);
 		}
 		if (playingAs.equals("Human")) {
 			currentAI = null;

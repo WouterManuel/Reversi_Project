@@ -29,7 +29,7 @@ public class GameSettingsPanel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        connectionLabel = new JLabel("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>"+"Local game setting"+"</div></html>");
+        connectionLabel = new JLabel("<html><br><div style='color: white; margin-bottom:50px; font-size: 20px;'>"+"Local game setting"+"</div></html>");
         add(connectionLabel, gbc);
 
         gbc.gridx = 0;
