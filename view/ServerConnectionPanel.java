@@ -20,7 +20,7 @@ public class ServerConnectionPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
 
-        JLabel playOnline = new JLabel("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>Play Online</div></html>");
+        JLabel playOnline = new JLabel("<html><br><div style='color: white;margin-bottom: 35px; font-size: 20px;'>Play Online</div></html>");
         add(playOnline, gbc);
 
         gbc.gridx = 0;

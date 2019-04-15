@@ -23,7 +23,6 @@ public class ServerParser {
 			ArrayList<String> outputList = new ArrayList<>();
 			while(m.find() && !m.group().contains(",,"))
 				outputList.add(m.group(1));
-			System.out.println("outputList: "+outputList);
 			ArrayList<String> playerlist = new ArrayList<>();
 
             if (outputList.size() >= 1) {

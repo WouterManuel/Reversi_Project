@@ -11,8 +11,10 @@ public class negaMax extends AI {
 	final double INF = 1000000000;
 
 	Reversi game;
-	public negaMax(Game game) {
+	int depth;
+	public negaMax(Game game, int depth) {
 		this.game = (Reversi) game;
+		this.depth = depth;
 	}
 
 	public Point findMove(byte player){
@@ -26,7 +28,7 @@ public class negaMax extends AI {
 			mBoard[p.x][p.y] = player;
 			game.flipv2(mBoard, player, p.x, p.y);
 			// System.out.println(p);
-			double val = negamax(mBoard, player, 0, -INF, INF, 1);
+			double val = negamax(mBoard, player, depth, -INF, INF, 1);
 			if(val>maxVal) {
 				maxVal = val;
 				bestMove = p;
@@ -38,9 +40,7 @@ public class negaMax extends AI {
 	public double negamax(byte[][] board, byte player, int depth, double alpha, double beta, int color) {
 		ArrayList<Point> possibleMoves = game.getAllPossibleMoves(board, player);
 		if(depth == 0 || possibleMoves.isEmpty()){
-			// System.out.println(color*game.scoreH(board, player, possibleMoves.size()));
-			// return color*game.scoreH(board, player, possibleMoves.size());
-			return color*game.scoreH(board, player, player==game.BLACK?game.WHITE:game.BLACK);
+			return game.scoreH(board, player, possibleMoves.size());
 		}
 
 		double bestVal = -INF;

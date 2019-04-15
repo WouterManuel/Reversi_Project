@@ -25,14 +25,12 @@ public class GameSidebarPanel extends JPanel{
         setPreferredSize(new Dimension(350,400));
         setBackground(Color.GRAY);
         GridBagConstraints gbc = new GridBagConstraints();
-        setLayout(new GridBagLayout());
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
         gameStats = new JLabel("<html><div style='color: white;font-size: 20px;'>Game Stats:</div></html>");
         add(gameStats, gbc);
-
 
         gbc.gridx = 0;
         gbc.gridy = 1;

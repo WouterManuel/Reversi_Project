@@ -49,8 +49,9 @@ public class ReturnFromGameState implements WindowState {
 
     @Override
     public void loggedOut() {
-        window.getContentPane().remove(window.getServerDetailsPanel());
-        window.getContentPane().add(window.getServerConnectionPanel(), BorderLayout.EAST);
+        window.remove(window.getServerDetailsPanel());
+        window.remove(window.getGameSettingsPanel());
         window.setWindowState(new IntroState(window));
+        window.repaint();
     }
 }

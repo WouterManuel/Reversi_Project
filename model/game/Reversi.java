@@ -676,4 +676,15 @@ public class Reversi extends Game {
     public byte[][] getBoard() {
         return board;
     }
+
+    public byte getResult() {
+        if(score(BLACK) > score(WHITE)) {
+            winner = BLACK;
+        } else if (score(BLACK) == score(WHITE)) {
+            winner = 0;
+        } else {
+            winner = WHITE;
+        }
+        return winner;
+    }
 }

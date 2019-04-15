@@ -2,6 +2,7 @@ package controller;
 
 import model.AI.AI;
 import model.AI.negaAI;
+import model.AI.negaMax;
 import model.AI.randomAI;
 import model.game.Game;
 import model.game.Reversi;
@@ -19,6 +20,7 @@ public class ClientController {
     private TicTacToe ticTacToeGame;
     private Game currentGame;
     private AI currentAI;
+    private AI opponentAI;
 
     private boolean myTurn = true;
     private boolean playingAsAI;
@@ -530,14 +532,14 @@ public class ClientController {
 					if(turnSkip)
 						updateResultLabel("Skip");
                     System.out.println("Opponent move: " + move);
+                    updateSidebarTurnLabel(opponentName);
 					turnSkip = true;
                     play(i, j, opp);
                 } else {
 					movelist.add(move);
 					turnSkip = false;
 					updateResultLabel("Game stats:");
-					updateSidebarTurnLabel(" is you");
-                    System.out.println("My move: " + move);
+					System.out.println("My move: " + move);
                     play(i, j, turn);
                 }
                 currentGame.updateView();
@@ -586,8 +588,8 @@ public class ClientController {
                     inviteTable.remove(Integer.valueOf(message.get(3)));
                 } else {
                     String challenger = message.get(2);
-                    String gameType = message.get(4);
-                    Integer challengeNumber = Integer.valueOf(message.get(6));
+                    String gameType = message.get(8);
+                    Integer challengeNumber = Integer.valueOf(message.get(5));
 
                     List<String> invite = new ArrayList<>(Arrays.asList(challenger, gameType));
                     inviteTable.put(challengeNumber, invite);
@@ -667,6 +669,13 @@ public class ClientController {
         }
     }
 
+	/**
+	 * This method will only be called when player is logged into server.
+	 *
+	 * @param gameType the selected game type in the game settings menu
+	 * @param playingAs the selected choice as what the player wants to play as.
+	 *
+	 */
     public void startGame(String gameType, String playingAs) {
         gameIsOver = false;
         playingAsAI = true;
@@ -714,6 +723,79 @@ public class ClientController {
 			playingAsAI = true;
 		}
     }
+
+	/**
+	 * Overrides startGame method by adding an extra parameter.
+	 * This overriden method will only be called when player is offline.
+	 *
+	 * @param gameType the selected game type in the game settings menu
+	 * @param playingAs the selected choice as what the player wants to play as.
+	 * @param playingAgainst the selected opponent the player wants to play against.
+	 *
+	 */
+	public void startGame(String gameType, String playingAs, String playingAgainst) {
+		gameIsOver = false;
+		playingAsAI = true;
+		playerTurn = 1;
+		if(gameType.equals("Reversi")) {
+			currentGame = reversiGame;
+			currentGame.resetBoard();
+			window.gameStarted(gameType);
+			currentGame.updateView();
+//            if (playingAs.equals("AI lvl. 1")){
+//                currentAI = new negaAI(currentGame, 1);
+//                playingAsAI = true;
+//            }
+//            else if (playingAs.equals("AI lvl. 2")){
+//                currentAI = new negaAI(currentGame, 3);
+//                playingAsAI = true;
+//            }
+//            else if (playingAs.equals("AI Random")){
+//                currentAI = new randomAI(currentGame);
+//                playingAsAI = true;
+//            }
+//			if(!myTurn)
+//				reversiGame.removeHighlightPossibleMoves();
+		} else if (gameType.equals("Tic-tac-toe") || gameType.equals("Tic-Tac-Toe")) {
+			currentGame = ticTacToeGame;
+			currentGame.resetBoard();
+			window.gameStarted(gameType);
+			currentGame.updateView();
+			updateSidebarTurnLabel("Player " + playerTurn + " to move");
+		}
+		if (playingAs.equals("Human")) {
+			currentAI = null;
+			playingAsAI = false;
+		}
+		else if (playingAs.equals("AI lvl. 1")){
+			currentAI = new negaAI(currentGame, 1);
+			playingAsAI = true;
+		}
+		else if (playingAs.equals("AI lvl. 2")){
+			currentAI = new negaAI(currentGame, 3);
+			playingAsAI = true;
+		}
+		else if (playingAs.equals("AI Random")){
+			currentAI = new randomAI(currentGame);
+			playingAsAI = true;
+		}
+		if (playingAgainst.equals("Human")) {
+			opponentAI = null;
+			playingAsAI = false;
+		}
+		else if (playingAgainst.equals("AI lvl. 1")){
+			opponentAI = new negaAI(currentGame, 1);
+			//playingAsAI = true;
+		}
+		else if (playingAgainst.equals("AI lvl. 2")){
+			currentAI = new negaAI(currentGame, 3);
+			//playingAsAI = true;
+		}
+		else if (playingAgainst.equals("AI Random")){
+			currentAI = new randomAI(currentGame);
+			//playingAsAI = true;
+		}
+	}
     /******************************************** View update methods *********************************************/
 
     /**
@@ -813,10 +895,20 @@ public class ClientController {
             window.loggedIn();
             isLoggedIn = true;
             window.getGameSettingsPanel().setPlayButton();
+			window.getGameSettingsPanel().setConnectionLabel();
         } else {
             isLoggedIn = false;
         }
     }
+
+
+    public String setPlayingAs() {
+        return window.getGameSettingsPanel().getPlayAs();
+    }
+
+	public String setPlayingAgainst() {
+		return window.getGameSettingsPanel().getPlayAgainst();
+	}
 
     private void setOpponentColor(int color) {
         opp = (byte) color;
