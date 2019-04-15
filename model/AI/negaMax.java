@@ -40,7 +40,7 @@ public class negaMax extends AI {
 		if(depth == 0 || possibleMoves.isEmpty()){
 			// System.out.println(color*game.scoreH(board, player, possibleMoves.size()));
 			// return color*game.scoreH(board, player, possibleMoves.size());
-			return color*game.evaluateBoard(board, player, player==game.BLACK?game.WHITE:game.BLACK);
+			return color*game.scoreH(board, player, player==game.BLACK?game.WHITE:game.BLACK);
 		}
 
 		double bestVal = -INF;

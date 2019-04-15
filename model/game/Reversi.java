@@ -164,6 +164,14 @@ public class Reversi extends Game {
 		return ret;
 	}
 
+    public boolean isBoardFull() {
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++)
+                if(board[i][j] == 0)
+                    return false;
+        return true;
+    }
+
     public int score(byte color) {
         int ret = 0;
         for (int i = 0; i < 8; i++)

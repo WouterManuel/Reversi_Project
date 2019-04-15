@@ -32,7 +32,7 @@ public class GameSettingsPanel extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        connectionLabel = new JLabel("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>"+"Play offline"+"</div></html>");
+        connectionLabel = new JLabel("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>"+"Local game setting"+"</div></html>");
         add(connectionLabel, gbc);
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -45,8 +45,8 @@ public class GameSettingsPanel extends JPanel{
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        String[] playsAs = new String[] {"AI lv. 1", "AI lv. 2" ,"Human"};
-        playAs = new JComboBox<String>(playsAs);
+        String[] playsAs = new String[] {"AI lv. 1", "AI lv. 2" , "AI Random","Human"};
+        playAs = new JComboBox<>(playsAs);
         add(playAs,gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -81,18 +81,11 @@ public class GameSettingsPanel extends JPanel{
         return playAs.getSelectedItem().toString();
     }
 
-    public void updateSidebarLabelScore(String s) {
-        scoreLabel.setText(s);
-    }
-
-    public void updateSidebarLabelPlayerTurn(String s) {
-        playerTurn.setText(s);
-    }
-
     public void setPlayButton() {
         playGame.setText("Subscribe");
     }
+
     public void setConnectionLabel() {
-        connectionLabel.setText("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>"+"Play online"+ "</div></html>");
+        connectionLabel.setText("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>"+"Online game settings"+ "</div></html>");
     }
 }

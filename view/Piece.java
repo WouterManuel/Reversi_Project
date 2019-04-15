@@ -62,7 +62,7 @@ public class Piece extends JLabel implements MouseListener{
                 game.highlight(i,j, parent.getController().getTurn());
             }
         } else {
-            if(parent.getController().isMyTurn()&&!parent.getController().isPlayingAsAI()) {
+            if(parent.getController().isMyTurn()&&!parent.getController().isPlayingAsAI()&&!parent.getController().isGameOver()) {
                 game.highlight(i,j, parent.getController().getOfflineTurn());
             }
         }
@@ -75,7 +75,7 @@ public class Piece extends JLabel implements MouseListener{
                 game.highlightRemove(i,j, parent.getController().getTurn());
                 }
         } else {
-                if (parent.getController().isMyTurn() && !parent.getController().isPlayingAsAI()) {
+                if (parent.getController().isMyTurn() && !parent.getController().isPlayingAsAI()&&!parent.getController().isGameOver()) {
                     game.highlightRemove(i, j, parent.getController().getOfflineTurn());
                 }
             }
@@ -87,11 +87,11 @@ public class Piece extends JLabel implements MouseListener{
     @Override
     public void mousePressed(MouseEvent e) {
         if(parent.getController().isLoggedIn()) {
-            if(parent.getController().isMyTurn()&&!parent.getController().isPlayingAsAI()) {
+            if(parent.getController().isMyTurn()&& !parent.getController().isPlayingAsAI()) {
                 parent.getController().playMove(i,j, parent.getController().getTurn());
             }
         } else {
-            if(parent.getController().isMyTurn()&&!parent.getController().isPlayingAsAI()) {
+            if(parent.getController().isMyTurn()&&!parent.getController().isPlayingAsAI()&&!parent.getController().isGameOver()) {
                 parent.getController().playMove(i,j, parent.getController().getOfflineTurn());
             }
         }

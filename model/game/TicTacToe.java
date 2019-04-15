@@ -10,6 +10,7 @@ public class TicTacToe extends Game{
 
     JPanel ticTacToePanel;
     ClientController clientController;
+    boolean gameOver = false;
 
     public TicTacToe(ClientController clientController) {
         this.clientController = clientController;
@@ -44,6 +45,7 @@ public class TicTacToe extends Game{
 
     public byte checkForWinner() {
         if(checkForWinnerDiagonally()||checkForWinnerInColumn()||checkForWinnerInRow()){
+            gameOver = true;
             return winner;
         }
         return 0;
@@ -82,7 +84,15 @@ public class TicTacToe extends Game{
     }
 
 
-
+    /**
+     * No implementation for this class
+     *
+     * @param board
+     * @param move
+     * @param turn
+     *
+     * @author Groep 5 ITV2E
+     */
     public void playMovez(byte[][] board, Point move, byte turn) {
         //
     }
@@ -90,11 +100,10 @@ public class TicTacToe extends Game{
     public void playMove(int i,int j, byte turn) {
         if (possibleMovev2(board, turn, i, j)) {
             setSquare(i, j, turn);
-            removeHighlightPossibleMoves();
-            if(clientController.isMyTurn())
-                highlightPossibleMoves(turn);
-            updateView();
+            //removeHighlightPossibleMoves();
+            System.out.println("Making dem moves");
         }
+        updateView();
     }
 
     public void highlight(int i, int j, byte turn) {
@@ -128,6 +137,7 @@ public class TicTacToe extends Game{
         int x = board.length;
         int y = board[0].length;
         winner = 0;
+        gameOver = false;
         board = new byte[x][y];
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
@@ -138,11 +148,16 @@ public class TicTacToe extends Game{
         if(!clientController.isConnected()){
             highlightPossibleMoves(clientController.getOfflineTurn());
         }
+
         updateView();
     }
 
     public void updateView() {
         ticTacToePanel.repaint();
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
     }
 
 	@Override

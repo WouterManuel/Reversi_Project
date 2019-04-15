@@ -491,6 +491,7 @@ public class ClientController {
     }
 
 	boolean turnSkip = false;
+
     public void update(ArrayList<String> message){
 		// System.out.println("controller update: "+message);
         switch(message.get(0)) {
@@ -505,7 +506,7 @@ public class ClientController {
 
                 if(!message.get(2).equals(username)) {
                     myTurn = false;
-                    updateSidebarTurnLabel(opponentName);
+                    updateSidebarTurnLabel("Player " + opponentName + " starts");
                     setOpponentColor(1);
 
                 } else {
@@ -527,7 +528,7 @@ public class ClientController {
                 if(!message.get(2).equals(username)) {
 					movelist.add(move);
 					if(turnSkip)
-						updateResultLabel("Skipppppppppppppppp");
+						updateResultLabel("Skip");
                     System.out.println("Opponent move: " + move);
 					turnSkip = true;
                     play(i, j, opp);
@@ -535,7 +536,7 @@ public class ClientController {
 					movelist.add(move);
 					turnSkip = false;
 					updateResultLabel("Game stats:");
-					updateSidebarTurnLabel("is you");
+					updateSidebarTurnLabel(" is you");
                     System.out.println("My move: " + move);
                     play(i, j, turn);
                 }
@@ -543,13 +544,15 @@ public class ClientController {
                 break;
             case "YOURTURN":
 				myTurn = true;
+				updateSidebarTurnLabel("Your turn");
 				currentGame.highlightPossibleMoves(turn);
+
                 /** AI plays */
                 if(playingAsAI) {
                     System.out.println("AI turn: " + turn);
 					Point AImove = playOpening(currentGame.pieces(), turn);
 					if(AImove==null){
-						System.out.println("---------------------------------------------AImove was null");
+						System.out.println("---------------------------------------------AI move was null");
 						AImove = currentAI.findMove(turn);
 					}
                     System.out.println("AI move: " + AImove);
@@ -613,16 +616,42 @@ public class ClientController {
                     serverCommander.sendMoveCommand(3 * i + j);
                 }
                 currentGame.removeHighlightPossibleMoves();
-                updateSidebarTurnLabel(opponentName);
+                updateSidebarTurnLabel("Player " + opponentName + " to move");
                 myTurn = false;
+
             }
             else {
                 currentGame.playMove(i, j, turn);
+                // Only updates the sidebar if the currentGame is a Reversi game
                 updateSideBarReversiScore();
-                playerTurn = playerTurn==(byte)1?(byte)2:(byte)1;
-                updateSidebarTurnLabel(String.valueOf(playerTurn));
                 currentGame.removeHighlightPossibleMoves();
-                myTurn = true;
+				updateSidebarTurnLabel("Player " + playerTurn + " to move");
+                if(currentGame.equals(ticTacToeGame)) {
+                    if((ticTacToeGame.checkForWinner() == (byte) 1 ) || (ticTacToeGame.checkForWinner() == (byte) 2 )) {
+                        gameIsOver = true;
+                        byte winner = ticTacToeGame.getWinner();
+                        updateResultLabel("Player " + winner + " wins!");
+                        updateSidebarTurnLabel(  "Game Over");
+                    }
+                    else if(currentGame.isBoardFull() && ticTacToeGame.checkForWinner() == 0) {
+                    	gameIsOver = true;
+						updateResultLabel("It's a draw!");
+						updateSidebarTurnLabel("Game Over");
+					}
+                }
+				playerTurn = playerTurn==(byte)1?(byte)2:(byte)1;
+				myTurn = true;
+
+//				if(playingAsAI) {
+//					System.out.println("AI turn: " + turn);
+//					Point AImove = playOpening(currentGame.pieces(), turn);
+//					if(AImove==null){
+//						System.out.println("---------------------------------------------AImove was null");
+//						AImove = currentAI.findMove(turn);
+//					}
+//					System.out.println("AI move: " + AImove);
+//					playMove(AImove.x, AImove.y, playerTurn);
+//				}
             }
         } else
             if(playingAsAI) System.out.println("AI: not possible move");
@@ -639,40 +668,51 @@ public class ClientController {
     }
 
     public void startGame(String gameType, String playingAs) {
+        gameIsOver = false;
+        playingAsAI = true;
         playerTurn = 1;
         if(gameType.equals("Reversi")) {
             currentGame = reversiGame;
             currentGame.resetBoard();
             window.gameStarted(gameType);
             currentGame.updateView();
-            if (playingAs.equals("AI lv. 1")){
-                currentAI = new negaAI(currentGame, 1);
-                playingAsAI = true;
-            }
-            else if (playingAs.equals("AI lv. 2")){
-                currentAI = new negaAI(currentGame, 3);
-                playingAsAI = true;
-            }
-            else if (playingAs.equals("Random")){
-                currentAI = new randomAI(currentGame);
-                playingAsAI = true;
-            }
+//            if (playingAs.equals("AI lvl. 1")){
+//                currentAI = new negaAI(currentGame, 1);
+//                playingAsAI = true;
+//            }
+//            else if (playingAs.equals("AI lvl. 2")){
+//                currentAI = new negaAI(currentGame, 3);
+//                playingAsAI = true;
+//            }
+//            else if (playingAs.equals("AI Random")){
+//                currentAI = new randomAI(currentGame);
+//                playingAsAI = true;
+//            }
 //			if(!myTurn)
 //				reversiGame.removeHighlightPossibleMoves();
-        } else if (gameType.equals("Tic-tac-toe")) {
+        } else if (gameType.equals("Tic-tac-toe") || gameType.equals("Tic-Tac-Toe")) {
             currentGame = ticTacToeGame;
             currentGame.resetBoard();
             window.gameStarted(gameType);
             currentGame.updateView();
-            if (playingAs.equals("AI")){
-                currentAI = new randomAI(currentGame);
-                playingAsAI = true;
-            }
+			updateSidebarTurnLabel("Player " + playerTurn + " to move");
         }
         if (playingAs.equals("Human")) {
             currentAI = null;
             playingAsAI = false;
         }
+		else if (playingAs.equals("AI lvl. 1")){
+			currentAI = new negaAI(currentGame, 1);
+			playingAsAI = true;
+		}
+		else if (playingAs.equals("AI lvl. 2")){
+			currentAI = new negaAI(currentGame, 3);
+			playingAsAI = true;
+		}
+		else if (playingAs.equals("AI Random")){
+			currentAI = new randomAI(currentGame);
+			playingAsAI = true;
+		}
     }
     /******************************************** View update methods *********************************************/
 
@@ -776,10 +816,6 @@ public class ClientController {
         } else {
             isLoggedIn = false;
         }
-    }
-
-    public String setPlayingAs() {
-        return window.getGameSettingsPanel().getPlayAs();
     }
 
     private void setOpponentColor(int color) {

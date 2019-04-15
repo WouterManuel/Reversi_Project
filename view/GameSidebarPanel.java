@@ -55,7 +55,7 @@ public class GameSidebarPanel extends JPanel{
 
         gbc.gridx = 0;
         gbc.gridy = 4;
-        backAndForfeitBtn = new JButton("Forfeit");
+        backAndForfeitBtn = new JButton("End game");
         backAndForfeitBtn.addActionListener(e -> {
             if(!clientController.isConnected()) { ;
                 clientController.returnToMenu();
@@ -82,7 +82,7 @@ public class GameSidebarPanel extends JPanel{
     }
 
     public void updateSidebarLabelPlayerTurn(String player) {
-        playerTurn.setText("<html><div style='color: white;font-size: 15px;'>Player to move "+ player +"</div></html>");
+        playerTurn.setText("<html><div style='color: white;font-size: 15px;'>" +player +"</div></html>");
     }
 
     public void setGameResult(String result, String serverComment) {

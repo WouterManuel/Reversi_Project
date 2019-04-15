@@ -33,6 +33,8 @@ public abstract class Game {
 
     public abstract void resetBoard();
 
+    public abstract boolean isBoardFull();
+
     public byte[][] getBoard() {
         return board;
     }
