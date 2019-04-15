@@ -134,6 +134,10 @@ public class Window extends JFrame implements WindowState {
 		this.gameSettingsPanel = gameSettingsPanel;
 	}
 
+	public void setServerConnectionPanel(ServerConnectionPanel serverConnectionPanel) {
+		this.serverConnectionPanel = serverConnectionPanel;
+	}
+
 	public void setGameSidebarPanel(GameSidebarPanel gameSidebarPanel) {
 		this.gameSidebarPanel = gameSidebarPanel;
 	}

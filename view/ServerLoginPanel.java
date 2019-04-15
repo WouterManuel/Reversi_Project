@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ServerLoginPanel extends JPanel {
+    JButton disconnectBtn;
     ClientController clientController;
 
     public ServerLoginPanel(ClientController clientController) {
@@ -48,7 +49,7 @@ public class ServerLoginPanel extends JPanel {
         add(username, gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 4;
         /* Connect btn */
@@ -64,5 +65,13 @@ public class ServerLoginPanel extends JPanel {
             } else messageLabel.setVisible(true);
         });
         add(loginBtn, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        disconnectBtn = new JButton("Disconnect");
+        add(disconnectBtn,gbc);
+        disconnectBtn.addActionListener(e -> {
+            clientController.sendLogout();
+        });
     }
 }

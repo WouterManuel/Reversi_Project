@@ -3,6 +3,8 @@ package view;
 import controller.ClientController;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +21,7 @@ public class ServerDetailsPanel extends JPanel {
     JButton acceptBtn;
     JButton logoutBtn;
     JLabel listText;
+    String opponent;
     ClientController clientController;
 
     public ServerDetailsPanel(ClientController clientController) {
@@ -49,10 +52,22 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridy = 2;
         DefaultListModel<String> listModel = new DefaultListModel<>();
         playerList = new JList<>(listModel);
+        playerList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    try {
+                        opponent = playerList.getSelectedValue().toString();
+                    }catch (Exception ex) {
+                        System.out.println(ex);
+                    }
+                }
+            }
+        });
+
 
         challengeBtn = new JButton("Challenge");
         challengeBtn.addActionListener(e -> {
-            clientController.getServerCommander().sendChallengeCommand(playerList.getSelectedValue().toString(), "Reversi");
+            clientController.getServerCommander().sendChallengeCommand(opponent, "Reversi");
         });
         JScrollPane playerListScroll = new JScrollPane(playerList);
         playerListScroll.setMinimumSize(new Dimension(140, 200));
