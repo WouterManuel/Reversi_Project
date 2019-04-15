@@ -49,7 +49,7 @@ public class ServerLoginPanel extends JPanel {
         add(username, gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridwidth = 1;
+        gbc.gridwidth = 2;
         gbc.gridx = 0;
         gbc.gridy = 4;
         /* Connect btn */
@@ -66,8 +66,9 @@ public class ServerLoginPanel extends JPanel {
         });
         add(loginBtn, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 5;
         disconnectBtn = new JButton("Disconnect");
         add(disconnectBtn,gbc);
         disconnectBtn.addActionListener(e -> {
