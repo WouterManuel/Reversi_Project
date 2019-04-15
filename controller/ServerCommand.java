@@ -59,7 +59,6 @@ public class ServerCommand {
             serverThread.stop();
             input.close();
             output.close();
-            System.out.println("Thread stopped");
             connected = false;
 //            if(checkIfValidCommand()){
 //            }
