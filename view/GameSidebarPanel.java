@@ -55,16 +55,18 @@ public class GameSidebarPanel extends JPanel{
         gbc.gridy = 4;
         backAndForfeitBtn = new JButton("End game");
         backAndForfeitBtn.addActionListener(e -> {
-            if(!clientController.isConnected()) { ;
+            if(!clientController.isConnected()) {
                 clientController.returnToMenu();
             }
             else if(!clientController.isGameOver())  {
                 popup  = new JFrame();
-                Object[] options = {"Yes, forfeit now"};
-                response = JOptionPane.showOptionDialog(popup,
-                        "Do you really want to forfeit this match?\n<html><div style='color:red'>Your opponent will win.</div></html>",
-                        "Forfeit", JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,
-                        null,options,options[0]);
+                if (clientController.isLoggedIn()) {
+                    Object[] options = {"Yes, forfeit now"};
+                    response = JOptionPane.showOptionDialog(popup,
+                            "Do you really want to forfeit this match?\n<html><div style='color:red'>Your opponent will win.</div></html>",
+                            "Forfeit", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                            null, options, options[0]);
+                }
                 if (response == JOptionPane.YES_OPTION) {
                     clientController.sendForfeit();
                 }

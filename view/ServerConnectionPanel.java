@@ -60,7 +60,7 @@ public class ServerConnectionPanel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 2;
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         JLabel messageLabel = new JLabel("<html><font color='red'><b>Error: </b></font>Failed to connect to the server</html>");
         messageLabel.setVisible(false);
         messageLabel.setForeground(Color.GRAY.brighter());

@@ -11,6 +11,7 @@ public class GameSettingsPanel extends JPanel {
     JLabel connectionLabel;
     JLabel playerTurn;
     JLabel scoreLabel;
+    JLabel opponentLabel;
     JButton playGame;
     JComboBox<String> playAs;
     JComboBox<String> playAgainst;
@@ -45,7 +46,7 @@ public class GameSettingsPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.ipadx = 20;
-        add(new JLabel("<html><br><div style='color: white;'>" + "Opponent:" + "</div></html>"), gbc);
+        add(opponentLabel = new JLabel("<html><br><div style='color: white;'>" + "Opponent:" + "</div></html>"), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -91,6 +92,8 @@ public class GameSettingsPanel extends JPanel {
 
     public void setPlayButton() {
         playGame.setText("Subscribe");
+        remove(opponentLabel);
+        remove(playAgainst);
     }
 
     public void setConnectionLabel() {

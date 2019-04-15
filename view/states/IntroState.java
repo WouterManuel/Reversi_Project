@@ -1,6 +1,7 @@
 package view.states;
 
 import view.GameSettingsPanel;
+import view.ServerConnectionPanel;
 import view.Window;
 import java.awt.*;
 
@@ -11,6 +12,7 @@ public class IntroState implements WindowState {
         this.window = window;
         window.setGameSettingsPanel(new GameSettingsPanel(window.getClientController()));
         window.add(window.getGameSettingsPanel(), BorderLayout.WEST);
+        window.setServerConnectionPanel(new ServerConnectionPanel(window.getClientController()));
         window.add(window.getServerConnectionPanel(), BorderLayout.EAST);
         window.revalidate();
     }
