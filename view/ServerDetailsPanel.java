@@ -73,7 +73,7 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 2;
         inviteList = new JTable();
-        tableModel = new DefaultTableModel(new Object[]{"Id", "Game", "From"}, 0);
+        tableModel = new DefaultTableModel(new Object[]{"ID", "Game", "From"}, 0);
         inviteList.setModel(tableModel);
         inviteList.getColumnModel().getColumn(0).setPreferredWidth(20);
         inviteList.getColumnModel().getColumn(1).setPreferredWidth(68);
