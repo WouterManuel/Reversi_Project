@@ -972,8 +972,4 @@ public class ClientController {
     public boolean isPlayingAsAI() {
         return playingAsAI;
     }
-
-    public static void main(String[] args) {
-        new ClientController();
-    }
 }

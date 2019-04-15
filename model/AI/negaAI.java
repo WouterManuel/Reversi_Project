@@ -24,7 +24,6 @@ public class negaAI extends AI {
 	}
 
 	public MoveScore negascout(byte[][] board, byte player, int depth, double alpha, double beta) {
-		System.out.println("entered negascout");
 		byte opp = player== game.BLACK?game.WHITE:game.BLACK;
 		ArrayList<Point> possibleMoves = game.getAllPossibleMoves(board, player);
 		if(depth == maxDepth)

@@ -157,7 +157,7 @@ public class ServerDetailsPanel extends JPanel {
                             if (!p.equals(clientController.getUsername()) && (!p.equals("OK")))
                                 listModel.addElement(p);
                         }
-                    } catch (Exception e) {
+                    } catch (IndexOutOfBoundsException e) {
                         e.printStackTrace();
                     }
 

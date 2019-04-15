@@ -21,10 +21,10 @@ public class GameSidebarPanel extends JPanel{
 
     public GameSidebarPanel(ClientController clientController) {
         this.clientController = clientController;
-        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(350,400));
         setBackground(Color.GRAY);
         GridBagConstraints gbc = new GridBagConstraints();
+        setLayout(new GridBagLayout());
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
