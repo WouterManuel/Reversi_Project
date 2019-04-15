@@ -7,16 +7,13 @@ import java.awt.*;
 
 public class GameSettingsPanel extends JPanel {
 
+    JLabel introLabel;
+    JLabel connectionLabel;
     JLabel playerTurn;
     JLabel scoreLabel;
-    JLabel connectionLabel;
-    JButton resetBtn;
-    JButton randBtn;
-    JButton interruptBtn;
     JButton playGame;
     JComboBox<String> playAs;
     JComboBox<String> playAgainst;
-    ClientController clientController;
 
     public GameSettingsPanel(ClientController clientController) {
 
@@ -24,16 +21,14 @@ public class GameSettingsPanel extends JPanel {
         setPreferredSize(new Dimension(400, 400));
         setBackground(Color.DARK_GRAY);
 
-        GridLayout experimentLayout = new GridLayout(3, 2);
         GridBagConstraints gbc = new GridBagConstraints();
-        setLayout(experimentLayout);
         GridBagLayout layout = new GridBagLayout();
         this.setLayout((layout));
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        connectionLabel = new JLabel("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>" + "Play offline" + "</div></html>");
+        connectionLabel = new JLabel("<html><br><div style='color: white; margin-bottom: 20px; font-size: 20px;'>" + "Play Offline" + "</div></html>");
         add(connectionLabel, gbc);
 
         gbc.gridx = 0;
@@ -107,6 +102,7 @@ public class GameSettingsPanel extends JPanel {
     }
 
     public void setConnectionLabel() {
-        connectionLabel.setText("<html><br><div style='color: white; margin-bottom: 50px; font-size: 20px;'>" + "Play Online" + "</div></html>");
+        connectionLabel.setText("<html><br><div style=' margin-bottom: 20px; font-size: 20px;'>" + "Play Online" + "</div></html>");
+        connectionLabel.setForeground(Color.green);
     }
 }

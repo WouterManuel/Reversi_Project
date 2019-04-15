@@ -1,8 +1,10 @@
 package view.states;
 
 import controller.ClientController;
+import view.GameSettingsPanel;
 import view.ServerDetailsPanel;
 import view.Window;
+
 import java.awt.*;
 
 public class LoggedInState implements WindowState {
@@ -40,16 +42,17 @@ public class LoggedInState implements WindowState {
 
     @Override
     public void gameStarted(String gameName) {
-        if(gameName.equals("Reversi")){
+        if (gameName.equals("Reversi")) {
             window.setWindowState(new StartReversiGameState(window));
-        } else if(gameName.equals("Tic-tac-toe")){
+        } else if (gameName.equals("Tic-tac-toe")) {
             window.setWindowState(new StartTicTacToeGameState(window));
         }
     }
 
     @Override
-    public void loggedOut(){
-       window.setWindowState(new IntroState(window));
-       window.repaint();
+    public void loggedOut() {
+        window.remove(window.getGameSettingsPanel());
+        window.setWindowState(new IntroState(window));
+        window.repaint();
     }
 }

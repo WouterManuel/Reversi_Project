@@ -27,7 +27,7 @@ public class ServerLoginPanel extends JPanel {
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 1;
-        JLabel usernameLabel = new JLabel("Type a username: ");
+        JLabel usernameLabel = new JLabel("Type a username");
         usernameLabel.setForeground(Color.WHITE);
         add(usernameLabel, gbc);
 
@@ -50,7 +50,7 @@ public class ServerLoginPanel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 2;
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 4;
         /* Connect btn */
         JButton loginBtn = new JButton("Login");
         loginBtn.addActionListener(e -> {

@@ -35,42 +35,45 @@ public class ServerDetailsPanel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
+        listText = new JLabel("<html><div style='font-size:14;'>Game Server</div?</html>");
+        listText.setForeground(Color.GREEN);
+        add(listText, gbc);
 
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         listText = new JLabel("Playerlist:");
         listText.setForeground(Color.WHITE);
         add(listText, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 1;
-
+        gbc.gridy = 2;
         DefaultListModel<String> listModel = new DefaultListModel<>();
         playerList = new JList<>(listModel);
-
         challengeBtn = new JButton("Challenge");
         challengeBtn.addActionListener(e -> {
             clientController.getServerCommander().sendChallengeCommand(playerList.getSelectedValue().toString(), "Reversi");
         });
-
         JScrollPane playerListScroll = new JScrollPane(playerList);
         playerListScroll.setMinimumSize(new Dimension(140, 200));
         add(playerListScroll, gbc);
 
 
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         add(challengeBtn, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         listText = new JLabel("Challenges:");
         listText.setForeground(Color.WHITE);
         add(listText, gbc);
 
 
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         inviteList = new JTable();
-        tableModel = new DefaultTableModel(new Object[]{"ID", "GAME", "FROM"}, 0);
+        tableModel = new DefaultTableModel(new Object[]{"Id", "Game", "From"}, 0);
         inviteList.setModel(tableModel);
         inviteList.getColumnModel().getColumn(0).setPreferredWidth(20);
         inviteList.getColumnModel().getColumn(1).setPreferredWidth(68);
@@ -90,16 +93,16 @@ public class ServerDetailsPanel extends JPanel {
         add(inviteListScroll, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         add(acceptBtn, gbc);
 
         gbc.gridwidth = 2;
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         logoutBtn = new JButton("Logout");
         inviteThreadStop click = new inviteThreadStop();
         logoutBtn.addActionListener(click);
