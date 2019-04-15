@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.*;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class ServerDetailsPanel extends JPanel {
     JButton logoutBtn;
     JLabel listText;
     String opponent;
+    int opponentAccept;
     ClientController clientController;
 
     public ServerDetailsPanel(ClientController clientController) {
@@ -52,14 +55,12 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridy = 2;
         DefaultListModel<String> listModel = new DefaultListModel<>();
         playerList = new JList<>(listModel);
-        playerList.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    try {
-                        opponent = playerList.getSelectedValue().toString();
-                    }catch (Exception ex) {
-                        System.out.println(ex);
-                    }
+        playerList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                try {
+                    opponent = playerList.getSelectedValue().toString();
+                }catch (Exception ex) {
+                    System.out.println(ex);
                 }
             }
         });
@@ -94,13 +95,25 @@ public class ServerDetailsPanel extends JPanel {
         inviteList.getColumnModel().getColumn(1).setPreferredWidth(68);
         inviteList.getColumnModel().getColumn(2).setPreferredWidth(69);
         inviteList.setAutoResizeMode(inviteList.AUTO_RESIZE_OFF);
+        inviteList.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                opponentAccept = (Integer) tableModel.getValueAt(inviteList.getSelectedRow(), 0);
+                System.out.println(opponentAccept);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+
+            }
+        });
         add(inviteList);
 
         acceptBtn = new JButton("Accept");
         add(acceptBtn);
         acceptBtn.addActionListener(e -> {
-            clientController.getInvites().remove(tableModel.getValueAt(inviteList.getSelectedRow(), 0));
-            clientController.getServerCommander().sendAcceptChallengeCommand((Integer) tableModel.getValueAt(inviteList.getSelectedRow(), 0));
+            clientController.getInvites().remove(opponentAccept);
+            clientController.getServerCommander().sendAcceptChallengeCommand(opponentAccept);
         });
 
         JScrollPane inviteListScroll = new JScrollPane(inviteList);
