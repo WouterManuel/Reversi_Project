@@ -11,11 +11,6 @@ public class GameSidebarPanel extends JPanel{
     JLabel scoreLabelWhite;
     JLabel scoreLabelBlack;
     JLabel gameStats;
-    JLabel fillLabel;
-    JButton resetBtn;
-    JButton randBtn;
-    JButton interruptBtn;
-    JButton playGame;
     JButton backAndForfeitBtn;
     JFrame popup;
     int response;
@@ -34,8 +29,6 @@ public class GameSidebarPanel extends JPanel{
         gbc.gridy = 0;
         imgIcon = new ImageIcon(this.getClass().getResource("winGif.gif"));
         label = new JLabel(imgIcon);
-        //label.setBounds(668, 43, 50, 10); // for example, you can use your own values
-        //label.setBounds(468, 43, 50, 10); // for example, you can use your own values
         label.setVisible(false);
         add(label,gbc);
 

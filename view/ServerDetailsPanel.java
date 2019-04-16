@@ -40,7 +40,7 @@ public class ServerDetailsPanel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        listText = new JLabel("<html><div style='font-size:14;'>Game Server</div?</html>");
+        listText = new JLabel("<html><div style='font-size:14;'>Game Server</div></html>");
         listText.setForeground(Color.GREEN);
         add(listText, gbc);
 
@@ -129,6 +129,10 @@ public class ServerDetailsPanel extends JPanel {
         gbc.gridy = 4;
         add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
 
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        add(new JLabel("<html><br><div style='color:00FF00;'>"+"Welcome, "+clientController.getUsername()+"</div></html>"), gbc);
+
         gbc.gridx = 1;
         gbc.gridy = 5;
         logoutBtn = new JButton("Logout");
@@ -138,6 +142,8 @@ public class ServerDetailsPanel extends JPanel {
         logoutBtn.addActionListener(e -> {
             clientController.sendLogout();
         });
+
+
 
         inviteThread = new Thread(() -> {
             try {

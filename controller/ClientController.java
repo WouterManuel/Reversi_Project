@@ -579,7 +579,7 @@ public class ClientController {
                 //currentGame.setWinner(opp);
                 serverComment = message.get(8);
                 updateResultLabel("You lost!");
-				window.getGameSidebarPanel().setBackground(Color.orange);
+				window.getGameSidebarPanel().setBackground(Color.orange.darker());
                 break;
             case "DRAW":
                 gameIsOver = true;
