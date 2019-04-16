@@ -1,6 +1,7 @@
 package view;
 
 import controller.ClientController;
+import model.game.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,8 @@ public class GameSidebarPanel extends JPanel{
     JButton backAndForfeitBtn;
     JFrame popup;
     int response;
+    Icon imgIcon;
+    JLabel label;
     ClientController clientController;
 
     public GameSidebarPanel(ClientController clientController) {
@@ -27,33 +30,42 @@ public class GameSidebarPanel extends JPanel{
         GridBagConstraints gbc = new GridBagConstraints();
         setLayout(new GridBagLayout());
 
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
+        imgIcon = new ImageIcon(this.getClass().getResource("winGif.gif"));
+        label = new JLabel(imgIcon);
+        //label.setBounds(668, 43, 50, 10); // for example, you can use your own values
+        //label.setBounds(468, 43, 50, 10); // for example, you can use your own values
+        label.setVisible(false);
+        add(label,gbc);
+
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         gameStats = new JLabel("<html><div style='color: white;font-size: 20px;'>Game Stats:</div></html>");
         add(gameStats, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         playerTurn = new JLabel();
         playerTurn.setForeground(Color.WHITE);
         add(playerTurn,gbc);
 
 
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         scoreLabelBlack = new JLabel();
         scoreLabelBlack.setForeground(Color.WHITE);
         add(scoreLabelBlack,gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         scoreLabelWhite = new JLabel();
         scoreLabelWhite.setForeground(Color.WHITE);
         add(scoreLabelWhite,gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         backAndForfeitBtn = new JButton("End game");
         backAndForfeitBtn.addActionListener(e -> {
             if(!clientController.isConnected()) {
@@ -74,6 +86,7 @@ public class GameSidebarPanel extends JPanel{
             } else if(clientController.isGameOver()) clientController.returnToMenu();
         });
         add(backAndForfeitBtn,gbc);
+
     }
 
     public void updateSidebarLabelScore(String player1, int score1, String player2, int score2) {
@@ -90,5 +103,11 @@ public class GameSidebarPanel extends JPanel{
         playerTurn.setText("<html><div style='color: white;font-size: 15px;'>" + serverComment +"</div></html>");
         backAndForfeitBtn.setText("Back to menu");
         this.repaint();
+    }
+    public void youWon() {
+        System.out.println("hier");
+        this.label.setVisible(true);
+        this.repaint();
+
     }
 }

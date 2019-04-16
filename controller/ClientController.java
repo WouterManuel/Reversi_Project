@@ -7,8 +7,10 @@ import model.AI.randomAI;
 import model.game.Game;
 import model.game.Reversi;
 import model.game.TicTacToe;
+import view.GameSidebarPanel;
 import view.Window;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -568,7 +570,8 @@ public class ClientController {
                 //currentGame.setWinner(turn);
                 serverComment = message.get(8);
                 updateResultLabel("You won!");
-                window.getGameSidebarPanel().setBackground(Color.green);
+				window.getGameSidebarPanel().youWon();
+				window.getGameSidebarPanel().setBackground(Color.green);
                 break;
             case "LOSS":
                 gameIsOver = true;

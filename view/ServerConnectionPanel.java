@@ -13,6 +13,7 @@ public class ServerConnectionPanel extends JPanel {
         setPreferredSize(new Dimension(350,400));
         setLayout(new GridBagLayout());
         setBackground(Color.darkGray.darker());
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(2, 10, 2 ,10);
 
